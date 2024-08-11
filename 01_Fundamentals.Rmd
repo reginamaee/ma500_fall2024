@@ -1,2 +1,21 @@
+# Expectations {.unnumbered}
 
-# R Fundamentals
+Writing clean, efficient, and well-documented code is an important aspect of this course! Developing these habits early is crucial for clear communication, effective collaboration,smoother debugging or troubleshooting, and error prevention. Therefore, your assignments will be evaluated not only on functionality but also on readability and adherence to coding practices. However, don't stress too much on that.
+
+If applicable, you should always submit
+
+-   source file `.R` or `.Rmd`
+
+-   raw data used (`.csv` or `.xlsx)`
+
+-   cleaned/output data (`.csv` or `.xlsx`)
+
+-   your code outputs (whether it be inclusive of the R script or on a separate document you have)
+
+## Tips on clean/well-documented code {-}
+
+Naming conventions should be meaningful (for both variables and files)
+
+-   use lowercase leters
+
+-   variable: nouns, function: verbs
