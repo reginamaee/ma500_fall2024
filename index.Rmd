@@ -1,0 +1,24 @@
+--- 
+title: "MA-500: Introduction to R"
+author: "Regina-Mae Dominguez - Fall 2024"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: reginamaee/ma500_fall2024
+---
+
+# Course Introduction {-}
+
+Moodle is the platform where you'll upload and submit homework assignments, as well as access other course-related materials. This `markdown` site serves as a central hub for all course information, including notes, guides, and resources.
+
+## Installing R {-}
+
+To install R, begin by visiting the Comprehensive R Archive Network (CRAN) here: https://cran.r-project.org/. Select and download the appropriate R binary package for your operating system— whether Windows, macOS, or Linux.  For Mac users, ensure you install the correct package binary associated with your processor (e.g., Intel or Apple Silicon). 
+
+## Installing RStudio {-}
+
+RStudio is the most widely used integrated development environment (IDE) for R programming. You can download the free version here: https://posit.co/downloads/. Whie you have the option to use alternative IDEs, such as VS Code with the Rtools extention or the base R GUI, it is recommended to use RStudio as the course material will primarily be demonstrated using this IDE. This will ensure you can easily follow along with the course content! 
+
