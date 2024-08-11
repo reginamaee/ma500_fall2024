@@ -4,7 +4,7 @@ bookdown::gitbook:
     toc:
       before: |
         <li><a href="./">MA500: Introduction to R</a></li>
-    edit: https://github.com/rstudio/bookdown-demo/edit/master/%s
+    edit: https://github.com/reginamaee/ma500_fall2024/
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:

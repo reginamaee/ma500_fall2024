@@ -2,7 +2,10 @@
 title: "MA-500: Introduction to R"
 author: "Regina-Mae Dominguez - Fall 2024"
 site: bookdown::bookdown_site
-output: bookdown::gitbook
+output: 
+  bookdown::bs4_book:
+    theme: 
+      bootswatch: minty
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
