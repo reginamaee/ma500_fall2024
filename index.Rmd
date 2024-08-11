@@ -1,4 +1,4 @@
---- 
+---
 title: "MA-500: Introduction to R"
 author: "Regina-Mae Dominguez - Fall 2024"
 site: bookdown::bookdown_site
@@ -11,15 +11,14 @@ favicon: "images/favicon.ico"
 github-repo: reginamaee/ma500_fall2024
 ---
 
-# Course Introduction {-}
+# Course Introduction {.unnumbered}
 
-Moodle is the platform where you'll upload and submit homework assignments, as well as access other course-related materials. This `markdown` site serves as a central hub for all course information, including notes, guides, and resources.
+This Markdown site serves as a central hub for all course information, including notes, guides, and resources. Moodle will be the platform for uploading and submitting homework assignments. As the course progresses, this site will be regularly updated to ensure it's helpful, easy to navigate, and accessible whenever you need a reference. While this resource is designed to be useful, I ***strongly*** encourage you to take your own notes for a more personalized and detailed study guide.
 
-## Installing R {-}
+## Installing R {.unnumbered}
 
-To install R, begin by visiting the Comprehensive R Archive Network (CRAN) here: https://cran.r-project.org/. Select and download the appropriate R binary package for your operating system— whether Windows, macOS, or Linux.  For Mac users, ensure you install the correct package binary associated with your processor (e.g., Intel or Apple Silicon). 
+To install R, begin by visiting the Comprehensive R Archive Network (CRAN) here: <https://cran.r-project.org/>. Select and download the appropriate R binary package for your operating system— whether Windows, macOS, or Linux. For Mac users, ensure you install the correct package binary associated with your processor (e.g., Intel or Apple Silicon).
 
-## Installing RStudio {-}
+## Installing RStudio {.unnumbered}
 
-RStudio is the most widely used integrated development environment (IDE) for R programming. You can download the free version here: https://posit.co/downloads/. Whie you have the option to use alternative IDEs, such as VS Code with the Rtools extention or the base R GUI, it is recommended to use RStudio as the course material will primarily be demonstrated using this IDE. This will ensure you can easily follow along with the course content! 
-
+RStudio is the most widely used integrated development environment (IDE) for R programming. You can download the free version here: <https://posit.co/downloads/>. Whie you have the option to use alternative IDEs, such as VS Code with the Rtools extention or the base R GUI, it is recommended to use RStudio as the course material will primarily be demonstrated using this IDE. This will ensure you can easily follow along with the course content!
