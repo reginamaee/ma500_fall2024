@@ -13,7 +13,7 @@ github-repo: reginamaee/ma500_fall2024
 
 # Course Introduction {.unnumbered}
 
-This Markdown site serves as a central hub for all course information, including notes, guides, and resources. Moodle will be the platform for uploading and submitting homework assignments. As the course progresses, this site will be regularly updated to ensure it's helpful, easy to navigate, and accessible whenever you need a reference. While this resource is designed to be useful, I ***strongly*** encourage you to take your own notes for a more personalized and detailed study guide.
+This `markdown` site will include notes, guides, and resources, while Moodle will be the central hub for the course as well as the platform for uploading and submitting homework assignments. As the course progresses, this site will be regularly updated to ensure it's helpful, easy to navigate, and accessible whenever you need a reference. While this resource is designed to be useful, I ***strongly*** encourage you to take your own notes for a more personalized and detailed study guide.
 
 ## Installing R {.unnumbered}
 
