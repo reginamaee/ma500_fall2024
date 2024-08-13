@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>R-Scripts/Code | MA-500: Introduction to R</title>
+<meta name="author" content="Regina-Mae Dominguez - Fall 2024">
+<meta name="generator" content="bookdown 0.40 with bs4_book()">
+<meta property="og:title" content="R-Scripts/Code | MA-500: Introduction to R">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/images/cover.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R-Scripts/Code | MA-500: Introduction to R">
+<meta name="twitter:image" content="/images/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<meta name="description" content="Writing clean, efficient, and well-documented code is an important aspect of this course! Developing these habits early is crucial for clear communication, effective collaboration,smoother...">
+<meta property="og:description" content="Writing clean, efficient, and well-documented code is an important aspect of this course! Developing these habits early is crucial for clear communication, effective collaboration,smoother...">
+<meta name="twitter:description" content="Writing clean, efficient, and well-documented code is an important aspect of this course! Developing these habits early is crucial for clear communication, effective collaboration,smoother...">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <img id="cover" class="d-none d-lg-block" src="images/cover-small.png"><br><h1>
+        <a href="index.html" title="">MA-500: Introduction to R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">MA-500: Introduction to R</a></li>
+<li><a class="" href="rrstudio-installation-guide.html">R/RStudio Installation Guide</a></li>
+<li><a class="active" href="r-scriptscode.html">R-Scripts/Code</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="r-scriptscode" class="section level1 unnumbered">
+<h1>R-Scripts/Code<a class="anchor" aria-label="anchor" href="#r-scriptscode"><i class="fas fa-link"></i></a>
+</h1>
+<p>Writing clean, efficient, and well-documented code is an important aspect of this course! Developing these habits early is crucial for clear communication, effective collaboration,smoother debugging or troubleshooting, and error prevention. Therefore, your assignments will be evaluated not only on functionality but also on readability and adherence to coding practices. However, don’t stress too much on that.</p>
+<p>If applicable, you should always submit</p>
+<ul>
+<li><p>source file <code>.R</code> or <code>.Rmd</code></p></li>
+<li><p>raw data used (<code>.csv</code> or <code>.xlsx)</code></p></li>
+<li><p>cleaned/output data (<code>.csv</code> or <code>.xlsx</code>)</p></li>
+<li><p>your code outputs (whether it be inclusive of the R script or on a separate document you have)</p></li>
+</ul>
+<div id="tips-on-cleanwell-documented-code" class="section level2 unnumbered">
+<h2>Tips on clean/well-documented code<a class="anchor" aria-label="anchor" href="#tips-on-cleanwell-documented-code"><i class="fas fa-link"></i></a>
+</h2>
+<p>Here’s a style guide I usually follow: <a href="https://style.tidyverse.org/files.html">Tidyverse Style Guide</a>. It’s purely optional and meant to be a helpful suggestion, not a requirement. However, it is an excellent resource for getting started with writing clear, clean code.</p>
+<div id="example-code" class="section level3 unnumbered">
+<h3>Example code<a class="anchor" aria-label="anchor" href="#example-code"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#'</span></span>
+<span><span class="co">#' Calculate percent change of means between two years</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @param dt data.table with mean outcome column</span></span>
+<span><span class="co">#' @param old_year initial year</span></span>
+<span><span class="co">#' @param new_year most recent year</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @return modified data.table with new percent change column and label column</span></span>
+<span><span class="co">#' </span></span>
+<span><span class="co">#' </span></span>
+<span><span class="va">get_pt_change</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dt</span>, <span class="va">old_year</span>, <span class="va">new_year</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># split dt to separate old observations and new observations</span></span>
+<span>  <span class="va">new</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span><span class="va">Year</span> <span class="op">==</span> <span class="va">new_year</span><span class="op">]</span></span>
+<span>  <span class="fu">setnames</span><span class="op">(</span><span class="va">new</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"new_mean"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">old</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span><span class="va">Year</span> <span class="op">==</span> <span class="va">old_year</span><span class="op">]</span></span>
+<span>  <span class="fu">setnames</span><span class="op">(</span><span class="va">old</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"prev_mean"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># merge to create new dt and calculate percent change </span></span>
+<span>  <span class="va">pct</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">new</span>, <span class="va">old</span>, by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"plot_id"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">pct</span> <span class="op">&lt;-</span> <span class="va">pct</span><span class="op">[</span>, <span class="fu">`:=`</span> <span class="op">(</span>mean_pct_change <span class="op">=</span> <span class="op">(</span><span class="va">new_mean</span> <span class="op">-</span> <span class="va">prev_mean</span><span class="op">)</span><span class="op">/</span><span class="va">prev_mean</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">]</span></span>
+<span>  <span class="va">pct</span> <span class="op">&lt;-</span> <span class="va">pct</span><span class="op">[</span>, <span class="va">year_pct_change</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">old_year</span>, <span class="st">" - "</span>, <span class="va">new_year</span><span class="op">)</span><span class="op">]</span></span>
+<span>  </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">pct</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="rrstudio-installation-guide.html">R/RStudio Installation Guide</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#r-scriptscode">R-Scripts/Code</a></li>
+<li>
+<a class="nav-link" href="#tips-on-cleanwell-documented-code">Tips on clean/well-documented code</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#example-code">Example code</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+
+
+</body>
+</html>
