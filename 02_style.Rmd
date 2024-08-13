@@ -1,8 +1,8 @@
 # R-Scripts/Code {.unnumbered}
 
-Writing clean, efficient, and well-documented code is an important aspect of this course! Developing these habits early is crucial for clear communication, effective collaboration,smoother debugging or troubleshooting, and error prevention. Therefore, your assignments will be evaluated not only on functionality but also on readability and adherence to coding practices. However, don't stress too much on that.
+Writing clean, efficient, and well-documented code is an important aspect of this course! Developing these habits early is crucial for clear communication, effective collaboration,smoother debugging or troubleshooting, and error prevention. Therefore, your assignments will be evaluated not only on functionality but also on readability and adherence to coding practices. However, don't stress too much on that!!
 
-If applicable, you should always submit
+If applicable, for homework assignments, you should always submit:
 
 -   source file `.R` or `.Rmd`
 
@@ -14,9 +14,10 @@ If applicable, you should always submit
 
 ## Tips on clean/well-documented code {.unnumbered}
 
-Here's a style guide I usually follow: [Tidyverse Style Guide](https://style.tidyverse.org/files.html). It's purely optional and meant to be a helpful suggestion, not a requirement. However, it is an excellent resource for getting started with writing clear, clean code.
+Here's a style guide I usually follow: [Tidyverse Style Guide](https://style.tidyverse.org/files.html). It's purely optional and meant to be a helpful suggestion, not a requirement. However, it is an excellent resource for getting started with writing well-documented, clear, and consise code.
 
 ### Example code {-}
+
 
 ```{r}
 #'

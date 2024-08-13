@@ -2,7 +2,7 @@
 
 ## Installing R {-}
 
-To install R, begin by visiting the Comprehensive R Archive Network (CRAN) here: https://cran.r-project.org/. Select and download the appropriate R binary package for your operating system— whether Windows, macOS, or Linux. For Mac users, ensure you install the correct package binary associated with your processor (e.g., Intel or Apple Silicon).
+To install R, begin by visiting the Comprehensive R Archive Network (CRAN) here: https://cran.r-project.org/. Select and download the appropriate R binary package for your operating system— whether Windows, macOS, or Linux. For Mac users, please be sure that you install the correct package binary associated with your processor (e.g., Intel or Apple Silicon).
 
 ## Installing RStudio {-}
 
