@@ -1,0 +1,46 @@
+# Expectations {.unnumbered}
+
+Writing clean, efficient, and well-documented code is an important aspect of this course! Developing these habits early is crucial for clear communication, effective collaboration,smoother debugging or troubleshooting, and error prevention. Therefore, your assignments will be evaluated not only on functionality but also on readability and adherence to coding practices. However, don't stress too much on that.
+
+If applicable, you should always submit
+
+-   source file `.R` or `.Rmd`
+
+-   raw data used (`.csv` or `.xlsx)`
+
+-   cleaned/output data (`.csv` or `.xlsx`)
+
+-   your code outputs (whether it be inclusive of the R script or on a separate document you have)
+
+## Tips on clean/well-documented code {-}
+
+
+### Example code 
+```{r}
+#'
+#' Calculate percent change of means between two years
+#'
+#' @param dt data.table with mean outcome column
+#' @param old_year initial year
+#' @param new_year most recent year
+#'
+#'
+#' @return modified data.table with new percent change column and label column
+#' 
+#' 
+get_pt_change <- function(dt, old_year, new_year) {
+  # split dt to separate old observations and new observations
+  new <- dt[Year == new_year]
+  setnames(new, c("mean"), c("new_mean"))
+  old <- dt[Year == old_year]
+  setnames(old, c("mean"), c("prev_mean"))
+  
+  # merge to create new dt and calculate percent change 
+  pct <- merge(new, old, by=c("plot_id"))
+  pct <- pct[, `:=` (mean_pct_change = (new_mean - prev_mean)/prev_mean * 100)]
+  pct <- pct[, year_pct_change := paste0(old_year, " - ", new_year)]
+  
+  return(pct)
+}
+```
+

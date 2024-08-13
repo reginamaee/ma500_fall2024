@@ -31,7 +31,7 @@
   <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
-      <h1>
+      <img id="cover" class="d-none d-lg-block" src="images/cover-small.png"><br><h1>
         <a href="index.html" title="">MA-500: Introduction to R</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
@@ -44,7 +44,8 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Course Introduction</a></li>
+<li><a class="" href="index.html">MA-500: Introduction to R</a></li>
+<li><a class="" href="rrstudio-installation-guide.html">R/RStudio Installation Guide</a></li>
 <li><a class="active" href="expectations.html">Expectations</a></li>
 </ul>
 
@@ -67,21 +68,50 @@
 <div id="tips-on-cleanwell-documented-code" class="section level2 unnumbered">
 <h2>Tips on clean/well-documented code<a class="anchor" aria-label="anchor" href="#tips-on-cleanwell-documented-code"><i class="fas fa-link"></i></a>
 </h2>
-<p>Naming conventions should be meaningful (for both variables and files)</p>
-<ul>
-<li><p>use lowercase leters</p></li>
-<li><p>variable: nouns, function: verbs</p></li>
-</ul>
+<div id="example-code" class="section level3" number="0.0.1">
+<h3>
+<span class="header-section-number">0.0.1</span> Example code<a class="anchor" aria-label="anchor" href="#example-code"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#'</span></span>
+<span><span class="co">#' Calculate percent change of means between two years</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @param dt data.table with mean outcome column</span></span>
+<span><span class="co">#' @param old_year initial year</span></span>
+<span><span class="co">#' @param new_year most recent year</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#'</span></span>
+<span><span class="co">#' @return modified data.table with new percent change column and label column</span></span>
+<span><span class="co">#' </span></span>
+<span><span class="co">#' </span></span>
+<span><span class="va">get_pt_change</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dt</span>, <span class="va">old_year</span>, <span class="va">new_year</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># split dt to separate old observations and new observations</span></span>
+<span>  <span class="va">new</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span><span class="va">Year</span> <span class="op">==</span> <span class="va">new_year</span><span class="op">]</span></span>
+<span>  <span class="fu">setnames</span><span class="op">(</span><span class="va">new</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"new_mean"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">old</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span><span class="va">Year</span> <span class="op">==</span> <span class="va">old_year</span><span class="op">]</span></span>
+<span>  <span class="fu">setnames</span><span class="op">(</span><span class="va">old</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"prev_mean"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># merge to create new dt and calculate percent change </span></span>
+<span>  <span class="va">pct</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">new</span>, <span class="va">old</span>, by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"plot_id"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">pct</span> <span class="op">&lt;-</span> <span class="va">pct</span><span class="op">[</span>, <span class="fu">`:=`</span> <span class="op">(</span>mean_pct_change <span class="op">=</span> <span class="op">(</span><span class="va">new_mean</span> <span class="op">-</span> <span class="va">prev_mean</span><span class="op">)</span><span class="op">/</span><span class="va">prev_mean</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">]</span></span>
+<span>  <span class="va">pct</span> <span class="op">&lt;-</span> <span class="va">pct</span><span class="op">[</span>, <span class="va">year_pct_change</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">old_year</span>, <span class="st">" - "</span>, <span class="va">new_year</span><span class="op">)</span><span class="op">]</span></span>
+<span>  </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">pct</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+
+</div>
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="index.html">Course Introduction</a></div>
+<div class="prev"><a href="rrstudio-installation-guide.html">R/RStudio Installation Guide</a></div>
 <div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#expectations">Expectations</a></li>
-<li><a class="nav-link" href="#tips-on-cleanwell-documented-code">Tips on clean/well-documented code</a></li>
+<li>
+<a class="nav-link" href="#tips-on-cleanwell-documented-code">Tips on clean/well-documented code</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#example-code"><span class="header-section-number">0.0.1</span> Example code</a></li></ul>
+</li>
 </ul>
 
       <div class="book-extra">
