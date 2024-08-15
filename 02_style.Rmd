@@ -16,6 +16,7 @@ If applicable, for homework assignments, you should always submit:
 
 Here's a style guide I usually follow: [Tidyverse Style Guide](https://style.tidyverse.org/files.html). It's purely optional and meant to be a helpful suggestion, not a requirement. However, it is an excellent resource for getting started with writing well-documented, clear, and consise code.
 
+
 ### Example code {-}
 
 

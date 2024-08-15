@@ -1,0 +1,133 @@
+# R Basics and Fundamentals
+
+## Variables {.unnumbered}
+
+Assigning names to values is done in R with the assignment operator: `<-` (as opposed to the conventional `=` which is used with `named function assignments`.)
+
+```{r}
+# variable assignment 
+x <- 4
+y <- x^2 + 2 + x
+```
+
+```{r}
+# to output what y is (assignment does not print output)
+print(y)
+
+# or simply just
+y
+```
+
+Note: R is a *dynamic language*, so the types and values can easily be changed. (type checks are done during run-time)
+
+```{r}
+# x is now a of type character
+x <- "statistics"
+```
+
+### R data types
+
+-   `numeric (double or int)` - any number with or without a decimal point (and can contain `NA`)
+
+-   `character` - any grouping of characters or string
+
+-   `logical/boolean` - TRUE or FALSE
+
+-   `vectors` list of related data that is all the same type
+
+Use `class()` to determine variable type
+
+```{r}
+class(2)
+class(x)
+```
+
+## Data Vectors
+
+**Vector:** a collection of observations or measurements concerning a single variable
+
+In 2021, the average temperature in Guam for each month was 80.7 81.4 81.5 82.6 82.6 83.7 83.4 81.8 82.5 81.4 82.0 81.0.
+
+```{r}
+# Let's place this list of temperatures in a data vector.
+# creating a vector - numeric vector
+temp <- c(80.7, 81.4, 81.5,82.6, 82.6, 83.7, 83.4, 81.8, 82.5, 81.4, 82.0, 81.0)
+# this returns the length of the vector
+length(temp)
+```
+
+```{r}
+sum(temp)
+mean(temp)
+```
+
+In the case one of your values in your vector is of `NA`, then `sum` or `mean` would also return `NA`. `sum(, na.rm=TRUE)`
+
+**Attributes:** Vectors can have attributes, or names for each case.
+
+```{r}
+# assign month to each temperature in the temp vector
+months <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+names(temp) <- months
+```
+
+## Indexing
+
+You can call a specific value in the `temp` vector by referencing it's respective name.
+
+```{r}
+temp["May"]
+```
+
+OR, you can index the vector by referencing its numeric index value.
+
+```{r}
+# returns the first element in temp
+temp[1]
+```
+
+```{r}
+# if I want the first 4 values, index with :
+temp[1:4]
+```
+
+## Operators
+
+Comparison:
+
+-   `>` Greater than
+
+-   `<` Less than
+
+-   `<=` Less than or equal
+
+-   `>=` Greater than or equal
+
+-   `==` Equal to:
+
+-   `!=` Not equal to
+
+-   `%in%` in (applicable to vectors)
+
+```{r}
+# get all temperatures that are higher than the temperature in Aug
+# temp['Aug] refers to temperature in August
+# adding temp > temp['Aug] inside temp[] means within the temp vector
+temp[temp > temp['Aug']]
+```
+
+Logical Operators:
+
+-   `&` AND
+
+-   `|` OR
+
+-   `!` NOT
+
+```{r}
+# want temperatures that are greater than temps in August, but also temperatures in the Fall
+
+fall <- c("Sep", "Oct", "Nov")
+temp[temp > temp['Aug'] | names(temp) %in% fall]
+```

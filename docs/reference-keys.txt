@@ -1,0 +1,5 @@
+r-basics-and-fundamentals
+r-data-types
+data-vectors
+indexing
+operators
