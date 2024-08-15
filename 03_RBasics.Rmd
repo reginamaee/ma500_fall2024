@@ -1,5 +1,66 @@
 # R Basics and Fundamentals
 
+## Comments
+
+In `R`, you can comment with `#`. (In markdown, `#` usually denotes the start of a heading.)
+
+```{r}
+# comment here
+#' 
+#' adding ' after #, allows you to enter multi-line comments
+#' 
+
+# basic arithmetic
+ 1+1
+```
+
+## Directories
+
+R sessions usually have a *working directory* associated with it. This is the default location where files are imported or saved.
+
+```{r}
+# check your working directory 
+getwd()
+```
+
+```{r}
+# change your working directory 
+setwd("/insertfilepathhere")
+```
+
+## R Packages
+
+Base installation consists of many in-house functions and commands, but more specialized techniques would require the installation of packages. A few packages that you should have for this course (there will probably be many more):
+
+-   `ggplot2`
+
+-   `data.table`
+
+-   `MASS`
+
+-   `stats`
+
+*Note:* If you are using a mac, some development packages would require you to install `XQuartz` or `XCode`. If issues come up with installing a package or getting a package to work, please let me know so I can help you out!
+
+Find more packages here: <https://cran.r-project.org/>
+
+```{r}
+# installing packages
+install.packages("MASS")
+```
+
+```{r}
+# calling the package after installation
+library("MASS")
+```
+
+```{r}
+# updating packages/all packages
+update.packages()
+```
+
+## Coding
+
 ## Variables {.unnumbered}
 
 Assigning names to values is done in R with the assignment operator: `<-` (as opposed to the conventional `=` which is used with `named function assignments`.)
