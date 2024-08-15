@@ -23,7 +23,7 @@ R sessions usually have a *working directory* associated with it. This is the de
 getwd()
 ```
 
-```{r}
+```{r eval=FALSE}
 # change your working directory 
 setwd("/insertfilepathhere")
 ```
@@ -44,17 +44,17 @@ Base installation consists of many in-house functions and commands, but more spe
 
 Find more packages here: <https://cran.r-project.org/>
 
-```{r}
+```{r eval=FALSE}
 # installing packages
 install.packages("MASS")
 ```
 
-```{r}
+```{r eval=FALSE}
 # calling the package after installation
 library("MASS")
 ```
 
-```{r}
+```{r eval=FALSE}
 # updating packages/all packages
 update.packages()
 ```

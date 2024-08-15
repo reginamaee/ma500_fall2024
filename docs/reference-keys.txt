@@ -1,4 +1,8 @@
 r-basics-and-fundamentals
+comments
+directories
+r-packages
+coding
 r-data-types
 data-vectors
 indexing
