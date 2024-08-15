@@ -51,7 +51,8 @@ In 2021, the average temperature in Guam for each month was 80.7 81.4 81.5 82.6 
 ```{r}
 # Let's place this list of temperatures in a data vector.
 # creating a vector - numeric vector
-temp <- c(80.7, 81.4, 81.5,82.6, 82.6, 83.7, 83.4, 81.8, 82.5, 81.4, 82.0, 81.0)
+temp <- c(80.7, 81.4, 81.5,82.6, 82.6, 83.7, 83.4, 
+          81.8, 82.5, 81.4, 82.0, 81.0)
 # this returns the length of the vector
 length(temp)
 ```
@@ -67,7 +68,8 @@ In the case one of your values in your vector is of `NA`, then `sum` or `mean` w
 
 ```{r}
 # assign month to each temperature in the temp vector
-months <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec")
+months <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+            "July", "Aug", "Sep", "Oct", "Nov", "Dec")
 
 names(temp) <- months
 ```
@@ -126,7 +128,8 @@ Logical Operators:
 -   `!` NOT
 
 ```{r}
-# want temperatures that are greater than temps in August, but also temperatures in the Fall
+# want temperatures that are greater than temps in August, 
+# but also temperatures in the Fall
 
 fall <- c("Sep", "Oct", "Nov")
 temp[temp > temp['Aug'] | names(temp) %in% fall]

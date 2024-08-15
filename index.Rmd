@@ -15,6 +15,11 @@ favicon: "images/favicon.ico"
 github-repo: reginamaee/ma500_fall2024
 ---
 
+```{r, global_options, include=FALSE}
+knitr::opts_chunk$set(message=FALSE, tidy.opts=list(width.cutoff=60), tidy=TRUE) 
+
+```
+
 # MA-500: Introduction to R {.unnumbered}
 
 FANUCHÅNAN 2024: 8/14/2024 - 10/04/2024
