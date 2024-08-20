@@ -202,7 +202,10 @@ In our `failed_to_vote` vector, how many times do we have poor outcomes and how 
 ```{r}
 # define a loop to count this
 # count how many times decent or poor appear
-decent_val <- 0
+
+# we initialize variables to store our count OUTSIDE of the for loop to retain their value
+# while the loop is running
+decent_val <- 0 
 poor_val   <- 0
 
 for (percent in failed_to_vote) {
