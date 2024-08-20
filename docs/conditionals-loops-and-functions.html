@@ -174,6 +174,9 @@ n! = n × (n - 1) × (n - 2) × ... × 2 × 1
 <p>Now, let’s define a For-Loop to use this function over the elements in <code>failed_to_vote</code> vector.</p>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># option 1 for a for loop</span></span>
+<span><span class="co">#' this loop iterates over each element in the failed_to_vote vector</span></span>
+<span><span class="co">#' we give it an arbitrary name (percent) which represents a single element</span></span>
+<span><span class="co">#' of this data vector at a point in our loop</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">percent</span> <span class="kw">in</span> <span class="va">failed_to_vote</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">percent</span><span class="op">)</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">determine_outcome</span><span class="op">(</span><span class="va">percent</span><span class="op">)</span><span class="op">)</span></span>
@@ -212,6 +215,9 @@ n! = n × (n - 1) × (n - 2) × ... × 2 × 1
 ## [1] "decent"</code></pre>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># option 2 - index with value</span></span>
+<span><span class="co">#' this for loop iterates throught the failed_to_vote vector by specifying their</span></span>
+<span><span class="co">#' numeric index. it defines the condition from i in 1:16 (which is the length of the vector)</span></span>
+<span><span class="co">#' and for each iteration of the loop, i gets replaced by 1, then by 2, then by 3.. until 16</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">failed_to_vote</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">failed_to_vote</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu">determine_outcome</span><span class="op">(</span><span class="va">failed_to_vote</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
@@ -266,6 +272,9 @@ n! = n × (n - 1) × (n - 2) × ... × 2 × 1
 ## [1] "decent"</code></pre>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># save these outcomes</span></span>
+<span><span class="co">#' we follow the first option of the for loop, but initialize an outcome variable to store</span></span>
+<span><span class="co">#' the value returned by `determine_outcome` into another vector. This variable is</span></span>
+<span><span class="co">#' initialized outside of the loop to retain its state or value as the loop runs.</span></span>
 <span><span class="va">outcome</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">percent</span> <span class="kw">in</span> <span class="va">failed_to_vote</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">outcome</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="va">outcome</span>, <span class="fu">determine_outcome</span><span class="op">(</span><span class="va">percent</span><span class="op">)</span><span class="op">)</span></span>
@@ -330,8 +339,9 @@ n! = n × (n - 1) × (n - 2) × ... × 2 × 1
 <code class="sourceCode R"><span><span class="co"># define a loop to count this count how many times decent</span></span>
 <span><span class="co"># or poor appear</span></span>
 <span></span>
-<span><span class="co"># we initialize variables to store our count OUTSIDE of the</span></span>
-<span><span class="co"># for loop to retain their value while the loop is running</span></span>
+<span><span class="co"># again, we initialize variables to store our count OUTSIDE</span></span>
+<span><span class="co"># of the for loop to retain their value while the loop is</span></span>
+<span><span class="co"># running</span></span>
 <span><span class="va">decent_val</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="va">poor_val</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span></span>

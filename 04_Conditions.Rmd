@@ -127,18 +127,27 @@ Now, let's define a For-Loop to use this function over the elements in `failed_t
 
 ```{r}
 # option 1 for a for loop
+#' this loop iterates over each element in the failed_to_vote vector
+#' we give it an arbitrary name (percent) which represents a single element
+#' of this data vector at a point in our loop
 for (percent in failed_to_vote) {
   print(percent)
   print(determine_outcome(percent))
 }
 
 # option 2 - index with value
+#' this for loop iterates throught the failed_to_vote vector by specifying their
+#' numeric index. it defines the condition from i in 1:16 (which is the length of the vector)
+#' and for each iteration of the loop, i gets replaced by 1, then by 2, then by 3.. until 16
 for (i in 1:length(failed_to_vote)) {
   print(failed_to_vote[i])
   print(determine_outcome(failed_to_vote[i]))
 }
 
 # save these outcomes
+#' we follow the first option of the for loop, but initialize an outcome variable to store
+#' the value returned by `determine_outcome` into another vector. This variable is
+#' initialized outside of the loop to retain its state or value as the loop runs.
 outcome <- c()
 for (percent in failed_to_vote) {
   outcome <- append(outcome, determine_outcome(percent))
@@ -203,7 +212,7 @@ In our `failed_to_vote` vector, how many times do we have poor outcomes and how 
 # define a loop to count this
 # count how many times decent or poor appear
 
-# we initialize variables to store our count OUTSIDE of the for loop to retain their value
+# again, we initialize variables to store our count OUTSIDE of the for loop to retain their value
 # while the loop is running
 decent_val <- 0 
 poor_val   <- 0
