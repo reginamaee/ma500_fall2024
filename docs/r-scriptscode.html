@@ -48,6 +48,7 @@
 <li><a class="" href="rrstudio-installation-guide.html">R/RStudio Installation Guide</a></li>
 <li><a class="active" href="r-scriptscode.html">R-Scripts/Code</a></li>
 <li><a class="" href="r-basics-and-fundamentals.html"><span class="header-section-number">1</span> R Basics and Fundamentals</a></li>
+<li><a class="" href="conditionals-loops.html"><span class="header-section-number">2</span> Conditionals &amp; Loops</a></li>
 </ul>
 
         <div class="book-extra">
@@ -86,18 +87,21 @@
 <span><span class="co">#' </span></span>
 <span><span class="co">#' </span></span>
 <span><span class="va">get_pt_change</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dt</span>, <span class="va">old_year</span>, <span class="va">new_year</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="co"># split dt to separate old observations and new observations</span></span>
-<span>  <span class="va">new</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span><span class="va">Year</span> <span class="op">==</span> <span class="va">new_year</span><span class="op">]</span></span>
-<span>  <span class="fu">setnames</span><span class="op">(</span><span class="va">new</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"new_mean"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">old</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span><span class="va">Year</span> <span class="op">==</span> <span class="va">old_year</span><span class="op">]</span></span>
-<span>  <span class="fu">setnames</span><span class="op">(</span><span class="va">old</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"prev_mean"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="co"># merge to create new dt and calculate percent change </span></span>
-<span>  <span class="va">pct</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">new</span>, <span class="va">old</span>, by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"plot_id"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">pct</span> <span class="op">&lt;-</span> <span class="va">pct</span><span class="op">[</span>, <span class="fu">`:=`</span> <span class="op">(</span>mean_pct_change <span class="op">=</span> <span class="op">(</span><span class="va">new_mean</span> <span class="op">-</span> <span class="va">prev_mean</span><span class="op">)</span><span class="op">/</span><span class="va">prev_mean</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">]</span></span>
-<span>  <span class="va">pct</span> <span class="op">&lt;-</span> <span class="va">pct</span><span class="op">[</span>, <span class="va">year_pct_change</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">old_year</span>, <span class="st">" - "</span>, <span class="va">new_year</span><span class="op">)</span><span class="op">]</span></span>
-<span>  </span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">pct</span><span class="op">)</span></span>
+<span>    <span class="co"># split dt to separate old observations and new</span></span>
+<span>    <span class="co"># observations</span></span>
+<span>    <span class="va">new</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span><span class="va">Year</span> <span class="op">==</span> <span class="va">new_year</span><span class="op">]</span></span>
+<span>    <span class="fu">setnames</span><span class="op">(</span><span class="va">new</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"new_mean"</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">old</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span><span class="va">Year</span> <span class="op">==</span> <span class="va">old_year</span><span class="op">]</span></span>
+<span>    <span class="fu">setnames</span><span class="op">(</span><span class="va">old</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mean"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"prev_mean"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="co"># merge to create new dt and calculate percent change</span></span>
+<span>    <span class="va">pct</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">new</span>, <span class="va">old</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"plot_id"</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">pct</span> <span class="op">&lt;-</span> <span class="va">pct</span><span class="op">[</span>, <span class="fu">`:=`</span><span class="op">(</span>mean_pct_change <span class="op">=</span> <span class="op">(</span><span class="va">new_mean</span> <span class="op">-</span> <span class="va">prev_mean</span><span class="op">)</span><span class="op">/</span><span class="va">prev_mean</span> <span class="op">*</span></span>
+<span>        <span class="fl">100</span><span class="op">)</span><span class="op">]</span></span>
+<span>    <span class="va">pct</span> <span class="op">&lt;-</span> <span class="va">pct</span><span class="op">[</span>, <span class="va">year_pct_change</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">old_year</span>, <span class="st">" - "</span>,</span>
+<span>        <span class="va">new_year</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">pct</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 
 </div>
@@ -128,5 +132,35 @@
 
 
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>

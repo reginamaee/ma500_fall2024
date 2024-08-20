@@ -7,3 +7,15 @@ r-data-types
 data-vectors
 indexing
 operators
+vector-operations
+sequences-and-repetition
+sequences
+random-sampling
+repetition
+conditionals-loops
+if-else-statement
+defining-a-function
+creating-a-for-loop
+case-study
+lists-vs-vectors
+apply-lapply-family

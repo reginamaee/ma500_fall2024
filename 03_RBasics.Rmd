@@ -155,7 +155,7 @@ temp[1]
 temp[1:4]
 ```
 
-## Operators
+### Operators
 
 Comparison:
 
@@ -180,7 +180,7 @@ Comparison:
 temp[temp > temp['Aug']]
 ```
 
-Logical Operators:
+Logical:
 
 -   `&` AND
 
@@ -194,4 +194,184 @@ Logical Operators:
 
 fall <- c("Sep", "Oct", "Nov")
 temp[temp > temp['Aug'] | names(temp) %in% fall]
+```
+
+What month gives the highest temperature?
+
+```{r}
+temp[temp == max(temp)]
+```
+
+```{r}
+# if you would just like to extract the month
+name <- names(temp)[temp==max(temp)]
+```
+
+Let's say we want to find the average temperature in the summer
+
+```{r}
+# grab only summer months from temp vector
+temp[c("Jun", "July", "Aug")]
+
+# OR 
+# define summer months 
+summer <- c("Jun", "July", "Aug")
+#temp[names(temp) %in% summer]
+summer_temps <- temp[summer]
+```
+
+The average temperature:
+
+```{r}
+avg_summer <- mean(summer_temps)
+avg_summer
+```
+
+## Vector Operations 
+
+With vectors, you can utilize element-wise basic arithmetic.
+
+For example, if we want to add 2 degrees to every temperature in the `temp` data vector, then we can define that as:
+
+```{r}
+temp <- temp + 2
+```
+
+Let's print it out to see what it looks like
+
+```{r}
+temp
+```
+
+Now, let's see what the mean looks like again
+
+```{r}
+mean(temp)
+```
+
+Now, these degrees are given in Fahrenheit, so let's say we want to convert it into Celcius.
+
+The formula for that is:
+
+$$
+C = \frac{5}{9}*(t - 32)
+$$
+
+where t is the temperature in Fahrenheit.
+
+```{r}
+temp_celcius <- (5/9)*(temp-32)
+```
+
+Print out temp celcius (notice it still kept the attributes from temp)
+
+```{r}
+temp_celcius
+```
+
+```{r}
+mean(temp_celcius)
+```
+
+## Sequences and Repetition 
+
+R has in-house functions that allow you to create a sequence of values (or repeat).
+
+We will be using `seq` and `rep`, and you can read up for help on the documentation by using ?function in R. This pulls up the documentation and example usage
+
+### Sequences
+
+Without the function, the easiest way to create a sequence with intervals of 1 is using the colon operator
+
+```{r}
+1:10
+```
+
+For more flexible sequences, let's use `seq`
+
+```{r}
+seq(from = 1, to=10, by=3)
+```
+
+Note: this will always include the `from` number, but not the `to` number depending on what you're `by` number is.
+
+Instead of specifying a `by` number, you can specify how many numbers you would like in between with `length.out` - this would be equally spaced.
+
+```{r}
+seq(from = 1, to = 10, length.out = 20)
+```
+
+For decreasing, set `` `by` `` to be a negative value and switch the `from` and `to` values.
+
+```{r}
+seq(from = 10, to = 1, by=-3)
+```
+
+```{r}
+seq(from = 10, to = 1, length.out = 12)
+```
+
+### Random Sampling
+
+The `sample()` function takes a sample from the specified elements of `x` with or without replacement.
+
+Create a random sample of 20 from 1 to 100 WITH replacement:
+
+```{r}
+sample(1:100, 20, replace = T)
+```
+
+Note, running this again won't give you the same output.
+
+```{r}
+sample(1:100, 20, replace = T)
+```
+
+We avoid this by using `set.seed(x)` where `x` is just any arbitrary number
+
+```{r}
+set.seed(415)
+sample(1:100, 20, replace = T)
+```
+
+```{r}
+# run again
+set.seed(415)
+sample(1:100, 20, replace = T)
+```
+
+### Repetition 
+
+In some cases, you may just want to repeat values. We will do this using the `rep` function.
+
+```{r}
+# repeat 1 four times
+rep(x=1, times = 4)
+```
+
+OR
+
+```{r}
+# repeat 1 to 5, 10 times
+rep(1:5, times = 10)
+```
+
+OR
+
+```{r}
+# repeat 1, 2, 5, 7, 3 times
+rep(x=c(1, 2, 5, 7), times=3)
+```
+
+OR
+
+```{r}
+# repeat 1, 2, 5, 7 each values twice
+rep(x=c(1,2,5,7), times=3, each=2)
+```
+
+```{r}
+# repeat each element in x by specified vector time
+# (1 once, 2 four times, 5, once, and 7 twice)
+rep(x=c(1, 2, 5, 7), times=c(1,4,1,2))
 ```
