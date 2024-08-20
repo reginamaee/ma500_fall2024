@@ -1,5 +1,7 @@
 # Conditionals & Loops
 
+In certain situations, you may need to control the flow and logic of your code. One approach is to make sections of the code `conditional` or use `loops` to repeat specific sections multiple times.
+
 ### If-else statement
 
 ```{r eval=FALSE, include = TRUE}
