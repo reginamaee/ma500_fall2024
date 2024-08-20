@@ -12,9 +12,11 @@ sequences-and-repetition
 sequences
 random-sampling
 repetition
-conditionals-loops
+conditionals-loops-and-functions
 if-else-statement
 defining-a-function
+recursive-function
+factorials
 creating-a-for-loop
 case-study
 lists-vs-vectors

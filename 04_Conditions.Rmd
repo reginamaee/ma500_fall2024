@@ -1,4 +1,4 @@
-# Conditionals & Loops
+# Conditionals, Loops, and Functions
 
 In certain situations, you may need to control the flow and logic of your code. One approach is to make sections of the code `conditional` or use `loops` to repeat specific sections multiple times.
 
@@ -40,6 +40,30 @@ function_name <- function(arg1, arg2, ...) {
 }
 
 ```
+
+### Recursive Function 
+
+A recursive function is a function that calls itself to solve smaller instances of the same problem. It’s particularly useful for tasks that can be broken down into simpler, repetitive sub-tasks,
+
+#### Factorials
+
+For example, if you wanted to calculate the `factorial` of a non-negative integer `n`,
+
+$$
+n! = n × (n - 1) × (n - 2) × ... × 2 × 1
+$$
+
+```{r}
+factorial_recursive <- function(n) {
+  if (n == 0) {
+    return(1)  # Base case: factorial of 0 is 1
+  } else {
+    return(n * factorial_recursive(n - 1))  # Recursive case
+  }
+}
+```
+
+Note: `R` already has a base function `factorial`.
 
 ### Creating a for loop
 
