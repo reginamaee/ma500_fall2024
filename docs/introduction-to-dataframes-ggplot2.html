@@ -163,10 +163,10 @@
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">ow</span><span class="op">$</span><span class="va">Damage</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-66-1.png" width="672"></div>
 </div>
-<div id="data-manipulation" class="section level4" number="3.1.0.3">
-<h4>
-<span class="header-section-number">3.1.0.3</span> Data Manipulation<a class="anchor" aria-label="anchor" href="#data-manipulation"><i class="fas fa-link"></i></a>
-</h4>
+<div id="data-manipulation" class="section level3" number="3.1.1">
+<h3>
+<span class="header-section-number">3.1.1</span> Data Manipulation<a class="anchor" aria-label="anchor" href="#data-manipulation"><i class="fas fa-link"></i></a>
+</h3>
 <p>Let’s say we would like to compare each player’s wins. We’ll compare wins by plotting a bar chart of wins by Date. It is most effective and straightforward to work with data when it is in <code>long</code> format rather than <code>wide</code>. (If you take a look at the<code>ow</code> dataframe, it’s raw state is in <code>wide</code>). So, let’s make that conversion! To switch from <code>long</code> to <code>wide</code>, the function is <code>pivot_wider</code>, and to go from <code>wide</code> to <code>long</code>, we use <code>pivot_longer</code>.</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ow</span> <span class="op">&lt;-</span> <span class="va">ow</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -202,13 +202,13 @@
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Player</span>, <span class="va">Date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>wins <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Win</span><span class="op">)</span>, pct_win <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Win</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="plotting-with-ggplot2" class="section level3" number="3.1.1">
+<div id="plotting-with-ggplot2" class="section level3" number="3.1.2">
 <h3>
-<span class="header-section-number">3.1.1</span> Plotting with ggplot2<a class="anchor" aria-label="anchor" href="#plotting-with-ggplot2"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.1.2</span> Plotting with ggplot2<a class="anchor" aria-label="anchor" href="#plotting-with-ggplot2"><i class="fas fa-link"></i></a>
 </h3>
-<div id="creating-a-bar-chart" class="section level4" number="3.1.1.1">
+<div id="creating-a-bar-chart" class="section level4" number="3.1.2.1">
 <h4>
-<span class="header-section-number">3.1.1.1</span> Creating a bar chart<a class="anchor" aria-label="anchor" href="#creating-a-bar-chart"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.1.2.1</span> Creating a bar chart<a class="anchor" aria-label="anchor" href="#creating-a-bar-chart"><i class="fas fa-link"></i></a>
 </h4>
 <div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">player_wins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Date</span>, y <span class="op">=</span> <span class="va">wins</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -216,9 +216,9 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">bar</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-70-1.png" width="672"></div>
 </div>
-<div id="creating-a-line-graph" class="section level4" number="3.1.1.2">
+<div id="creating-a-line-graph" class="section level4" number="3.1.2.2">
 <h4>
-<span class="header-section-number">3.1.1.2</span> Creating a line graph<a class="anchor" aria-label="anchor" href="#creating-a-line-graph"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.1.2.2</span> Creating a line graph<a class="anchor" aria-label="anchor" href="#creating-a-line-graph"><i class="fas fa-link"></i></a>
 </h4>
 <div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">line</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">player_wins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Date</span>, y <span class="op">=</span> <span class="va">pct_win</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -266,7 +266,10 @@
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#introduction-to-dataframes-ggplot2"><span class="header-section-number">3</span> Introduction to Dataframes &amp; ggplot2</a></li>
 <li>
-<a class="nav-link" href="#case-study-overwatch-2-player-statistics"><span class="header-section-number">3.1</span> Case Study: Overwatch 2 Player Statistics</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#plotting-with-ggplot2"><span class="header-section-number">3.1.1</span> Plotting with ggplot2</a></li></ul>
+<a class="nav-link" href="#case-study-overwatch-2-player-statistics"><span class="header-section-number">3.1</span> Case Study: Overwatch 2 Player Statistics</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#data-manipulation"><span class="header-section-number">3.1.1</span> Data Manipulation</a></li>
+<li><a class="nav-link" href="#plotting-with-ggplot2"><span class="header-section-number">3.1.2</span> Plotting with ggplot2</a></li>
+</ul>
 </li>
 </ul>
 

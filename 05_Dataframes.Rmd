@@ -76,7 +76,7 @@ We can also create a boxplot to easily determine what our potential outliers loo
 boxplot(ow$Damage)
 ```
 
-#### Data Manipulation 
+### Data Manipulation 
 
 Let's say we would like to compare each player's wins. We'll compare wins by plotting a bar chart of wins by Date. It is most effective and straightforward to work with data when it is in `long` format rather than `wide`. (If you take a look at the`ow` dataframe, it's raw state is in `wide`). So, let's make that conversion! To switch from `long` to `wide`, the function is `pivot_wider`, and to go from `wide` to `long`, we use `pivot_longer`.
 
