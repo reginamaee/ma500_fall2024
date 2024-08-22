@@ -115,6 +115,7 @@ player_wins <- ow %>% group_by(Player, Date) %>% summarise(wins = sum(Win),
 ```{r}
 bar <- ggplot(data = player_wins, aes(x=Date, y=wins))+
   geom_bar(position="dodge", stat="identity", aes(fill = Player))
+print(bar)
 ```
 
 #### Creating a line graph
@@ -123,12 +124,14 @@ bar <- ggplot(data = player_wins, aes(x=Date, y=wins))+
 line <- ggplot(data = player_wins, aes(x=Date, y=pct_win))+
   geom_point()+
   geom_line(aes(color = Player))
+print(line)
 ```
 
 Now, let's do the same to determine the number of eliminations each player has based on their role. To achieve this, we'll aggregate the wins by grouping the data by both Player and Role.
 
 ```{r}
 role <- ow %>% group_by(Player, Role, Value_Type) %>% summarise(val = sum(Value))
+head(role)
 
 ```
 
@@ -143,5 +146,6 @@ Let's create a barchart for this new aggregation.
 chart <- ggplot(data = role, aes(x=Role, y=val))+
   geom_bar(position="dodge", stat="identity", aes(fill=Player))+facet_wrap(~Value_Type, 
                                                                            scales = "free_y")
+print(chart)
 
 ```
