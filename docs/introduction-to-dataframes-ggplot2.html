@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 3 Introduction to Dataframes &amp; ggplot2 | MA-500: Introduction to R</title>
+<meta name="author" content="Regina-Mae Dominguez - Fall 2024">
+<meta name="generator" content="bookdown 0.40 with bs4_book()">
+<meta property="og:title" content="Chapter 3 Introduction to Dataframes &amp; ggplot2 | MA-500: Introduction to R">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/images/cover.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 3 Introduction to Dataframes &amp; ggplot2 | MA-500: Introduction to R">
+<meta name="twitter:image" content="/images/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<meta name="description" content="3.0.0.1 What is a data.frame? A data.frame in R is a data structure used for storing data in a tabular format. It is very similar to a spreadsheet, excel sheet, or SQL table within R. You can also...">
+<meta property="og:description" content="3.0.0.1 What is a data.frame? A data.frame in R is a data structure used for storing data in a tabular format. It is very similar to a spreadsheet, excel sheet, or SQL table within R. You can also...">
+<meta name="twitter:description" content="3.0.0.1 What is a data.frame? A data.frame in R is a data structure used for storing data in a tabular format. It is very similar to a spreadsheet, excel sheet, or SQL table within R. You can also...">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <img id="cover" class="d-none d-lg-block" src="images/cover-small.png"><br><h1>
+        <a href="index.html" title="">MA-500: Introduction to R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">MA-500: Introduction to R</a></li>
+<li><a class="" href="rrstudio-installation-guide.html">R/RStudio Installation Guide</a></li>
+<li><a class="" href="r-scriptscode.html">R-Scripts/Code</a></li>
+<li><a class="" href="r-basics-and-fundamentals.html"><span class="header-section-number">1</span> R Basics and Fundamentals</a></li>
+<li><a class="" href="conditionals-loops-and-functions.html"><span class="header-section-number">2</span> Conditionals, Loops, and Functions</a></li>
+<li><a class="active" href="introduction-to-dataframes-ggplot2.html"><span class="header-section-number">3</span> Introduction to Dataframes &amp; ggplot2</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="introduction-to-dataframes-ggplot2" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Introduction to Dataframes &amp; ggplot2<a class="anchor" aria-label="anchor" href="#introduction-to-dataframes-ggplot2"><i class="fas fa-link"></i></a>
+</h1>
+<div id="what-is-a-data.frame" class="section level4" number="3.0.0.1">
+<h4>
+<span class="header-section-number">3.0.0.1</span> What is a <code>data.frame</code>?<a class="anchor" aria-label="anchor" href="#what-is-a-data.frame"><i class="fas fa-link"></i></a>
+</h4>
+<p>A <code>data.frame</code> in R is a data structure used for storing data in a tabular format. It is very similar to a spreadsheet, excel sheet, or SQL table within R. You can also think of it as a collection of multiple data vectors. It’s two dimensional, meaning it has rows and columns where each row represents an observation and each column represents a variable, attribute, or feature.</p>
+</div>
+<div id="what-is-tidyverse" class="section level4" number="3.0.0.2">
+<h4>
+<span class="header-section-number">3.0.0.2</span> What is <code>tidyverse?</code><a class="anchor" aria-label="anchor" href="#what-is-tidyverse"><i class="fas fa-link"></i></a>
+</h4>
+<p>I will introduce the concept of wrangling, cleaning, and transforming dataframes with the <code>tidyverse</code> package. <code>Tidyverse</code> is a collection of packages to help with cleaning, transformation, visualization, and analysis. (A few packages in <code>Tidyverse</code> include <code>dplyr</code>, <code>ggplot2</code>, <code>tidyr</code>, and <code>readr</code>).</p>
+</div>
+<div id="what-is-ggplot2" class="section level4" number="3.0.0.3">
+<h4>
+<span class="header-section-number">3.0.0.3</span> What is <code>ggplot2?</code><a class="anchor" aria-label="anchor" href="#what-is-ggplot2"><i class="fas fa-link"></i></a>
+</h4>
+<p>This is <em>the</em> R package for data visualization. This suite provides an easy way to visualize your data with: bar charts, scatter plots, time trends, etc. Writing ggplot code comprises of these components: the data being visualized, the aesthetics (how you would like the variables to be mapped), and geometric objects (the shapes that represent the data).</p>
+</div>
+<div id="case-study-overwatch-2-player-statistics" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Case Study: Overwatch 2 Player Statistics<a class="anchor" aria-label="anchor" href="#case-study-overwatch-2-player-statistics"><i class="fas fa-link"></i></a>
+</h2>
+<div id="load-inspect-data" class="section level4" number="3.1.0.1">
+<h4>
+<span class="header-section-number">3.1.0.1</span> Load &amp; Inspect Data<a class="anchor" aria-label="anchor" href="#load-inspect-data"><i class="fas fa-link"></i></a>
+</h4>
+<p>Let’s call in our dataset using <code>read_csv</code>.</p>
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="co"># i am defining a string variable with the filepath of the</span></span>
+<span><span class="co"># directory that hosts the csv file we are using</span></span>
+<span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="st">"/Users/rdominguez/Documents/MA500/Lessons/datasets/"</span></span>
+<span></span>
+<span><span class="co"># i use paste0() to concatenate these strings together to</span></span>
+<span><span class="co"># provide the full filepath</span></span>
+<span><span class="va">ow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"overwatch_stats.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Once you have your data loaded into R, the best first steps to take is to inspect your data. This can look like a lot of things from plotting all your variables to visualize its relationship to other variables in the dataset. But, the main focus is to get familiar with the data and summarize its main characteristics.</p>
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># using the head() function will bring up the first 6 rows</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ow</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 × 12
+##   Player  Date     Win Map   Mode  Role  Elimination Assists Deaths Damage Heals
+##   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 player1 8/15/…     1 Sura… Assa… Dama…          28       0      5  11480  2484
+## 2 player1 8/15/…     1 King… Atta… Dama…          17       3      4   6713     0
+## 3 player1 8/15/…     0 New … Robot Tank           27       4      7   5776   122
+## 4 player1 8/15/…     0 Midt… Atta… Dama…           8       3      6   7138     8
+## 5 player1 8/15/…     1 Ilios Atta… Supp…          10       3      4   2163  4849
+## 6 player1 8/15/…     1 Hava… Esco… Tank            7       2      9   4416  2498
+## # ℹ 1 more variable: Mitigation &lt;dbl&gt;</code></pre>
+<p>We can also use the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function on the <code>ow</code> data.frame to provide us a summary of each column.</p>
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ow</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##     Player              Date                Win             Map           
+##  Length:87          Length:87          Min.   :0.0000   Length:87         
+##  Class :character   Class :character   1st Qu.:0.0000   Class :character  
+##  Mode  :character   Mode  :character   Median :1.0000   Mode  :character  
+##                                        Mean   :0.6552                     
+##                                        3rd Qu.:1.0000                     
+##                                        Max.   :1.0000                     
+##      Mode               Role            Elimination       Assists      
+##  Length:87          Length:87          Min.   : 4.00   Min.   : 0.000  
+##  Class :character   Class :character   1st Qu.:10.50   1st Qu.: 2.000  
+##  Mode  :character   Mode  :character   Median :15.00   Median : 6.000  
+##                                        Mean   :16.68   Mean   : 8.747  
+##                                        3rd Qu.:21.00   3rd Qu.:12.500  
+##                                        Max.   :58.00   Max.   :51.000  
+##      Deaths           Damage          Heals         Mitigation  
+##  Min.   : 0.000   Min.   :  773   Min.   :    0   Min.   :   0  
+##  1st Qu.: 4.000   1st Qu.: 2974   1st Qu.:  100   1st Qu.:   0  
+##  Median : 6.000   Median : 4336   Median : 1322   Median :   0  
+##  Mean   : 5.989   Mean   : 5166   Mean   : 3214   Mean   :1156  
+##  3rd Qu.: 8.000   3rd Qu.: 6994   3rd Qu.: 5898   3rd Qu.:1798  
+##  Max.   :12.000   Max.   :14824   Max.   :18620   Max.   :7253</code></pre>
+<p><code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> is most helpful when you want to see the range of values for our numeric variables. When we have categorical or qualitative variables, I like to use the <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code> function to show me the values these columns provide.</p>
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># this will output all unique values in the Player column</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">ow</span><span class="op">$</span><span class="va">Player</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "player1" "player2"</code></pre>
+<p>Our <code>ow</code> data.frame includes a <code>Date</code> column, but in our <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> output, it is categorized as a <code>character</code>. Let’s re-assign it’s class by using the <code>as.Date</code> function.</p>
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># because the values of Date appear as MM/DD/YY, we use</span></span>
+<span><span class="co"># %m/%d/%y to follow the same format %y represents year</span></span>
+<span><span class="co"># using 2 digits, where %Y represents year using 4 digits</span></span>
+<span><span class="va">ow</span><span class="op">$</span><span class="va">Date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">ow</span><span class="op">$</span><span class="va">Date</span>, format <span class="op">=</span> <span class="st">"%m/%d/%y"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="visualize-data" class="section level4" number="3.1.0.2">
+<h4>
+<span class="header-section-number">3.1.0.2</span> Visualize Data<a class="anchor" aria-label="anchor" href="#visualize-data"><i class="fas fa-link"></i></a>
+</h4>
+<p>We have a few numeric columns, <code>elimintations</code>, <code>assists</code>, <code>deaths</code>, <code>damage</code>, <code>heals</code>, and <code>mitigation</code>.</p>
+<p>Let’s plot a histogram for the <code>damage</code> column to determine what the distribution of values appear to be.</p>
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># hist is a base R function</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">ow</span><span class="op">$</span><span class="va">Damage</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-65-1.png" width="672"></div>
+<p>We can also create a boxplot to easily determine what our potential outliers look like.</p>
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># boxplot is also a base R function</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">ow</span><span class="op">$</span><span class="va">Damage</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-66-1.png" width="672"></div>
+</div>
+<div id="data-manipulation" class="section level4" number="3.1.0.3">
+<h4>
+<span class="header-section-number">3.1.0.3</span> Data Manipulation<a class="anchor" aria-label="anchor" href="#data-manipulation"><i class="fas fa-link"></i></a>
+</h4>
+<p>Let’s say we would like to compare each player’s wins. We’ll compare wins by plotting a bar chart of wins by Date. It is most effective and straightforward to work with data when it is in <code>long</code> format rather than <code>wide</code>. (If you take a look at the<code>ow</code> dataframe, it’s raw state is in <code>wide</code>). So, let’s make that conversion! To switch from <code>long</code> to <code>wide</code>, the function is <code>pivot_wider</code>, and to go from <code>wide</code> to <code>long</code>, we use <code>pivot_longer</code>.</p>
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ow</span> <span class="op">&lt;-</span> <span class="va">ow</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Elimination"</span>, <span class="st">"Assists"</span>, <span class="st">"Deaths"</span>,</span>
+<span>        <span class="st">"Damage"</span>, <span class="st">"Heals"</span>, <span class="st">"Mitigation"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"Value_Type"</span>,</span>
+<span>        values_to <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span></span></code></pre></div>
+<ul>
+<li><p><code>cols</code> indicates which columns you want to pivot into the long format</p></li>
+<li><p><code>names_to</code> indicates the name of the column you are saving the previous columns</p></li>
+<li><p><code>values_to</code> indicates the name of the column you are saving the values corresponding to the columns in <code>cols</code></p></li>
+</ul>
+<p>Use the <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> function to see what the first 6 rows look like now!</p>
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># notice that we now have a column named Value_Type and the</span></span>
+<span><span class="co"># values in that column correspond to our previous columns!</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ow</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 × 8
+##   Player  Date         Win Map      Mode    Role   Value_Type  Value
+##   &lt;chr&gt;   &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;
+## 1 player1 2024-08-15     1 Suravasa Assault Damage Elimination    28
+## 2 player1 2024-08-15     1 Suravasa Assault Damage Assists         0
+## 3 player1 2024-08-15     1 Suravasa Assault Damage Deaths          5
+## 4 player1 2024-08-15     1 Suravasa Assault Damage Damage      11480
+## 5 player1 2024-08-15     1 Suravasa Assault Damage Heals        2484
+## 6 player1 2024-08-15     1 Suravasa Assault Damage Mitigation      0</code></pre>
+<p>Next, we want to calculate each player’s total number of wins in this dataset, summarized by date. The “Win” column is binary, with 0 indicating a loss and 1 indicating a win. We can simply sum this column for each player to get the total wins.</p>
+<p>With <code>dplyr</code>, he pipe operator, <code>%&gt;%</code>, helps with the readability on the action you are taking with the data.frame. It pipes the value on its left and in the argument that it follows.</p>
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># we want to group by Player and Date n() is an in house</span></span>
+<span><span class="co"># function for tidyverse and simply returns the total</span></span>
+<span><span class="co"># within Player and Date</span></span>
+<span><span class="va">player_wins</span> <span class="op">&lt;-</span> <span class="va">ow</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Player</span>, <span class="va">Date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>wins <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Win</span><span class="op">)</span>, pct_win <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Win</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="plotting-with-ggplot2" class="section level3" number="3.1.1">
+<h3>
+<span class="header-section-number">3.1.1</span> Plotting with ggplot2<a class="anchor" aria-label="anchor" href="#plotting-with-ggplot2"><i class="fas fa-link"></i></a>
+</h3>
+<div id="creating-a-bar-chart" class="section level4" number="3.1.1.1">
+<h4>
+<span class="header-section-number">3.1.1.1</span> Creating a bar chart<a class="anchor" aria-label="anchor" href="#creating-a-bar-chart"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">player_wins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Date</span>, y <span class="op">=</span> <span class="va">wins</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span>, stat <span class="op">=</span> <span class="st">"identity"</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Player</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="creating-a-line-graph" class="section level4" number="3.1.1.2">
+<h4>
+<span class="header-section-number">3.1.1.2</span> Creating a line graph<a class="anchor" aria-label="anchor" href="#creating-a-line-graph"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">line</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">player_wins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Date</span>, y <span class="op">=</span> <span class="va">pct_win</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">Player</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Now, let’s do the same to determine the number of eliminations each player has based on their role. To achieve this, we’ll aggregate the wins by grouping the data by both Player and Role.</p>
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">role</span> <span class="op">&lt;-</span> <span class="va">ow</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Player</span>, <span class="va">Role</span>, <span class="va">Value_Type</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Value</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Let’s create a barchart for this new aggregation.</p>
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># we set facets to create multiple barcharts by Value Type</span></span>
+<span><span class="co"># we also set the scales of the y-axis to be free, meaning</span></span>
+<span><span class="co"># each barchart will have its own y-axis. we do this</span></span>
+<span><span class="co"># because the damage and heal values are way larger than</span></span>
+<span><span class="co"># the values for deaths, eliminations, assists, etc.</span></span>
+<span><span class="va">chart</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">role</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Role</span>, y <span class="op">=</span> <span class="va">val</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span>,</span>
+<span>    stat <span class="op">=</span> <span class="st">"identity"</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Player</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Value_Type</span>,</span>
+<span>    scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="conditionals-loops-and-functions.html"><span class="header-section-number">2</span> Conditionals, Loops, and Functions</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#introduction-to-dataframes-ggplot2"><span class="header-section-number">3</span> Introduction to Dataframes &amp; ggplot2</a></li>
+<li>
+<a class="nav-link" href="#case-study-overwatch-2-player-statistics"><span class="header-section-number">3.1</span> Case Study: Overwatch 2 Player Statistics</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#plotting-with-ggplot2"><span class="header-section-number">3.1.1</span> Plotting with ggplot2</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

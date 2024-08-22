@@ -1,0 +1,147 @@
+# Introduction to Dataframes & ggplot2
+
+#### What is a `data.frame`?
+
+A `data.frame` in R is a data structure used for storing data in a tabular format. It is very similar to a spreadsheet, excel sheet, or SQL table within R. You can also think of it as a collection of multiple data vectors. It's two dimensional, meaning it has rows and columns where each row represents an observation and each column represents a variable, attribute, or feature.
+
+#### What is `tidyverse?`
+
+I will introduce the concept of wrangling, cleaning, and transforming dataframes with the `tidyverse` package. `Tidyverse` is a collection of packages to help with cleaning, transformation, visualization, and analysis. (A few packages in `Tidyverse` include `dplyr`, `ggplot2`, `tidyr`, and `readr`).
+
+#### What is `ggplot2?`
+
+This is *the* R package for data visualization. This suite provides an easy way to visualize your data with: bar charts, scatter plots, time trends, etc. Writing ggplot code comprises of these components: the data being visualized, the aesthetics (how you would like the variables to be mapped), and geometric objects (the shapes that represent the data).
+
+## Case Study: Overwatch 2 Player Statistics
+
+#### Load & Inspect Data
+
+Let's call in our dataset using `read_csv`.
+
+```{r}
+library(tidyverse)
+# i am defining a string variable with the filepath of the directory that hosts the csv file we are using
+dir <- "/Users/rdominguez/Documents/MA500/Lessons/datasets/"
+
+# i use paste0() to concatenate these strings together to provide the full filepath
+ow <- read_csv(paste0(dir, "overwatch_stats.csv"))
+
+```
+
+Once you have your data loaded into R, the best first steps to take is to inspect your data. This can look like a lot of things from plotting all your variables to visualize its relationship to other variables in the dataset. But, the main focus is to get familiar with the data and summarize its main characteristics.
+
+```{r}
+# using the head() function will bring up the first 6 rows
+head(ow)
+```
+
+We can also use the `summary()` function on the `ow` data.frame to provide us a summary of each column.
+
+```{r}
+summary(ow)
+```
+
+`summary()` is most helpful when you want to see the range of values for our numeric variables. When we have categorical or qualitative variables, I like to use the `unique()` function to show me the values these columns provide.
+
+```{r}
+# this will output all unique values in the Player column
+unique(ow$Player)
+```
+
+Our `ow` data.frame includes a `Date` column, but in our `summary()` output, it is categorized as a `character`. Let's re-assign it's class by using the `as.Date` function.
+
+```{r}
+# because the values of Date appear as MM/DD/YY, we use
+# %m/%d/%y to follow the same format
+# %y represents year using 2 digits, where %Y represents 
+# year using 4 digits
+ow$Date <- as.Date(ow$Date, format="%m/%d/%y")
+```
+
+#### Visualize Data
+
+We have a few numeric columns, `elimintations`, `assists`, `deaths`, `damage`, `heals`, and `mitigation`.
+
+Let's plot a histogram for the `damage` column to determine what the distribution of values appear to be.
+
+```{r}
+# hist is a base R function
+hist(ow$Damage) 
+```
+
+We can also create a boxplot to easily determine what our potential outliers look like.
+
+```{r}
+# boxplot is also a base R function
+boxplot(ow$Damage)
+```
+
+#### Data Manipulation 
+
+Let's say we would like to compare each player's wins. We'll compare wins by plotting a bar chart of wins by Date. It is most effective and straightforward to work with data when it is in `long` format rather than `wide`. (If you take a look at the`ow` dataframe, it's raw state is in `wide`). So, let's make that conversion! To switch from `long` to `wide`, the function is `pivot_wider`, and to go from `wide` to `long`, we use `pivot_longer`.
+
+```{r}
+ow <- ow %>% pivot_longer(cols = c("Elimination", "Assists", "Deaths", "Damage", "Heals", "Mitigation"), names_to = "Value_Type", values_to = "Value" )
+```
+
+-   `cols` indicates which columns you want to pivot into the long format
+
+-   `names_to` indicates the name of the column you are saving the previous columns
+
+-   `values_to` indicates the name of the column you are saving the values corresponding to the columns in `cols`
+
+Use the `head()` function to see what the first 6 rows look like now!
+
+```{r}
+# notice that we now have a column named Value_Type and the values in that column correspond to our previous columns!
+head(ow)
+```
+
+Next, we want to calculate each player's total number of wins in this dataset, summarized by date. The "Win" column is binary, with 0 indicating a loss and 1 indicating a win. We can simply sum this column for each player to get the total wins.
+
+With `dplyr`, he pipe operator, `%>%`, helps with the readability on the action you are taking with the data.frame. It pipes the value on its left and in the argument that it follows.
+
+```{r}
+# we want to group by Player and Date 
+# n() is an in house function for tidyverse and simply returns the total within Player and Date
+player_wins <- ow %>% group_by(Player, Date) %>% summarise(wins = sum(Win), 
+                                                           pct_win = sum(Win)/n()*100)
+```
+
+### Plotting with ggplot2
+
+#### Creating a bar chart
+
+```{r}
+bar <- ggplot(data = player_wins, aes(x=Date, y=wins))+
+  geom_bar(position="dodge", stat="identity", aes(fill = Player))
+```
+
+#### Creating a line graph
+
+```{r}
+line <- ggplot(data = player_wins, aes(x=Date, y=pct_win))+
+  geom_point()+
+  geom_line(aes(color = Player))
+```
+
+Now, let's do the same to determine the number of eliminations each player has based on their role. To achieve this, we'll aggregate the wins by grouping the data by both Player and Role.
+
+```{r}
+role <- ow %>% group_by(Player, Role, Value_Type) %>% summarise(val = sum(Value))
+
+```
+
+Let's create a barchart for this new aggregation.
+
+```{r}
+# we set facets to create multiple barcharts by Value Type
+# we also set the scales of the y-axis to be free, meaning
+# each barchart will have its own y-axis. we do this
+# because the damage and heal values are way larger than 
+# the values for deaths, eliminations, assists, etc.
+chart <- ggplot(data = role, aes(x=Role, y=val))+
+  geom_bar(position="dodge", stat="identity", aes(fill=Player))+facet_wrap(~Value_Type, 
+                                                                           scales = "free_y")
+
+```

@@ -21,3 +21,14 @@ creating-a-for-loop
 case-study
 lists-vs-vectors
 apply-lapply-family
+introduction-to-dataframes-ggplot2
+what-is-a-data.frame
+what-is-tidyverse
+what-is-ggplot2
+case-study-overwatch-2-player-statistics
+load-inspect-data
+visualize-data
+data-manipulation
+plotting-with-ggplot2
+creating-a-bar-chart
+creating-a-line-graph
