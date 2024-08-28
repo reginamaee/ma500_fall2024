@@ -32,3 +32,15 @@ data-manipulation
 plotting-with-ggplot2
 creating-a-bar-chart
 creating-a-line-graph
+merging
+data-visualizations
+types-of-plots
+scatter-plot
+line-plot
+bar-plot
+histogram
+boxplot
+density-plot
+violin-plot
+faceted-plots
+themes

@@ -50,6 +50,7 @@
 <li><a class="" href="r-basics-and-fundamentals.html"><span class="header-section-number">1</span> R Basics and Fundamentals</a></li>
 <li><a class="" href="conditionals-loops-and-functions.html"><span class="header-section-number">2</span> Conditionals, Loops, and Functions</a></li>
 <li><a class="active" href="introduction-to-dataframes-ggplot2.html"><span class="header-section-number">3</span> Introduction to Dataframes &amp; ggplot2</a></li>
+<li><a class="" href="data-visualizations.html"><span class="header-section-number">4</span> Data Visualizations</a></li>
 </ul>
 
         <div class="book-extra">
@@ -253,14 +254,125 @@
 <span>    scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">chart</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-73-1.png" width="672"></div>
+<p>I want to reorder the x-axis of this chart so that it displays “Tank,” “Damage,” and then “Support.” Additionally, I would like to reorder the facets in the following order: “Eliminations,” “Assists,” “Deaths,” “Damage,” “Heals,” and “Mitigation.” We can achieve this by setting the relevant columns as factors and defining the desired levels for each.</p>
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># we set the column role to be a factor and define the</span></span>
+<span><span class="co"># ordered values with the level argument, we also do the</span></span>
+<span><span class="co"># same for the column value type in order to get the facets</span></span>
+<span><span class="co"># in our barchart above in the order we would like</span></span>
+<span><span class="va">role</span><span class="op">$</span><span class="va">Role</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">role</span><span class="op">$</span><span class="va">Role</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Tank"</span>, <span class="st">"Support"</span>,</span>
+<span>    <span class="st">"Damage"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">role</span><span class="op">$</span><span class="va">Value_Type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">role</span><span class="op">$</span><span class="va">Value_Type</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Elimination"</span>,</span>
+<span>    <span class="st">"Assists"</span>, <span class="st">"Deaths"</span>, <span class="st">"Damage"</span>, <span class="st">"Heals"</span>, <span class="st">"Mitigation"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Plot the chart again for it to work</p>
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot chart again</span></span>
+<span><span class="va">chart</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">role</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Role</span>, y <span class="op">=</span> <span class="va">val</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span>,</span>
+<span>    stat <span class="op">=</span> <span class="st">"identity"</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Player</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Value_Type</span>,</span>
+<span>    scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Role"</span>, y <span class="op">=</span> <span class="st">"Number"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">chart</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-75-1.png" width="672"></div>
+<p>Save the plot with <code>ggsave</code></p>
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># saving chart if you don't specify a file path, it will</span></span>
+<span><span class="co"># save it working directory</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"/Users/rdominguez/Documents/MA500/chart1.png"</span>,</span>
+<span>    plot <span class="op">=</span> <span class="va">chart</span>, dpi <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="merging" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Merging<a class="anchor" aria-label="anchor" href="#merging"><i class="fas fa-link"></i></a>
+</h2>
+<p>Merging data frames is the process of combining two or more data frames based on common columns or row indices. This is a common operation in data analysis, where you often need to bring together information from different sources into a single data set.</p>
+<p>In the Overwatch dataset, there’s an accompanying dataset that lists the heroes played in each game. We know that each row in the original Overwatch dataset we’ve been working with corresponds to a single game. Because of the game’s mechanics, players are allowed to switch heroes during a match. As a result, in the heroes dataset, you’ll see that a player may have played multiple heroes within the same game.</p>
+<p>Let’s read in this accompanying dataset.</p>
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hero</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"overwatch_heros.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">hero</span><span class="op">$</span><span class="va">Date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">hero</span><span class="op">$</span><span class="va">Date</span>, format <span class="op">=</span> <span class="st">"%m/%d/%y"</span><span class="op">)</span></span></code></pre></div>
+<p>As you can see, the hero data frame contains more observations than the Overwatch dataset, which has 87 entries.</p>
+<p>When you use the <code>left_join</code> function to merge the <code>ow</code> data frame with the <code>hero</code> data frame, it will match all key values from the <code>hero</code> data to the <code>ow</code> data. However, the first time you run this, you’ll encounter a “many-to-many relationship” warning. This means that the join will occur, but it will generate all possible combinations of our key columns—Player, Date, Win, Map, Mode, and Role—with the various corresponding heroes.</p>
+<p>To simplify things, we’ll only join the rows associated with the heroes that were played the most during each game.</p>
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># we will first work with filtering the hero data.frame</span></span>
+<span><span class="co"># this code groups the hero data.frame by our key (unique</span></span>
+<span><span class="co"># idenitifying columns) and takes the higher value from the</span></span>
+<span><span class="co"># Percent Played column</span></span>
+<span></span>
+<span><span class="va">hero_most_played</span> <span class="op">&lt;-</span> <span class="va">hero</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Player</span>, <span class="va">Date</span>, <span class="va">Win</span>, <span class="va">Map</span>, <span class="va">Mode</span>, <span class="va">Role</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">`Percent Played`</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">`Percent Played`</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># left join</span></span>
+<span><span class="va">ow_with_hero</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">ow</span>, <span class="va">hero_most_played</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Player"</span>,</span>
+<span>    <span class="st">"Date"</span>, <span class="st">"Win"</span>, <span class="st">"Map"</span>, <span class="st">"Mode"</span>, <span class="st">"Role"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning in left_join(ow, hero_most_played, by = c("Player", "Date", "Win", : Detected an unexpected many-to-many relationship between `x` and `y`.
+## ℹ Row 139 of `x` matches multiple rows in `y`.
+## ℹ Row 1 of `y` matches multiple rows in `x`.
+## ℹ If a many-to-many relationship is expected, set `relationship = "many-to-many"` to
+##   silence this warning.</code></pre>
+<p>Another warning, a “many-to-many relationship” warning, will appear due to duplicates in the grouped combinations of our key indicators: Player, Date, Win, Map, Mode, and Role. Typically, this issue would be avoided by assigning a unique identifier to each game, but this dataset lacks such an identifier. Essentially, a player can participate in multiple games on the same day, and even play on the same map with the same role and mode. To proceed with our analysis, we’ll need to identify these duplicate entries and remove them from the dataset.</p>
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># we will create a new data.frame called duplicate to count</span></span>
+<span><span class="co"># the number of instances the grouped key columns appear</span></span>
+<span><span class="va">duplicate</span> <span class="op">&lt;-</span> <span class="va">ow_with_hero</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">Player</span>, <span class="va">Date</span>, <span class="va">Win</span>, <span class="va">Map</span>, <span class="va">Mode</span>, <span class="va">Role</span>, <span class="va">Value_Type</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># now we will use an anti-join to remove these duplicate</span></span>
+<span><span class="co"># keys from the overwatch dataset</span></span>
+<span><span class="va">ow_with_hero</span> <span class="op">&lt;-</span> <span class="va">ow_with_hero</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">duplicate</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Player"</span>, <span class="st">"Date"</span>, <span class="st">"Win"</span>, <span class="st">"Map"</span>,</span>
+<span>        <span class="st">"Mode"</span>, <span class="st">"Role"</span>, <span class="st">"Value_Type"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>ow_with_hero</code> data frame should now have one row for each game, with only one hero per game.</p>
+<p>Suppose we want to analyze Player 2’s statistics (such as the number of eliminations, assists, heals, damage, deaths, and mitigation) by hero. To do this, we’ll need to filter the <code>ow_with_hero</code> data frame to include only Player 2’s records, and then aggregate or sum the <code>Value</code> column to get the total for each hero, regardless of the date.</p>
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">player2</span> <span class="op">&lt;-</span> <span class="va">ow_with_hero</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Player</span> <span class="op">==</span> <span class="st">"player2"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Player</span>, <span class="va">Role</span>, <span class="va">Hero</span>, <span class="va">Value_Type</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>sum_val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Value</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Continue to create a barchart</p>
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">player2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Role</span>, y <span class="op">=</span> <span class="va">sum_val</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span>,</span>
+<span>    stat <span class="op">=</span> <span class="st">"identity"</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Value_Type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Hero</span>,</span>
+<span>    scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Player 2 Statistics by Hero"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Role"</span>, y <span class="op">=</span> <span class="st">"Number"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Now, let’s output a <code>.csv</code> file that contains player statistics (for both player) by hero. For publication or easy reading purposes, it is best to show long datasets and format it to wide.</p>
+<p>First, we need to summarise the hero stats again!</p>
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># this is similar to what we did to get player2 stats above</span></span>
+<span><span class="co"># but instead we group by hero, if we filter the output of</span></span>
+<span><span class="co"># this to just player 2, we should get the same</span></span>
+<span><span class="co"># observations as the player2 data.frame</span></span>
+<span><span class="va">hero_stats</span> <span class="op">&lt;-</span> <span class="va">ow_with_hero</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Player</span>, <span class="va">Role</span>, <span class="va">Hero</span>, <span class="va">Value_Type</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>sum_val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Value</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Pivot from long to wide</p>
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hero_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span><span class="va">hero_stats</span>, id_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Player"</span>, <span class="st">"Role"</span>,</span>
+<span>    <span class="st">"Hero"</span><span class="op">)</span>, names_from <span class="op">=</span> <span class="st">"Value_Type"</span>, values_from <span class="op">=</span> <span class="st">"sum_val"</span><span class="op">)</span></span></code></pre></div>
+<p>Here I am defining the following parameters:</p>
+<ul>
+<li>
+<code>id_cols</code>: The key columns that should remain unchanged during pivoting, which are Player, Role, and Hero.</li>
+</ul>
+<!-- --><ul>
+<li><p><code>names_from</code>: Specifies the column that contains the entries we want to transform into column headers when converting the dataset to a wide format.</p></li>
+<li><p><code>values_from</code>: Specifies the column from which we want to extract the cell values for the newly created columns.</p></li>
+</ul>
+<p>To save this to a <code>.csv</code> file, we will use the <code>write_csv</code> function.</p>
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># first argument is the data.frame you are saving second</span></span>
+<span><span class="co"># argument is the filepath we would like to save it to</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">hero_stats</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"ow_hero_stats.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 
-</div>
-</div>
 </div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="conditionals-loops-and-functions.html"><span class="header-section-number">2</span> Conditionals, Loops, and Functions</a></div>
-<div class="empty"></div>
+<div class="next"><a href="data-visualizations.html"><span class="header-section-number">4</span> Data Visualizations</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -271,6 +383,7 @@
 <li><a class="nav-link" href="#plotting-with-ggplot2"><span class="header-section-number">3.1.2</span> Plotting with ggplot2</a></li>
 </ul>
 </li>
+<li><a class="nav-link" href="#merging"><span class="header-section-number">3.2</span> Merging</a></li>
 </ul>
 
       <div class="book-extra">

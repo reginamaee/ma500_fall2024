@@ -1,0 +1,155 @@
+# Data Visualizations
+
+Beyond the bar charts and line graphs discussed in the previous section, ggplot2 offers a variety of other visualizations that you can create. We'll be using the `mtcars` dataset, which is readily available in your R environment, to explore these options.
+
+```{r}
+data(mtcars)
+head(mtcars)
+```
+
+## Types of Plots
+
+### Scatter Plot
+
+-   Shows relationship between two continuous variables
+
+```{r}
+scatter <- ggplot(data = mtcars, 
+                  aes(x = wt, y = mpg))+
+  geom_point()+
+  labs(x = "Weight",
+       y = "Miles per Gallon")
+print(scatter)
+```
+
+### Line Plot
+
+-   Displays trends over time or ordered data
+
+```{r}
+line <- ggplot(mtcars, aes(x = hp, y = mpg)) +
+  geom_line() +
+  labs(x = "Horsepower",
+       y = "Miles Per Gallon")
+print(line)
+
+# if you want to plot the trend of the different
+# values in a categorical variable, you can 
+# set it as a color 
+line <- ggplot(mtcars, aes(x = hp, y = mpg)) +
+  geom_line(aes(color = factor(gear))) +
+  labs(x = "Horsepower",
+       y = "Miles Per Gallon", 
+       color = "Number of Gear")
+print(line)
+```
+
+### Bar Plot
+
+-   Displays counts or summary statistics of categorical data
+
+```{r}
+bar <- ggplot(mtcars, aes(x = factor(cyl))) +
+  geom_bar(fill = "steelblue") +
+  labs(x = "Number of Cylinders",
+       y = "Count")
+print(bar)
+```
+
+### Histogram
+
+-   Displays the distribution of a single continuous variable
+
+```{r}
+hist <- ggplot(mtcars, aes(x = mpg)) +
+  geom_histogram(binwidth = 2, fill = "steelblue") +
+  labs(title = "Histogram of MPG",
+       x = "Miles Per Gallon",
+       y = "Frequency")
+print(hist)
+```
+
+### Boxplot
+
+-   Displays the distribution of one or multiple continuous variables
+
+```{r}
+# you can fill/color the boxes to correspond to a # specific categorical variable as well 
+box <- ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+  geom_boxplot(aes(fill = factor(cyl))) +
+  labs(title = "Box Plot of MPG by Cylinder",
+       x = "Number of Cylinders",
+       y = "Miles Per Gallon", 
+       fill = "Number of Cylinders")
+print(box)
+```
+
+### Density Plot
+
+-    Displays the distribution as a smoothed curve of a continuous variable
+
+```{r}
+density <- ggplot(mtcars, aes(x = mpg)) +
+  geom_density(fill = "blue", alpha = 0.5) +
+  labs(x = "Miles Per Gallon",
+       y = "Density")
+print(density)
+
+```
+
+### Violin Plot
+
+-    To show the distribution of a continuous variable by categories, combining aspects of a box plot and a density plot.
+
+```{r}
+violin <- ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+  geom_violin(aes(fill = factor(cyl))) +
+  labs(x = "Number of Cylinders",
+       y = "Miles Per Gallon", 
+       fill = "Number of Cylinders")
+print(violin)
+```
+
+### Faceted Plots
+
+-   Creates multiple plots based on the values of a categorical variable
+
+```{r}
+facet <- ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(aes(color = factor(cyl))) +
+  facet_wrap(~ cyl) +
+  labs(x = "Weight",
+       y = "Miles Per Gallon (mpg)", 
+       color = "Number of Cylinders")
+print(facet)
+```
+
+## Themes
+
+`ggplot2`offers a variety of built-in themes that you can apply to change the appearance of your plots. Here are a few options you can use:
+
+-   `theme_grey()`
+
+-   `theme_bw()`
+
+-   `theme_linedraw()`
+
+-   `theme_light()`
+
+-   `theme_dark()`
+
+-   `theme_minimal()`
+
+-   `theme_classic()`
+
+-   `theme_void()`
+
+Here is how you can implement:
+
+```{r}
+# re-using the box plot, we can append a new
+# ggplot element to our variable box
+
+box <- box + theme_minimal()
+print(box)
+```
