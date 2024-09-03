@@ -41,7 +41,7 @@ function_name <- function(arg1, arg2, ...) {
 
 ```
 
-### Recursive Function 
+### Recursive Function
 
 A recursive function is a function that calls itself to solve smaller instances of the same problem. It’s particularly useful for tasks that can be broken down into simpler, repetitive sub-tasks,
 

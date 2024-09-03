@@ -1,0 +1,33 @@
+# Useful Tips {.unnumbered}
+
+## Outliers
+
+Outliers can significantly impact model fitting and statistical calculations. Always conduct exploratory analysis to understand your data and know the context of your data to help determine if datapoints are an outlier or not.
+
+**Identifying Outliers in R:**
+
+-    Use boxplots/scatterplots/histograms
+
+-    filter data to observations \> Q3 + I.5(IQR) or \< Q1 - 1.5(IQR)
+
+    -   or by the Z-score method
+
+    -   or by percentiles
+
+Handling Outliers:
+
+1\. *Understand the Cause:*
+
+-   **Natural Variability**: Legitimate data variation.
+
+-    **Data Entry Errors**: Mistakes in data collection or entry.
+
+-   **Instrument/Process Error**: Issues with data collection methods.
+
+2.  *Decide on an Approach:*
+    -   **Keep Them**: If they reflect true variation.
+    -   **Transform Data**: Reduce their impact.
+    -   **Cap/Floor Values**: Limit extreme outliers.
+    -   **Remove Them**: If they’re errors or irrelevant—document decisions.
+    -   **Use Robust Models**: Opt for models less sensitive to outliers.
+3.  **Always document!**

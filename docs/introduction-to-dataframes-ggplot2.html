@@ -51,6 +51,9 @@
 <li><a class="" href="conditionals-loops-and-functions.html"><span class="header-section-number">2</span> Conditionals, Loops, and Functions</a></li>
 <li><a class="active" href="introduction-to-dataframes-ggplot2.html"><span class="header-section-number">3</span> Introduction to Dataframes &amp; ggplot2</a></li>
 <li><a class="" href="data-visualizations.html"><span class="header-section-number">4</span> Data Visualizations</a></li>
+<li><a class="" href="statistics.html"><span class="header-section-number">5</span> Statistics</a></li>
+<li><a class="" href="probability.html"><span class="header-section-number">6</span> Probability</a></li>
+<li><a class="" href="useful-tips.html">Useful Tips</a></li>
 </ul>
 
         <div class="book-extra">
@@ -310,8 +313,7 @@
 <pre><code>## Warning in left_join(ow, hero_most_played, by = c("Player", "Date", "Win", : Detected an unexpected many-to-many relationship between `x` and `y`.
 ## ℹ Row 139 of `x` matches multiple rows in `y`.
 ## ℹ Row 1 of `y` matches multiple rows in `x`.
-## ℹ If a many-to-many relationship is expected, set `relationship = "many-to-many"` to
-##   silence this warning.</code></pre>
+## ℹ If a many-to-many relationship is expected, set `relationship = "many-to-many"` to silence this warning.</code></pre>
 <p>Another warning, a “many-to-many relationship” warning, will appear due to duplicates in the grouped combinations of our key indicators: Player, Date, Win, Map, Mode, and Role. Typically, this issue would be avoided by assigning a unique identifier to each game, but this dataset lacks such an identifier. Essentially, a player can participate in multiple games on the same day, and even play on the same map with the same role and mode. To proceed with our analysis, we’ll need to identify these duplicate entries and remove them from the dataset.</p>
 <div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># we will create a new data.frame called duplicate to count</span></span>

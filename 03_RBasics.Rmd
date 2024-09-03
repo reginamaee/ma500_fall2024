@@ -227,7 +227,7 @@ avg_summer <- mean(summer_temps)
 avg_summer
 ```
 
-## Vector Operations 
+## Vector Operations
 
 With vectors, you can utilize element-wise basic arithmetic.
 
@@ -273,7 +273,7 @@ temp_celcius
 mean(temp_celcius)
 ```
 
-## Sequences and Repetition 
+## Sequences and Repetition
 
 R has in-house functions that allow you to create a sequence of values (or repeat).
 
@@ -340,7 +340,7 @@ set.seed(415)
 sample(1:100, 20, replace = T)
 ```
 
-### Repetition 
+### Repetition
 
 In some cases, you may just want to repeat values. We will do this using the `rep` function.
 

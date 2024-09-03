@@ -1,0 +1,217 @@
+# Statistics 
+
+Here, we will go over some basic concepts when analyzing univariate and bivariate data. We will be using the built-in `R` dataset `mtcars`, which you can call right away in your console (by typing `mtcars`).
+
+```{r, eval = FALSE}
+?mtcars # this brings up the documentation on the dataset
+```
+
+Your help page should bring up the description, the columns and their definitions, etc. So, we know that this data comes from the 1974 Motor Trend US magazine and has variables pertaining to their miles per gallon, number of cylinders, etc.
+
+## Measures of Central Tendency 
+
+### Mean, Median, Mode
+
+The `mean`, `median`, and `mode` of a dataset helps you identify the central or typical value of your data. `R` has built in functions to find your `mean` and `median`, but not for `mode`.
+
+```{r}
+mean(mtcars$wt)
+median(mtcars$wt)
+```
+
+To find values that frequent the most, we can use the `table()` function
+
+```{r}
+# this shows the number of observations for every unique value of cyl
+table(mtcars$cyl)
+```
+
+Using `table()` is manageable when our data is small, but it would be most efficient to define a function to output the largest value.
+
+```{r}
+# this function extends the functionality of table, but sorts it so that when we pull the first 
+# element, we get the largest value
+mode <- function(x) {
+  names(sort(-table(x)))[1]
+}
+```
+
+```{r}
+mode(mtcars$cyl)
+```
+
+### Min, Max, Range
+
+Other useful functions: `min()`, `max()`, `range()`, and `diff()`.
+
+```{r}
+min(mtcars$wt)
+max(mtcars$wt)
+range(mtcars$wt) # this provides both min and max
+diff(range(mtcars$wt))
+```
+
+### Summary by factors
+
+Let's say we want to find the `mean` of all cars grouped by `gears`, we can write a for loop or we can use another implicit loop called `tapply` - which helps calculate summary statistics for different factors.
+
+```{r}
+mean(mtcars$wt[mtcars$gear == 3])
+mean(mtcars$wt[mtcars$gear == 4])
+mean(mtcars$wt[mtcars$gear == 5])
+
+```
+
+The above code can be translated into:
+
+```{r}
+tapply(mtcars$wt, INDEX = mtcars$gear, FUN = mean)
+```
+
+We can also use `tapply` for other statistical summary functions, BUT even include our own `mode` function (so it takes in user-defined functions as well!)
+
+```{r}
+tapply(mtcars$wt, INDEX = mtcars$gear, FUN = median)
+tapply(mtcars$wt, INDEX = mtcars$gear, FUN = min)
+tapply(mtcars$wt, INDEX = mtcars$gear, FUN = max)
+tapply(mtcars$wt, INDEX = mtcars$gear, FUN = mode)
+```
+
+### Weighted Averages 
+
+In the case we have values that are weighted more (or valued more in importance) that we believe would affect the mean of the data, we would calculate the weighted average. For this, let's create a data.frame that represents scores a student in a class received and their respective weights.
+
+```{r}
+# Sample data: students' grades and corresponding weights for each assignment
+grades <- c(85, 92, 78, 88, 90)  # Grades received on different assignments
+weights <- c(0.2, 0.3, 0.1, 0.25, 0.15)  # Weights of each assignment
+
+# Calculate the weighted average
+weighted_average <- sum(grades * weights)
+
+# Print the result
+cat("The weighted average grade is:", weighted_average, "\n")
+
+# OR (from the stats library)
+weighted.mean(grades, weights)
+```
+
+## Quantiles and Percentiles 
+
+A quantile (divides into 4 equal parts)/percentile (divides into 100 equal parts) is a value computed from a collection of numeric measurements that indicates an observation's rank.
+
+```{r}
+quantile(mtcars$mpg, prob = 0.8) # this outputs the 80th percentile
+quantile(mtcars$mpg, prob = c(0, 0.25, 0.5, 0.75, 1))
+```
+
+We can also run the 5 number summary:
+
+```{r}
+summary(mtcars$mpg)
+```
+
+## Measures of Spread
+
+Measures of spread are helpful when you want to see how dispersed your data is.
+
+The sample variance and sample standard deviation can be computed with the `var()` and `sd()` function.
+
+```{r}
+var(mtcars$mpg)
+sd(mtcars$mpg)
+```
+
+The interquartile range can be given with `IQR()`
+
+```{r}
+IQR(mtcars$mpg)
+```
+
+## Analysis of Bi-Variate Data
+
+### Correlation and Covariance 
+
+It is useful to be able to investigate the relationship between two numeric variables to assess their trends. For instance, you can hypothesize that height and weight may have a relationship as taller people tend to weigh more.
+
+-   **Covariance** expresses how much two numeric variables change together (whether positive or negative)
+    -   a positive result indicates a positive linear relationship - as *x* increases, *y* increases
+    -   a negative result indicates a negative linear relationship - as *x* decreases, *y* decreases
+    -   when the result is 0, then there is no linear relationship.
+-   Correlation helps interpret covariance further by assessing both the strength and direction. The *Pearson's correlation coefficient* $\rho_{xy}$} is the most commonly used measure, and $-1 \leq \rho_{xy} \leq 1$
+    -   $\rho_{xy} = -1$, then that indicates a near perfect negative linear relationship
+    -   $\rho_{xy} = 1$, then that indicates a near perfect positive linear relationship
+    -   the relationship gets weaker the closer the coefficient is to 0.
+
+#### Case-Study: mtcars
+
+Let's investigate more into the `mtcars` dataset and see if there is a relationship between `hp` and `qsec`, the shortest time taken to travel a quarter-mile distance. Continue to plot a scatter and compute the covariance and correlation coefficient.
+
+```{r}
+scatter <- ggplot(data = mtcars, aes(x = hp, y = qsec))+
+  geom_point()
+print(scatter)
+
+cov(mtcars$hp, mtcars$qsec)
+cor(mtcars$hp, mtcars$qsec)
+```
+
+Now, let's look at transmission (manual vs auto) cars. Based on the documentation, 0 = automatic and 1 = manual so let's recode a new variable. We'll go ahead and plot `mtcars$hp` and `mtcars$qsec` by transmission.
+
+```{r}
+mtcars <- mtcars %>% mutate(tranfac = ifelse(am == 1, "manual", "automatic"))
+scatter <- ggplot(data = mtcars, aes(x = hp, y = qsec))+
+  geom_point()+facet_wrap(~tranfac)
+print(scatter)
+```
+
+Based on the scatter, we can see for both automatic and manual cars, the relationship between horsepower and the time it gets to a quarter mile still possesses a negative relationship. Let's find the correlation coefficient for automatic and manual cars.
+
+```{r}
+# automatic
+cor(mtcars$hp[mtcars$am == 0], mtcars$qsec[mtcars$am == 0])
+# manual 
+cor(mtcars$hp[mtcars$am == 1], mtcars$qsec[mtcars$am == 1])
+```
+
+If you are interested in looking at each variable's correlation with eachother, we can run
+
+```{r}
+# we have to remove the tranfac column since it is not numeric
+mtcars <- mtcars %>% select(-tranfac)
+```
+
+```{r}
+# the cor function provides a correlation matrix 
+cor_matrix <- round(cor(mtcars), 2)
+
+# saving it to a data.frame to allow plotting in ggplot2
+cor_matrix <- as.data.frame(cor_matrix)
+cor_matrix$var1 <- row.names(cor_matrix)
+```
+
+```{r}
+cor_matrix <- pivot_longer(cor_matrix, cols = colnames(mtcars), names_to = "var2")
+cor_matrix$var1 <- factor(cor_matrix$var1, levels = colnames(mtcars))
+cor_matrix$var2 <- factor(cor_matrix$var2, levels = colnames(mtcars))
+```
+
+```{r}
+# create a correlation matrix heatmap 
+heatmap <- ggplot(cor_matrix, aes(x = var1, y = var2, fill = value))+
+  geom_tile()
+print(heatmap)
+
+```
+
+For simplier usage, we can use the functions in the `corrplot` library.
+
+```{r}
+library(corrplot)
+cor_matrix <- round(cor(mtcars), 2)
+corrplot(cor_matrix)
+```
+
+```{r}
+corrplot(cor_matrix, method = "square", type = "lower", order = "FPC")
+```

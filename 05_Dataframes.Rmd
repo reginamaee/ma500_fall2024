@@ -76,7 +76,7 @@ We can also create a boxplot to easily determine what our potential outliers loo
 boxplot(ow$Damage)
 ```
 
-### Data Manipulation 
+### Data Manipulation
 
 Let's say we would like to compare each player's wins. We'll compare wins by plotting a bar chart of wins by Date. It is most effective and straightforward to work with data when it is in `long` format rather than `wide`. (If you take a look at the`ow` dataframe, it's raw state is in `wide`). So, let's make that conversion! To switch from `long` to `wide`, the function is `pivot_wider`, and to go from `wide` to `long`, we use `pivot_longer`.
 
@@ -178,7 +178,7 @@ ggsave(filename = "/Users/rdominguez/Documents/MA500/chart1.png",
        dpi = 300)
 ```
 
-## Merging 
+## Merging
 
 Merging data frames is the process of combining two or more data frames based on common columns or row indices. This is a common operation in data analysis, where you often need to bring together information from different sources into a single data set.
 
@@ -273,9 +273,8 @@ Here I am defining the following parameters:
 
 -   `id_cols`: The key columns that should remain unchanged during pivoting, which are Player, Role, and Hero.
 
-```{=html}
 <!-- -->
-```
+
 -   `names_from`: Specifies the column that contains the entries we want to transform into column headers when converting the dataset to a wide format.
 
 -   `values_from`: Specifies the column from which we want to extract the cell values for the newly created columns.

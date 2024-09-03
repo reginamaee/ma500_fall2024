@@ -1,0 +1,134 @@
+# Probability 
+
+Here, we are going to discuss `R` functionality for probability (base `R` functions and some from `stats`).
+
+Each distribution has core R functions- `d` function, providing specific mass or density function values - `p` function, providing cumulative distribution probability - `q` function, providing quantiles- `r` function, providing random variate generation
+
+## Binomial Distribution
+
+The *binomial distribution* is the distribution of successes within *n* trials involving discrete random variables.$$f(x) = P_r(X=x) = \binom{n}{x}p^x(1-p)^{n-x}$$where $x \in {0,1,...n}$. The parameters of $X \sim BIN(n,p)$ is used to indicate that X follows a binomial distribution for $n$ trials and probability $p$.
+
+Let's say we want to roll a die and our success measure is when a 4 is rolled. We know that the probability of getting a 4 is $P(\text{roll a 4}) = \frac{1}{6}$. Let's say we want to roll the die 8 times.
+
+-   What is the probability that out of the 8 times, we get exactly 5 successes (roll 4 5 times)?
+
+    -   The function `dbinom` directly provides the mass function probability for any valid $x$.
+
+```{r}
+dbinom(x = 5, size = 8, prob = 1/6) # size is the number of trials
+```
+
+We can also provide a vector for `x` if we are interested in the full probability mass function table for X.
+
+```{r}
+X.prob <- dbinom(x = 0:8, size = 8, prob = 1/6)
+print(round(X.prob, 3))
+
+# verify that it equals 1
+sum(X.prob)
+```
+
+Let's plot the PMF!
+
+```{r}
+# we set X to be all possible outcomes (how many successes we can have in 8 trials)
+X  <- 0:8
+
+# create a data.frame to input into ggplot
+df <- data.frame(X = X, 
+                 prob = X.prob)
+
+bar <- ggplot(data = df,
+              aes(x=factor(X), 
+                  y=prob))+
+  geom_bar(stat = "identity")+
+  labs(x="x", y="Pr(X=X)")+
+  theme_minimal()
+```
+
+The achievement of ONE success in eight trials has the highest probability.
+
+Using `pbinom` will provide the cumulative probability distribution. Let's say we want to find $\text{Pr}(X \leq 5)$
+
+```{r}
+pbinom(q = 5, size = 8, prob = 1/6)
+# can verify that it works the same way with the sum of dbinom from 0 to 5
+sum(dbinom(x = 0:5, size = 8, prob = 1/6))
+```
+
+The `rbinom` function will randomly generate realizations (a value that is actually observed or something that did happen) of a binomally distributed variable. `N` here refers to the number of realizations or observations you would like. In this example, a realization refers to the number of successes when running 8 trials.
+
+```{r}
+rbinom(n = 1, size = 8, prob = 1/6)
+rbinom(n = 3, size = 8, prob = 1/6)
+```
+
+## Normal Distribution
+
+The *normal* or *Gaussian* distribution is a probability distribution that is symmetric about the mean. (Data is more frequent in occurance closer to the mean than further from the mean).For a continuous random variable, $- \infty < X < \infty$$$f(x) = \frac{1}{\sigma \sqrt{2\pi}} \text{exp} \left\{ - \frac{(x-\mu)^2}{2\sigma^2}\right\}$$The notation $X \sim N(\mu, \sigma)$ is used to indicate that "X follows a normal distribution with mean $\mu$ and standard deviation $\sigma$.
+
+We can use the `dnorm` function to find the value $f(x)$ at any $x$. Let's simulate some datapoints.
+
+```{r}
+vals <- seq(-3, 3, length = 200)
+fx   <- dnorm(vals, mean = 0, sd = 1)
+print(fx[0:10])
+```
+
+The `pnorm` function provides the value of the cumulative density function of the normal distribution.
+
+*Ex*: The length of time taken to complete a certain statistics question by first-year undergraduate students on average is 17 minutes with a standard deviation of 4.5 minutes (and $X$ is normally distributed.)
+
+-   What is the probability a randomly selected undergraduate takes more than 20 minutes to complete the question?
+
+```{r}
+1 - pnorm(20, mean = 17, 4.5) # we subtract from 1 since pnorm provides left-tailed probabilities
+```
+
+-   What is the probability that a student takes between 5-10 minutes to finish the question?
+
+```{r}
+pnorm(10, 17, 4.5)-pnorm(5, 17, 4.5)
+```
+
+The `q` function, `qnorm` provides the quantile value that will give you the lower-tailed probability. Think of it as the inverse of `pnorm`.
+
+```{r}
+pnorm(10, 17, 4.5)
+qnorm(pnorm(10, 17, 4.5), mean = 17, sd = 4.5) # this outputs 10 
+
+```
+
+Let's plot $N \sim (17, 4.5)$
+
+```{r}
+vals <- seq(17 - 4 * 4.5, 17 + 4 * 4.5, 
+            length.out = 500) # create a sequence of values with +/- 4 standard deviations
+fx <- dnorm(vals, mean = 17, sd = 4.5)
+
+# save to a data.frame to input into ggplot
+df <- data.frame(x = vals, 
+                 y = fx)
+
+normal <- ggplot(data = df, aes(x=x, y = y))+
+  geom_polygon(fill = "blue", alpha = 0.4)+
+  geom_vline(xintercept = 17, linetype = "dashed")+
+  theme_minimal()+
+  labs(title = "N ~ (17, 4.5)")
+
+print(normal)
+```
+
+The `rnorm` function produces random variates for any given normal distribution. Let's simulate the amount of time students take to finish this statistical question and plot the distribution with a histogram.
+
+```{r}
+sim <- rnorm(n = 200, mean = 17, sd = 4.5)
+hist(sim)
+```
+
+The histogram shows the the simulated values do follow a normal distribution! But, let's continue validating the normality of the data by plotting a QQ (quantile-quantile) plot. This plot calculates a range of sample quantile values for our observed data and plots it against the same quantiles for a correspondingly standardized normal distribution. The built-in function `qqnrom` will help us achieve this! Theoretically, the values should fall well within the 45 degree reference line if normally distributed since we are comparing between a standard normal distribution plot, if not normal, then the values will deviate from the 45 degree line.
+
+```{r}
+qqnorm(sim, main = "Normal QQ plot of generated N(17,4.5)")
+qqline(sim, col="gray")
+```

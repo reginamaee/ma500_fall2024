@@ -86,7 +86,7 @@ print(box)
 
 ### Density Plot
 
--    Displays the distribution as a smoothed curve of a continuous variable
+-   Displays the distribution as a smoothed curve of a continuous variable
 
 ```{r}
 density <- ggplot(mtcars, aes(x = mpg)) +
@@ -99,7 +99,7 @@ print(density)
 
 ### Violin Plot
 
--    To show the distribution of a continuous variable by categories, combining aspects of a box plot and a density plot.
+-   To show the distribution of a continuous variable by categories, combining aspects of a box plot and a density plot.
 
 ```{r}
 violin <- ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +

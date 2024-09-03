@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 5 Statistics | MA-500: Introduction to R</title>
+<meta name="author" content="Regina-Mae Dominguez - Fall 2024">
+<meta name="generator" content="bookdown 0.40 with bs4_book()">
+<meta property="og:title" content="Chapter 5 Statistics | MA-500: Introduction to R">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/images/cover.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 5 Statistics | MA-500: Introduction to R">
+<meta name="twitter:image" content="/images/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<meta name="description" content="Here, we will go over some basic concepts when analyzing univariate and bivariate data. We will be using the built-in R dataset mtcars, which you can call right away in your console (by typing...">
+<meta property="og:description" content="Here, we will go over some basic concepts when analyzing univariate and bivariate data. We will be using the built-in R dataset mtcars, which you can call right away in your console (by typing...">
+<meta name="twitter:description" content="Here, we will go over some basic concepts when analyzing univariate and bivariate data. We will be using the built-in R dataset mtcars, which you can call right away in your console (by typing...">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <img id="cover" class="d-none d-lg-block" src="images/cover-small.png"><br><h1>
+        <a href="index.html" title="">MA-500: Introduction to R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">MA-500: Introduction to R</a></li>
+<li><a class="" href="rrstudio-installation-guide.html">R/RStudio Installation Guide</a></li>
+<li><a class="" href="r-scriptscode.html">R-Scripts/Code</a></li>
+<li><a class="" href="r-basics-and-fundamentals.html"><span class="header-section-number">1</span> R Basics and Fundamentals</a></li>
+<li><a class="" href="conditionals-loops-and-functions.html"><span class="header-section-number">2</span> Conditionals, Loops, and Functions</a></li>
+<li><a class="" href="introduction-to-dataframes-ggplot2.html"><span class="header-section-number">3</span> Introduction to Dataframes &amp; ggplot2</a></li>
+<li><a class="" href="data-visualizations.html"><span class="header-section-number">4</span> Data Visualizations</a></li>
+<li><a class="active" href="statistics.html"><span class="header-section-number">5</span> Statistics</a></li>
+<li><a class="" href="probability.html"><span class="header-section-number">6</span> Probability</a></li>
+<li><a class="" href="useful-tips.html">Useful Tips</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="statistics" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> Statistics<a class="anchor" aria-label="anchor" href="#statistics"><i class="fas fa-link"></i></a>
+</h1>
+<p>Here, we will go over some basic concepts when analyzing univariate and bivariate data. We will be using the built-in <code>R</code> dataset <code>mtcars</code>, which you can call right away in your console (by typing <code>mtcars</code>).</p>
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">`?`</span><span class="op">(</span><span class="va">mtcars</span>  <span class="co"># this brings up the documentation on the dataset</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Your help page should bring up the description, the columns and their definitions, etc. So, we know that this data comes from the 1974 Motor Trend US magazine and has variables pertaining to their miles per gallon, number of cylinders, etc.</p>
+<div id="measures-of-central-tendency" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Measures of Central Tendency<a class="anchor" aria-label="anchor" href="#measures-of-central-tendency"><i class="fas fa-link"></i></a>
+</h2>
+<div id="mean-median-mode" class="section level3" number="5.1.1">
+<h3>
+<span class="header-section-number">5.1.1</span> Mean, Median, Mode<a class="anchor" aria-label="anchor" href="#mean-median-mode"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <code>mean</code>, <code>median</code>, and <code>mode</code> of a dataset helps you identify the central or typical value of your data. <code>R</code> has built in functions to find your <code>mean</code> and <code>median</code>, but not for <code>mode</code>.</p>
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 3.21725</code></pre>
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 3.325</code></pre>
+<p>To find values that frequent the most, we can use the <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> function</p>
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># this shows the number of observations for every unique</span></span>
+<span><span class="co"># value of cyl</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  4  6  8 
+## 11  7 14</code></pre>
+<p>Using <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> is manageable when our data is small, but it would be most efficient to define a function to output the largest value.</p>
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># this function extends the functionality of table, but</span></span>
+<span><span class="co"># sorts it so that when we pull the first element, we get</span></span>
+<span><span class="co"># the largest value</span></span>
+<span><span class="va">mode</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mode.html">mode</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "8"</code></pre>
+</div>
+<div id="min-max-range" class="section level3" number="5.1.2">
+<h3>
+<span class="header-section-number">5.1.2</span> Min, Max, Range<a class="anchor" aria-label="anchor" href="#min-max-range"><i class="fas fa-link"></i></a>
+</h3>
+<p>Other useful functions: <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, <code><a href="https://rdrr.io/r/base/range.html">range()</a></code>, and <code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code>.</p>
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 1.513</code></pre>
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 5.424</code></pre>
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span>  <span class="co"># this provides both min and max</span></span></code></pre></div>
+<pre><code>## [1] 1.513 5.424</code></pre>
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 3.911</code></pre>
+</div>
+<div id="summary-by-factors" class="section level3" number="5.1.3">
+<h3>
+<span class="header-section-number">5.1.3</span> Summary by factors<a class="anchor" aria-label="anchor" href="#summary-by-factors"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s say we want to find the <code>mean</code> of all cars grouped by <code>gears</code>, we can write a for loop or we can use another implicit loop called <code>tapply</code> - which helps calculate summary statistics for different factors.</p>
+<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">[</span><span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span> <span class="op">==</span> <span class="fl">3</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 3.8926</code></pre>
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">[</span><span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span> <span class="op">==</span> <span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 2.616667</code></pre>
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span><span class="op">[</span><span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span> <span class="op">==</span> <span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 2.6326</code></pre>
+<p>The above code can be translated into:</p>
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span>, INDEX <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span>, FUN <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##        3        4        5 
+## 3.892600 2.616667 2.632600</code></pre>
+<p>We can also use <code>tapply</code> for other statistical summary functions, BUT even include our own <code>mode</code> function (so it takes in user-defined functions as well!)</p>
+<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span>, INDEX <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span>, FUN <span class="op">=</span> <span class="va">median</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##    3    4    5 
+## 3.73 2.70 2.77</code></pre>
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span>, INDEX <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span>, FUN <span class="op">=</span> <span class="va">min</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##     3     4     5 
+## 2.465 1.615 1.513</code></pre>
+<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span>, INDEX <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span>, FUN <span class="op">=</span> <span class="va">max</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##     3     4     5 
+## 5.424 3.440 3.570</code></pre>
+<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/tapply.html">tapply</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">wt</span>, INDEX <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span>, FUN <span class="op">=</span> <span class="va">mode</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##       3       4       5 
+## "2.465"  "3.44" "1.513"</code></pre>
+</div>
+<div id="weighted-averages" class="section level3" number="5.1.4">
+<h3>
+<span class="header-section-number">5.1.4</span> Weighted Averages<a class="anchor" aria-label="anchor" href="#weighted-averages"><i class="fas fa-link"></i></a>
+</h3>
+<p>In the case we have values that are weighted more (or valued more in importance) that we believe would affect the mean of the data, we would calculate the weighted average. For this, let’s create a data.frame that represents scores a student in a class received and their respective weights.</p>
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Sample data: students' grades and corresponding weights</span></span>
+<span><span class="co"># for each assignment</span></span>
+<span><span class="va">grades</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">85</span>, <span class="fl">92</span>, <span class="fl">78</span>, <span class="fl">88</span>, <span class="fl">90</span><span class="op">)</span>  <span class="co"># Grades received on different assignments</span></span>
+<span><span class="va">weights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.25</span>, <span class="fl">0.15</span><span class="op">)</span>  <span class="co"># Weights of each assignment</span></span>
+<span></span>
+<span><span class="co"># Calculate the weighted average</span></span>
+<span><span class="va">weighted_average</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">grades</span> <span class="op">*</span> <span class="va">weights</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Print the result</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"The weighted average grade is:"</span>, <span class="va">weighted_average</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## The weighted average grade is: 87.9</code></pre>
+<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># OR (from the stats library)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="va">grades</span>, <span class="va">weights</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 87.9</code></pre>
+</div>
+</div>
+<div id="quantiles-and-percentiles" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Quantiles and Percentiles<a class="anchor" aria-label="anchor" href="#quantiles-and-percentiles"><i class="fas fa-link"></i></a>
+</h2>
+<p>A quantile (divides into 4 equal parts)/percentile (divides into 100 equal parts) is a value computed from a collection of numeric measurements that indicates an observation’s rank.</p>
+<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span>  <span class="co"># this outputs the 80th percentile</span></span></code></pre></div>
+<pre><code>##   80% 
+## 24.08</code></pre>
+<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##     0%    25%    50%    75%   100% 
+## 10.400 15.425 19.200 22.800 33.900</code></pre>
+<p>We can also run the 5 number summary:</p>
+<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   10.40   15.43   19.20   20.09   22.80   33.90</code></pre>
+</div>
+<div id="measures-of-spread" class="section level2" number="5.3">
+<h2>
+<span class="header-section-number">5.3</span> Measures of Spread<a class="anchor" aria-label="anchor" href="#measures-of-spread"><i class="fas fa-link"></i></a>
+</h2>
+<p>Measures of spread are helpful when you want to see how dispersed your data is.</p>
+<p>The sample variance and sample standard deviation can be computed with the <code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code> and <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code> function.</p>
+<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 36.3241</code></pre>
+<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 6.026948</code></pre>
+<p>The interquartile range can be given with <code><a href="https://rdrr.io/r/stats/IQR.html">IQR()</a></code></p>
+<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 7.375</code></pre>
+</div>
+<div id="analysis-of-bi-variate-data" class="section level2" number="5.4">
+<h2>
+<span class="header-section-number">5.4</span> Analysis of Bi-Variate Data<a class="anchor" aria-label="anchor" href="#analysis-of-bi-variate-data"><i class="fas fa-link"></i></a>
+</h2>
+<div id="correlation-and-covariance" class="section level3" number="5.4.1">
+<h3>
+<span class="header-section-number">5.4.1</span> Correlation and Covariance<a class="anchor" aria-label="anchor" href="#correlation-and-covariance"><i class="fas fa-link"></i></a>
+</h3>
+<p>It is useful to be able to investigate the relationship between two numeric variables to assess their trends. For instance, you can hypothesize that height and weight may have a relationship as taller people tend to weigh more.</p>
+<ul>
+<li>
+<strong>Covariance</strong> expresses how much two numeric variables change together (whether positive or negative)
+<ul>
+<li>a positive result indicates a positive linear relationship - as <em>x</em> increases, <em>y</em> increases</li>
+<li>a negative result indicates a negative linear relationship - as <em>x</em> decreases, <em>y</em> decreases</li>
+<li>when the result is 0, then there is no linear relationship.</li>
+</ul>
+</li>
+<li>Correlation helps interpret covariance further by assessing both the strength and direction. The <em>Pearson’s correlation coefficient</em> <span class="math inline">\(\rho_{xy}\)</span>} is the most commonly used measure, and <span class="math inline">\(-1 \leq \rho_{xy} \leq 1\)</span>
+<ul>
+<li>
+<span class="math inline">\(\rho_{xy} = -1\)</span>, then that indicates a near perfect negative linear relationship</li>
+<li>
+<span class="math inline">\(\rho_{xy} = 1\)</span>, then that indicates a near perfect positive linear relationship</li>
+<li>the relationship gets weaker the closer the coefficient is to 0.</li>
+</ul>
+</li>
+</ul>
+<div id="case-study-mtcars" class="section level4" number="5.4.1.1">
+<h4>
+<span class="header-section-number">5.4.1.1</span> Case-Study: mtcars<a class="anchor" aria-label="anchor" href="#case-study-mtcars"><i class="fas fa-link"></i></a>
+</h4>
+<p>Let’s investigate more into the <code>mtcars</code> dataset and see if there is a relationship between <code>hp</code> and <code>qsec</code>, the shortest time taken to travel a quarter-mile distance. Continue to plot a scatter and compute the covariance and correlation coefficient.</p>
+<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">scatter</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hp</span>, y <span class="op">=</span> <span class="va">qsec</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">scatter</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-110-1.png" width="672"></div>
+<div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">qsec</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] -86.77008</code></pre>
+<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">qsec</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] -0.7082234</code></pre>
+<p>Now, let’s look at transmission (manual vs auto) cars. Based on the documentation, 0 = automatic and 1 = manual so let’s recode a new variable. We’ll go ahead and plot <code>mtcars$hp</code> and <code>mtcars$qsec</code> by transmission.</p>
+<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>tranfac <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">am</span> <span class="op">==</span> <span class="fl">1</span>, <span class="st">"manual"</span>, <span class="st">"automatic"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">scatter</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hp</span>, y <span class="op">=</span> <span class="va">qsec</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">tranfac</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">scatter</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-111-1.png" width="672"></div>
+<p>Based on the scatter, we can see for both automatic and manual cars, the relationship between horsepower and the time it gets to a quarter mile still possesses a negative relationship. Let’s find the correlation coefficient for automatic and manual cars.</p>
+<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># automatic</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span><span class="op">[</span><span class="va">mtcars</span><span class="op">$</span><span class="va">am</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">qsec</span><span class="op">[</span><span class="va">mtcars</span><span class="op">$</span><span class="va">am</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] -0.8040275</code></pre>
+<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># manual</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span><span class="op">[</span><span class="va">mtcars</span><span class="op">$</span><span class="va">am</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">qsec</span><span class="op">[</span><span class="va">mtcars</span><span class="op">$</span><span class="va">am</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] -0.8494566</code></pre>
+<p>If you are interested in looking at each variable’s correlation with eachother, we can run</p>
+<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># we have to remove the tranfac column since it is not</span></span>
+<span><span class="co"># numeric</span></span>
+<span><span class="va">mtcars</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">tranfac</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># the cor function provides a correlation matrix</span></span>
+<span><span class="va">cor_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># saving it to a data.frame to allow plotting in ggplot2</span></span>
+<span><span class="va">cor_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">cor_matrix</span><span class="op">)</span></span>
+<span><span class="va">cor_matrix</span><span class="op">$</span><span class="va">var1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">cor_matrix</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cor_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="va">cor_matrix</span>, cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>,</span>
+<span>    names_to <span class="op">=</span> <span class="st">"var2"</span><span class="op">)</span></span>
+<span><span class="va">cor_matrix</span><span class="op">$</span><span class="va">var1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cor_matrix</span><span class="op">$</span><span class="va">var1</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">cor_matrix</span><span class="op">$</span><span class="va">var2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cor_matrix</span><span class="op">$</span><span class="va">var2</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># create a correlation matrix heatmap</span></span>
+<span><span class="va">heatmap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">cor_matrix</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">var1</span>, y <span class="op">=</span> <span class="va">var2</span>, fill <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">heatmap</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-116-1.png" width="672"></div>
+<p>For simplier usage, we can use the functions in the <code>corrplot</code> library.</p>
+<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/taiyun/corrplot">corrplot</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning: package 'corrplot' was built under R version 4.3.3</code></pre>
+<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cor_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html">corrplot</a></span><span class="op">(</span><span class="va">cor_matrix</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-117-1.png" width="672"></div>
+<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html">corrplot</a></span><span class="op">(</span><span class="va">cor_matrix</span>, method <span class="op">=</span> <span class="st">"square"</span>, type <span class="op">=</span> <span class="st">"lower"</span>, order <span class="op">=</span> <span class="st">"FPC"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-118-1.png" width="672"></div>
+
+</div>
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="data-visualizations.html"><span class="header-section-number">4</span> Data Visualizations</a></div>
+<div class="next"><a href="probability.html"><span class="header-section-number">6</span> Probability</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#statistics"><span class="header-section-number">5</span> Statistics</a></li>
+<li>
+<a class="nav-link" href="#measures-of-central-tendency"><span class="header-section-number">5.1</span> Measures of Central Tendency</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#mean-median-mode"><span class="header-section-number">5.1.1</span> Mean, Median, Mode</a></li>
+<li><a class="nav-link" href="#min-max-range"><span class="header-section-number">5.1.2</span> Min, Max, Range</a></li>
+<li><a class="nav-link" href="#summary-by-factors"><span class="header-section-number">5.1.3</span> Summary by factors</a></li>
+<li><a class="nav-link" href="#weighted-averages"><span class="header-section-number">5.1.4</span> Weighted Averages</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#quantiles-and-percentiles"><span class="header-section-number">5.2</span> Quantiles and Percentiles</a></li>
+<li><a class="nav-link" href="#measures-of-spread"><span class="header-section-number">5.3</span> Measures of Spread</a></li>
+<li>
+<a class="nav-link" href="#analysis-of-bi-variate-data"><span class="header-section-number">5.4</span> Analysis of Bi-Variate Data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#correlation-and-covariance"><span class="header-section-number">5.4.1</span> Correlation and Covariance</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

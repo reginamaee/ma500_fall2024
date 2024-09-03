@@ -4,14 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Page not found | MA-500: Introduction to R</title>
+<title>Useful Tips | MA-500: Introduction to R</title>
 <meta name="author" content="Regina-Mae Dominguez - Fall 2024">
 <meta name="generator" content="bookdown 0.40 with bs4_book()">
-<meta property="og:title" content="Page not found | MA-500: Introduction to R">
+<meta property="og:title" content="Useful Tips | MA-500: Introduction to R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/cover.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Page not found | MA-500: Introduction to R">
+<meta name="twitter:title" content="Useful Tips | MA-500: Introduction to R">
 <meta name="twitter:image" content="/images/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -20,9 +20,9 @@
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
-<meta name="description" content="The page you requested cannot be found (perhaps it was moved or renamed). You may want to try searching to find the page's new location, or use the table of contents to find the page you are...">
-<meta property="og:description" content="The page you requested cannot be found (perhaps it was moved or renamed). You may want to try searching to find the page's new location, or use the table of contents to find the page you are...">
-<meta name="twitter:description" content="The page you requested cannot be found (perhaps it was moved or renamed). You may want to try searching to find the page's new location, or use the table of contents to find the page you are...">
+<meta name="description" content="6.3 Outliers Outliers can significantly impact model fitting and statistical calculations. Always conduct exploratory analysis to understand your data and know the context of your data to help...">
+<meta property="og:description" content="6.3 Outliers Outliers can significantly impact model fitting and statistical calculations. Always conduct exploratory analysis to understand your data and know the context of your data to help...">
+<meta name="twitter:description" content="6.3 Outliers Outliers can significantly impact model fitting and statistical calculations. Always conduct exploratory analysis to understand your data and know the context of your data to help...">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -53,7 +53,7 @@
 <li><a class="" href="data-visualizations.html"><span class="header-section-number">4</span> Data Visualizations</a></li>
 <li><a class="" href="statistics.html"><span class="header-section-number">5</span> Statistics</a></li>
 <li><a class="" href="probability.html"><span class="header-section-number">6</span> Probability</a></li>
-<li><a class="" href="useful-tips.html">Useful Tips</a></li>
+<li><a class="active" href="useful-tips.html">Useful Tips</a></li>
 </ul>
 
         <div class="book-extra">
@@ -61,18 +61,66 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="page-not-found" class="section level1">
-<h1>Page not found<a class="anchor" aria-label="anchor" href="#page-not-found"><i class="fas fa-link"></i></a>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="useful-tips" class="section level1 unnumbered">
+<h1>Useful Tips<a class="anchor" aria-label="anchor" href="#useful-tips"><i class="fas fa-link"></i></a>
 </h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="outliers" class="section level2" number="6.3">
+<h2>
+<span class="header-section-number">6.3</span> Outliers<a class="anchor" aria-label="anchor" href="#outliers"><i class="fas fa-link"></i></a>
+</h2>
+<p>Outliers can significantly impact model fitting and statistical calculations. Always conduct exploratory analysis to understand your data and know the context of your data to help determine if datapoints are an outlier or not.</p>
+<p><strong>Identifying Outliers in R:</strong></p>
+<ul>
+<li><p>Use boxplots/scatterplots/histograms</p></li>
+<li><p>filter data to observations &gt; Q3 + I.5(IQR) or &lt; Q1 - 1.5(IQR)</p></li>
+</ul>
+<pre><code>-   or by the Z-score method
+
+-   or by percentiles</code></pre>
+<p>Handling Outliers:</p>
+<p>1. <em>Understand the Cause:</em></p>
+<ul>
+<li><p><strong>Natural Variability</strong>: Legitimate data variation.</p></li>
+<li><p><strong>Data Entry Errors</strong>: Mistakes in data collection or entry.</p></li>
+<li><p><strong>Instrument/Process Error</strong>: Issues with data collection methods.</p></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>
+<em>Decide on an Approach:</em>
+<ul>
+<li>
+<strong>Keep Them</strong>: If they reflect true variation.</li>
+<li>
+<strong>Transform Data</strong>: Reduce their impact.</li>
+<li>
+<strong>Cap/Floor Values</strong>: Limit extreme outliers.</li>
+<li>
+<strong>Remove Them</strong>: If they’re errors or irrelevant—document decisions.</li>
+<li>
+<strong>Use Robust Models</strong>: Opt for models less sensitive to outliers.</li>
+</ul>
+</li>
+<li><strong>Always document!</strong></li>
+</ol>
+</div>
 </div>
   <div class="chapter-nav">
-<div class="empty"></div>
+<div class="prev"><a href="probability.html"><span class="header-section-number">6</span> Probability</a></div>
 <div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    </div>
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#useful-tips">Useful Tips</a></li>
+<li><a class="nav-link" href="#outliers"><span class="header-section-number">6.3</span> Outliers</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
 
 </div>
 </div> <!-- .container -->
