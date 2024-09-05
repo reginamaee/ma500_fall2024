@@ -36,6 +36,12 @@ head(df)
 summary(df)
 ```
 
+If you take a look at the summary, we see that there is a minimum value of Height that is `-11.23`. We do know that height should be positive, so let's move forward believing this in an error in data inputting and remove this from our analysis.
+
+```{r}
+df <- df %>% filter(Height > 0)
+```
+
 We have to do a bit of data cleaning with this dataset. If you look at the unique values of Species, you will notice that there are multiple typos/spelling errors for each species. We want to make sure we correct that before we move forward with our analysis.
 
 We will fix these errors by using the `grepl` function. `grepl()` in R is a function used for pattern matching within strings. It checks whether a specific pattern (regular expression) exists in each element of a character vector, and returns a logical vector (`TRUE` or `FALSE`) indicating whether the pattern was found in each element.
@@ -190,3 +196,5 @@ head(prem_wide)
 # running a paired t-test, make sure the paired argument is TRUE
 t.test(x = prem_wide$after, y = prem_wide$before, paired = TRUE)
 ```
+
+The t-test results above show a p-value less than 0.05, meaning we can reject the null hypothesis that the mean difference between the heights on the first recorded day and the last recorded day is 0.
