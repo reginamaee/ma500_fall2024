@@ -1,0 +1,188 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Hypothesis Testing
+
+Today, we are going to go over some concepts of Hypothesis Testing, specifically the Student's t-test and Analysis of Variance (ANOVA).
+
+#### Assumptions of T-Test
+
+-   Independence of Observations
+
+-   Normality of the Dependent Variable
+
+-   Equal Variances (Homogeneity of Variance)
+
+#### Assumptions of ANOVA
+
+-   Independence of Observations
+
+-   Normality of the Dependent Variable
+
+-   Equal Variances (Homogeneity of Variance)
+
+We will be using the **mock_outplanting_data.csv** file available on Moodle. This dataset contains simulated height measurements (in centimeters) of three different plant species native to Guam, collected on two separate dates. Please note that these height values are simulated to maintain data privacy.
+
+```{r}
+# load in packages needed
+library(tidyverse)
+library(stats)
+library(psych)
+df <- read_csv("/Users/rdominguez/MA500/mock_outplanting_data.csv")
+
+# familarize with the data
+head(df)
+summary(df)
+```
+
+We have to do a bit of data cleaning with this dataset. If you look at the unique values of Species, you will notice that there are multiple typos/spelling errors for each species. We want to make sure we correct that before we move forward with our analysis.
+
+We will fix these errors by using the `grepl` function. `grepl()` in R is a function used for pattern matching within strings. It checks whether a specific pattern (regular expression) exists in each element of a character vector, and returns a logical vector (`TRUE` or `FALSE`) indicating whether the pattern was found in each element.
+
+The below code searches for each value in the `Species` column that matches the specified pattern, `Pan` for *Pandanus tectorius,* `Pre` for *Premna serratifolia,* and `Ix` for *Ixora triantha,* then overwrites all the values that match the pattern to the correct spelling we would like.
+
+```{r}
+
+# recoding Pandanus
+unique(df$Species[grepl("Pan", df$Species)])
+df$Species[grepl("Pan", df$Species)] <- "Pandanus tectorius"
+
+
+# recoding Premna
+unique(df$Species[grepl("Pre", df$Species)])
+df$Species[grepl("Pre", df$Species)] <- "Premna serratifolia"
+
+# recoding Ixora
+df$Species[grepl("Ix", df$Species)] <- "Ixora triantha"
+
+```
+
+## Visualizing Data/Diagnostics
+
+Before proceeding with hypothesis testing or assessing statistical significance, it's important to first ensure that our data meets the assumptions required for the tests we plan to use. If the assumptions are not met, we may need to explore alternative approaches or adjustments to address the issue.
+
+The diagnostics here primarily involve examining the distribution of the data within the groups we intend to test. This includes generating density plots with histograms, creating QQ plots, and constructing box plots. These visual tools provide valuable insights into the overall characteristics and distribution of the data.
+
+```{r}
+# we are subsetting to just the first date given in our dataset
+unique(df$Date)
+df_day1 <- df %>% dplyr::filter(Date == "2020-04")
+```
+
+### Creating a Density Plot
+
+```{r}
+# normality diagnostics
+dens <- ggplot(data = df_day1, aes(x=Height))+
+  geom_histogram(aes(y = after_stat(density)), binwidth = 2, color = "black", fill="white")+
+  geom_density(aes(color = Species, fill = Species), alpha = 0.6)
+  
+print(dens)
+```
+
+From the density plot, we can compare the means of each group visually. From observation, we can see that *Pandanus tectorius* has a wider spread of data (meaning a higher variance value) and the means of *Ixora triantha* and *Premna serratifolia* differ. Each distribution separately (by species) however does look to follow normal distribution.
+
+### Creating a QQ plot for each group
+
+```{r}
+qqnorm(df_day1$Height[df_day1$Species == "Ixora triantha"])
+qqline(df_day1$Height[df_day1$Species == "Ixora triantha"], col="gray")
+
+qqnorm(df_day1$Height[df_day1$Species == "Pandanus tectorius"])
+qqline(df_day1$Height[df_day1$Species == "Pandanus tectorius"], col="gray")
+
+qqnorm(df_day1$Height[df_day1$Species == "Premna serratifolia"])
+qqline(df_day1$Height[df_day1$Species == "Premna serratifolia"], col="gray")
+```
+
+Creating a qqplot also reinforces that our data looks normal!
+
+### Creating a boxplot for each group
+
+```{r}
+bp <- ggplot(data = df_day1, aes(x = Species, y = Height))+
+  geom_boxplot(aes(fill = Species))
+print(bp)
+```
+
+```{r}
+describeBy(df_day1, group = df_day1$Species)
+```
+
+## Running two-sample t-test
+
+Let's test if the means between the heights of *Pandanus tectorius* and *Ixora triantha* are different, ie
+
+$$
+H_0: \mu_{1} - \mu_{2} = 0 \\
+H_A: \mu_{1} - \mu_{2} \neq 0
+$$
+
+```{r}
+two_samp <- df_day1 %>% dplyr::filter(Species != "Premna serratifolia")
+unique(two_samp$Species)
+
+t.test(Height ~ Species, data = two_samp)
+```
+
+Then test if the means of *Pandanus tectorius* is greater than *Ixora triantha*, ie
+
+$$
+H_0: \mu_1 - \mu_2 = 0 \\
+H_A: \mu_1 - \mu_2 >0
+$$
+
+```{r}
+# is ixora mean > pandanus mean?
+t.test(Height ~ Species, data = two_samp, alternative = "greater")
+
+# is ixora mean < pandanus mean?
+t.test(Height ~ Species, data = two_samp, alternative = "less")
+
+t.test(x = two_samp$Height[two_samp$Species == "Pandanus tectorius"], 
+       y = two_samp$Height[two_samp$Species == "Ixora triantha"], 
+       alternative = "greater")
+```
+
+## Running a paired t-test
+
+For this section, we will test if there is a difference in the means of heights for *Premna serratifolia* between the two recorded dates, ie
+
+$$
+H_0: \mu_d = 0 \\
+H_A: \mu_d \neq 0
+$$
+
+```{r}
+prem <- df %>% dplyr::filter(Species == "Premna serratifolia")
+```
+
+```{r}
+prem_dens <- ggplot(data = prem, aes(x=Height))+
+  geom_histogram(aes(y = after_stat(density)), binwidth = 2, color="black", fill="white")+
+  geom_density(aes(color=Date, fill = Date), alpha = 0.5)+theme_minimal()
+print(prem_dens)
+```
+
+```{r}
+qqnorm(prem$Height[prem$Date == "2020-04"])
+qqnorm(prem$Height[prem$Date == "2021-09"])
+```
+
+Let's move forward and pivot our dataset so that we can see the heights by date side-by-side. This will help you visually see how each specific plant (which is uniquely identified by `id`) changes between the two dates.
+
+```{r}
+prem_wide <- pivot_wider(data = prem, 
+                         id_cols = "id", 
+                         names_from = "Date", 
+                         values_from = "Height")
+prem_wide <- prem_wide %>% mutate(diff = `2021-09` - `2020-04`)
+prem_wide <- prem_wide %>% rename(before = `2020-04`) %>% rename(after = `2021-09`)
+head(prem_wide)
+```
+
+```{r}
+# running a paired t-test, make sure the paired argument is TRUE
+t.test(x = prem_wide$after, y = prem_wide$before, paired = TRUE)
+```

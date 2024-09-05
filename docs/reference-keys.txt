@@ -58,4 +58,13 @@ case-study-mtcars
 probability
 binomial-distribution
 normal-distribution
+hypothesis-testing
+assumptions-of-t-test
+assumptions-of-anova
+visualizing-datadiagnostics
+creating-a-density-plot
+creating-a-qq-plot-for-each-group
+creating-a-boxplot-for-each-group
+running-two-sample-t-test
+running-a-paired-t-test
 outliers
