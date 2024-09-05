@@ -145,6 +145,10 @@ t.test(x = two_samp$Height[two_samp$Species == "Pandanus tectorius"],
        alternative = "greater")
 ```
 
+Based on the results above, we can reject both null hypotheses and say that there does exist a difference in the mean heights between *Pandanus tectorius* and *Ixora triantha (p \<* 2.547e-16) and that the mean height for *Pandanus tectorius* is greater than the mean height for *Ixora triantha (p \<* 2.2e-16)*.*
+
+**BIG NOTE: If we ran a two-sample t-test comparing the mean height for *Ixora triantha* and *Premna serratifolia,* we can run the standard two-sample t-test due to their variances being approximately equal (another way to check is if: their ratio (var(group1)/var(group2) \< 2).**
+
 ## Running a paired t-test
 
 For this section, we will test if there is a difference in the means of heights for *Premna serratifolia* between the two recorded dates, ie
