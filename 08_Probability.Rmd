@@ -1,4 +1,4 @@
-# Probability 
+# Probability
 
 Here, we are going to discuss `R` functionality for probability (base `R` functions and some from `stats`).
 

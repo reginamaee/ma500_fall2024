@@ -1,4 +1,4 @@
-# Statistics 
+# Statistics
 
 Here, we will go over some basic concepts when analyzing univariate and bivariate data. We will be using the built-in `R` dataset `mtcars`, which you can call right away in your console (by typing `mtcars`).
 
@@ -8,7 +8,7 @@ Here, we will go over some basic concepts when analyzing univariate and bivariat
 
 Your help page should bring up the description, the columns and their definitions, etc. So, we know that this data comes from the 1974 Motor Trend US magazine and has variables pertaining to their miles per gallon, number of cylinders, etc.
 
-## Measures of Central Tendency 
+## Measures of Central Tendency
 
 ### Mean, Median, Mode
 
@@ -77,7 +77,7 @@ tapply(mtcars$wt, INDEX = mtcars$gear, FUN = max)
 tapply(mtcars$wt, INDEX = mtcars$gear, FUN = mode)
 ```
 
-### Weighted Averages 
+### Weighted Averages
 
 In the case we have values that are weighted more (or valued more in importance) that we believe would affect the mean of the data, we would calculate the weighted average. For this, let's create a data.frame that represents scores a student in a class received and their respective weights.
 
@@ -96,7 +96,7 @@ cat("The weighted average grade is:", weighted_average, "\n")
 weighted.mean(grades, weights)
 ```
 
-## Quantiles and Percentiles 
+## Quantiles and Percentiles
 
 A quantile (divides into 4 equal parts)/percentile (divides into 100 equal parts) is a value computed from a collection of numeric measurements that indicates an observation's rank.
 
@@ -130,7 +130,7 @@ IQR(mtcars$mpg)
 
 ## Analysis of Bi-Variate Data
 
-### Correlation and Covariance 
+### Correlation and Covariance
 
 It is useful to be able to investigate the relationship between two numeric variables to assess their trends. For instance, you can hypothesize that height and weight may have a relationship as taller people tend to weigh more.
 

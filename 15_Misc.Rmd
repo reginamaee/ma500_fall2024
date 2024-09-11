@@ -6,13 +6,15 @@ Outliers can significantly impact model fitting and statistical calculations. Al
 
 **Identifying Outliers in R:**
 
--    Use boxplots/scatterplots/histograms
+-   Use boxplots/scatterplots/histograms
 
--    filter data to observations \> Q3 + I.5(IQR) or \< Q1 - 1.5(IQR)
+-   filter data to observations \> Q3 + I.5(IQR) or \< Q1 - 1.5(IQR)
 
-    -   or by the Z-score method
+```         
+-   or by the Z-score method
 
-    -   or by percentiles
+-   or by percentiles
+```
 
 Handling Outliers:
 
@@ -20,7 +22,7 @@ Handling Outliers:
 
 -   **Natural Variability**: Legitimate data variation.
 
--    **Data Entry Errors**: Mistakes in data collection or entry.
+-   **Data Entry Errors**: Mistakes in data collection or entry.
 
 -   **Instrument/Process Error**: Issues with data collection methods.
 

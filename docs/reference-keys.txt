@@ -67,4 +67,5 @@ creating-a-qq-plot-for-each-group
 creating-a-boxplot-for-each-group
 running-two-sample-t-test
 running-a-paired-t-test
+one-way-anova
 outliers

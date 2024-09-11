@@ -1,0 +1,351 @@
+# Case Study: Wine Quality Dataset {-}
+
+The **Wine Quality** dataset comes from the UCI Machine Learning Repository. It contains information on the chemical properties of red and white variants of Portuguese wines, as well as quality rating. You can read more about it here: [Wine Quality](https://archive.ics.uci.edu/dataset/186/wine+quality)
+
+Note: I am manipulating the data with `data.table` notation rather than using `dplyr`.
+
+```{r}
+library(data.table)
+library(ggplot2)
+library(psych)
+library(dplyr)
+```
+
+```{r}
+# read in data and format
+dir   <- "/Users/rdominguez/MA500/"
+red   <- fread(paste0(dir, "winequality-red.csv"))
+white <- fread(paste0(dir, "winequality-white.csv"))
+summary(red)
+summary(white)
+
+red$color <- "red"
+white$color <- "white"
+
+all <- rbind(red,white)
+```
+
+In addition to summary, getting more statistical measures can be done with the `describe` and `describeBy` functions from the `pysch` package.
+
+```{r}
+describe(all)
+describeBy(all, group = all$color)
+```
+
+Visualize all data:
+
+```{r}
+# visualize all data
+# transformed from wide to long
+all_long <- melt(all, id.vars=c("color", "quality"), 
+                 measure.vars = colnames(all[,-c("color", "quality")]), 
+                 variable.name = "property", 
+                 value.name="value")
+
+bp_all <- ggplot(data = all_long, aes(y = value))+
+  geom_boxplot()+facet_wrap(~property, scales="free_y")
+print(bp_all)
+```
+
+Another way to view correlation and scatter points all together by using `library(GGally)`:
+
+```{r, eval = FALSE}
+library(GGally)
+print(ggpairs(data = all))
+```
+
+Discuss:
+
+-   Visualize the distribution of the "free sulfur dioxide" variable, grouped by wine color. Perform a t-test to determine if there is a significant difference in the mean free sulfur dioxide between red and white wines. Next, rerun the t-test after removing any free sulfur dioxide values greater than 100. Record the number of observations dropped. Finally, run the analysis again after removing all potential outliers and again, record the number of observations dropped. How do the results differ across these steps?
+
+```{r}
+# plot density to see what free sulfur looks like in the whole dataset
+dens <- ggplot(data = all, aes(x=`free sulfur dioxide`))+
+  geom_histogram(aes(y = after_stat(density)), binwidth = 2, color = "black", fill="white")+
+  geom_density(aes(color = color, fill = color), alpha = 0.6)
+
+print(dens)
+
+```
+
+```{r}
+# more visualization to see what the outliers look like in a boxplot
+bp <- ggplot(data = all, aes(x=color, y=`free sulfur dioxide`))+
+  geom_boxplot()
+print(bp)
+```
+
+Based off the plots above, we can observe that the mean values of `free sulfur dioxide` between red and white wines are visually different. Let's run a t-test to see if it statistically significant.
+
+```{r}
+# run t-test without dropping observations
+t.test(`free sulfur dioxide` ~ color, data = all)
+```
+
+Since we have a p-value \< 0.05, then we can reject the null hypothesis and say that there does exist a difference between the means.
+
+```{r}
+# t-test when dropping data > 100
+t.test(`free sulfur dioxide` ~ color, data = all[`free sulfur dioxide` < 100])
+```
+
+From the results above, the t-test still provides the same results.
+
+Next, I will continue on with outliering the dataset with the following functions below:
+
+-   IQR\*1.5 method: standard method we all know, recommended to use if data is somewhat symmetric and you want a simple, systematic, and robust way to outlier
+
+-   Percentile method: recommended for skewed data and large datasets, also provides more flexibility because you can define a threshold
+
+```{r}
+#' This function processes a data frame, examining all numeric columns
+#' to detect outliers on a row-by-row basis. Since the data being analyzed 
+#' is paired, if any observation in a row is considered an outlier 
+#' (according to the IQR method), the entire row will be dropped from the dataset.
+#' 
+#' @param df A data frame containing numeric columns.
+#' @return A data frame with all rows that had an outlier in any numeric column removed.
+#' 
+#' To step through the function line by line, you can add `browser()` 
+#' at the start of the function, re-run it, and call a test case. 
+#' This will initiate "debug/browser" mode, allowing you to examine each 
+#' step of the function with a snapshot of the environment at that point in time.
+detect_and_remove_outliers <- function(df) {
+
+  # Create a new column to mark outliers
+  df$is_outlier <- FALSE
+  
+  # Loop through each numeric column to detect outliers
+  for (col in colnames(df)) {
+    if (is.numeric(df[[col]])) {
+      # Calculate IQR for the column
+      Q1 <- quantile(df[[col]], 0.25, na.rm = TRUE)
+      Q3 <- quantile(df[[col]], 0.75, na.rm = TRUE)
+      IQR_value <- Q3 - Q1
+      
+      lower_bound <- Q1 - 1.5 * IQR_value
+      upper_bound <- Q3 + 1.5 * IQR_value
+      
+      # Identify outliers
+      df$is_outlier <- df$is_outlier | (df[[col]] <= lower_bound | df[[col]] >= upper_bound)
+    }
+  }
+  
+  
+  # Remove rows that are outliers
+  df_removed <- df[!df$is_outlier, ]
+  
+  # Drop the is_outlier column
+  df_removed$is_outlier <- NULL
+  
+  return(df_removed)
+}
+
+# percentile way - may be useful for highly skewed data as IQR might miss values on one tail
+# better for large datasets
+# flexible thresholds 
+detect_and_remove_outliers_percentile <- function(df) {
+
+  
+  # Create a new column to mark outliers
+  df$is_outlier <- FALSE
+  
+  # Loop through each numeric column to detect outliers
+  for (col in colnames(df)) {
+    if (is.numeric(df[[col]])) {
+      # Calculate IQR for the column
+      lower_bound <- quantile(df[[col]], 0.05, na.rm = TRUE)
+      upper_bound <- quantile(df[[col]], 0.95, na.rm = TRUE)
+      
+      # Identify outliers
+      df$is_outlier <- df$is_outlier | (df[[col]] <= lower_bound | df[[col]] >= upper_bound)
+    }
+  }
+  
+  
+  # Remove rows that are outliers
+  df_removed <- df[!df$is_outlier, ]
+  
+  # Drop the is_outlier column
+  df_removed$is_outlier <- NULL
+  
+  return(df_removed)
+}
+```
+
+Because my distributions look fairly different between red and white wines, I will outlier the `free sulfur dioxide separately.`
+
+```{r}
+# remove outliers for free sulfur dioxide
+free_red <- all[color == "red", .(`free sulfur dioxide`, color)]
+free_red <- detect_and_remove_outliers(free_red)
+
+free_white <- all[color == "white", .(`free sulfur dioxide`, color)]
+free_white <- detect_and_remove_outliers(free_white)
+
+# no difference, obvious difference between groups
+# true significance
+free <- rbind(free_red, free_white)
+
+free_dens <- ggplot(data = free, aes(x=`free sulfur dioxide`))+
+  geom_histogram(aes(y = after_stat(density)), binwidth = 2, color = "black", fill="white")+
+  geom_density(aes(color = color, fill = color), alpha = 0.6)
+t.test(`free sulfur dioxide` ~ color, data = free)
+```
+
+Testing below if outliering based off of percentiles will make the analysis any different (I removed the top and bottom 5% of the values).
+
+```{r}
+# percentile 
+free_red_percentile <- all[color == "red", .(`free sulfur dioxide`, color)]
+free_red_percentile <- detect_and_remove_outliers_percentile(free_red_percentile)
+
+free_white_percentile <- all[color == "white", .(`free sulfur dioxide`, color)]
+free_white_percentile <- detect_and_remove_outliers_percentile(free_white_percentile)
+
+free_percentile <- rbind(free_red_percentile, free_white_percentile)
+
+# the distribution shows the data being more condensed when you outlier based off of a 0.05 threshold
+free_dens <- ggplot(data = free_percentile, aes(x=`free sulfur dioxide`))+
+  geom_histogram(aes(y = after_stat(density)), binwidth = 2, color = "black", fill="white")+
+  geom_density(aes(color = color, fill = color), alpha = 0.6)
+print(free_dens)
+t.test(`free sulfur dioxide` ~ color, data = free_percentile)
+```
+
+Both outliering practices did not provide any difference between the t-test results.
+
+I am going to move forward with testing this same analysis again but with the `alcohol` variable. Based off the distribution of `alcohol`, the means and spread look relatively the same (the difference is so small that it could just be due to the fact that white wines have much more data).
+
+```{r}
+bp_a <- ggplot(data = all, aes(x = color, y = alcohol))+
+  geom_boxplot()
+print(bp_a)
+```
+
+```{r}
+t.test(alcohol ~ color, data = all)
+```
+
+From the output above, if we run the t-test on the entire dataset for alcohol to see if there is a difference between alcohol means between white and red wines, we get a statistical significance. However, this makes me wonder since the means are both \~10, and the distribution is fairly the same. Is this practical?
+
+Let's move forward with checking if outliers make a difference:
+
+```{r}
+a_red <- all[color == "red", .(alcohol, color)]
+a_red <- detect_and_remove_outliers(a_red)
+
+a_white <- all[color == "white", .(alcohol, color)]
+a_white <- detect_and_remove_outliers(a_white)
+
+a <- rbind(a_red, a_white)
+# t-test p val is significantly lower
+t.test(alcohol ~ color, data = a)
+
+# only red was affected
+bp_a <- ggplot(data = a, aes(x=color, y = alcohol))+
+  geom_boxplot()
+print(bp_a)
+
+# difference if outliering based off of all data?
+alcohol <- all[,.(alcohol, color)]
+bp_a2 <- ggplot(data = alcohol, aes(x = color, y = alcohol))+
+  geom_boxplot()
+print(bp_a2)
+
+t.test(alcohol ~ color, data = alcohol)
+```
+
+We still get statistical significance!
+
+```{r}
+dens_alcohol <- ggplot(data = all, aes(x=alcohol))+
+  geom_histogram(aes(y = after_stat(density)), binwidth = 2, color = "black", fill="white")+
+  geom_density(aes(color = color, fill = color), alpha = 0.6)
+print(dens_alcohol)
+```
+
+This could be due to numerous things, but what stands out is large sample size and low variability, which means a small difference in means can contribute to the statistical significance. The t-test looks at the ratio of the difference in means to the variation within the groups, so low variability can make the ratio larger, leading to significance. Although the test is statistically significant, it doesn't seem practically significant since the means and sd are relatively similar- this could contribute to a small or low effect size. There is also a chance that this is a Type I Error.
+
+```{r}
+# try out with smaller sample
+set.seed(123)
+red_sample   <- sample_n(red, 150)
+white_sample <- sample_n(white, 150)
+sample <- rbind(red_sample, white_sample)
+```
+
+```{r}
+sample_long <- melt(sample, id.vars=c("color", "quality"), 
+                 measure.vars = colnames(sample[,-c("color", "quality")]), 
+                 variable.name = "property", 
+                 value.name="value")
+
+sample_bp <- ggplot(data = sample_long, aes(y = value))+
+  geom_boxplot()+facet_wrap(~property, scales="free_y")
+print(sample_bp)
+```
+
+```{r}
+t.test(alcohol ~ color, data = sample)
+```
+
+```{r}
+# would removing outliers impact?
+samp_red <- sample[color == "red", .(alcohol, color)]
+samp_red <- detect_and_remove_outliers(samp_red)
+
+samp_white <- all[color == "white", .(alcohol, color)]
+samp_white <- detect_and_remove_outliers(samp_white)
+
+samp<- rbind(samp_red, samp_white)
+#does not!
+t.test(alcohol ~ color, data = samp)
+```
+
+```{r}
+#' Visualize the distribution of free sulfur dioxide across the three quality 
+#' categories. For white wines only, run an ANOVA test to determine if free 
+#' sulfur dioxide differs significantly between the three quality groups.
+#' 
+
+quality_categorize <- function(x) {
+  if (x %in% 0:4) {
+    return("Poor Quality")
+  } else if (x %in% 5:7) {
+    return("Decent Quality")
+  } else 
+    return("Great Quality")
+}
+
+qual_vect <- Vectorize(quality_categorize)
+
+white[, qual_category := qual_vect(quality)]
+
+dens <- ggplot(data = white, aes(x=`free sulfur dioxide`))+
+  geom_histogram(aes(y = after_stat(density)), binwidth = 2, color = "black", fill="white")+
+  geom_density(aes(color = qual_category, fill = qual_category), alpha = 0.6)
+print(dens)
+
+summary(aov(`free sulfur dioxide` ~ qual_category, data = white))
+
+free_white <- white[,.(`free sulfur dioxide`, qual_category)]
+free_white_remove <- detect_and_remove_outliers(free_white)
+
+bp_white <- ggplot(data = free_white_remove, aes(x=qual_category, y = `free sulfur dioxide`))+
+  geom_boxplot()
+print(bp_white)
+
+summary(aov(`free sulfur dioxide` ~ qual_category, data = free_white_remove))
+
+white[, free_log := log(`free sulfur dioxide`)]
+dens2 <- ggplot(data = white, aes(x=free_log))+
+  geom_histogram(aes(y = after_stat(density)), binwidth = 2, color = "black", fill="white")+
+  geom_density(aes(color = qual_category, fill = qual_category), alpha = 0.6)
+print(dens2)
+
+summary(aov(free_log ~ qual_category, data = white))
+
+samp_white2 <- sample_n(white, 100)
+summary(aov(`free sulfur dioxide` ~ qual_category, data = samp_white2))
+```

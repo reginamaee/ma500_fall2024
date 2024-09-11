@@ -198,3 +198,25 @@ t.test(x = prem_wide$after, y = prem_wide$before, paired = TRUE)
 ```
 
 The t-test results above show a p-value less than 0.05, meaning we can reject the null hypothesis that the mean difference between the heights on the first recorded day and the last recorded day is 0.
+
+## One-way ANOVA
+
+With ANOVA, we are going to test if there is a difference in the mean heights for all species.
+
+$$
+H_0: \mu_1 = \mu_2 = \mu_3 \\
+H_A: \text{The means are not equal (at least one mean is different)}
+$$
+
+For our data, we are only going to run this test on the first date height was recorded.
+
+```{r}
+anova <- aov(Height ~ Species, data = df_day1)
+summary(anova)
+```
+
+Since anova only tells us that at least one of the groups has a difference in means, you can perform a post-hoc test to determine which groups are exactly different. The most common one is the Tukey Honest Significant Differences test.
+
+```{r}
+TukeyHSD(anova)
+```

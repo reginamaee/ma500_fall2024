@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Case Study: Wine Quality Dataset | MA-500: Introduction to R</title>
+<meta name="author" content="Regina-Mae Dominguez - Fall 2024">
+<meta name="generator" content="bookdown 0.40 with bs4_book()">
+<meta property="og:title" content="Case Study: Wine Quality Dataset | MA-500: Introduction to R">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/images/cover.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Case Study: Wine Quality Dataset | MA-500: Introduction to R">
+<meta name="twitter:image" content="/images/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<meta name="description" content="The Wine Quality dataset comes from the UCI Machine Learning Repository. It contains information on the chemical properties of red and white variants of Portuguese wines, as well as quality...">
+<meta property="og:description" content="The Wine Quality dataset comes from the UCI Machine Learning Repository. It contains information on the chemical properties of red and white variants of Portuguese wines, as well as quality...">
+<meta name="twitter:description" content="The Wine Quality dataset comes from the UCI Machine Learning Repository. It contains information on the chemical properties of red and white variants of Portuguese wines, as well as quality...">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <img id="cover" class="d-none d-lg-block" src="images/cover-small.png"><br><h1>
+        <a href="index.html" title="">MA-500: Introduction to R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">MA-500: Introduction to R</a></li>
+<li><a class="" href="rrstudio-installation-guide.html">R/RStudio Installation Guide</a></li>
+<li><a class="" href="r-scriptscode.html">R-Scripts/Code</a></li>
+<li><a class="" href="r-basics-and-fundamentals.html"><span class="header-section-number">1</span> R Basics and Fundamentals</a></li>
+<li><a class="" href="conditionals-loops-and-functions.html"><span class="header-section-number">2</span> Conditionals, Loops, and Functions</a></li>
+<li><a class="" href="introduction-to-dataframes-ggplot2.html"><span class="header-section-number">3</span> Introduction to Dataframes &amp; ggplot2</a></li>
+<li><a class="" href="data-visualizations.html"><span class="header-section-number">4</span> Data Visualizations</a></li>
+<li><a class="" href="statistics.html"><span class="header-section-number">5</span> Statistics</a></li>
+<li><a class="" href="probability.html"><span class="header-section-number">6</span> Probability</a></li>
+<li><a class="" href="hypothesis-testing.html"><span class="header-section-number">7</span> Hypothesis Testing</a></li>
+<li><a class="active" href="case-study-wine-quality-dataset.html">Case Study: Wine Quality Dataset</a></li>
+<li><a class="" href="useful-tips.html">Useful Tips</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="case-study-wine-quality-dataset" class="section level1 unnumbered">
+<h1>Case Study: Wine Quality Dataset<a class="anchor" aria-label="anchor" href="#case-study-wine-quality-dataset"><i class="fas fa-link"></i></a>
+</h1>
+<p>The <strong>Wine Quality</strong> dataset comes from the UCI Machine Learning Repository. It contains information on the chemical properties of red and white variants of Portuguese wines, as well as quality rating. You can read more about it here: <a href="https://archive.ics.uci.edu/dataset/186/wine+quality">Wine Quality</a></p>
+<p>Note: I am manipulating the data with <code>data.table</code> notation rather than using <code>dplyr</code>.</p>
+<div class="sourceCode" id="cb295"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com">data.table</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># read in data and format</span></span>
+<span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="st">"/Users/rdominguez/MA500/"</span></span>
+<span><span class="va">red</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"winequality-red.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">white</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html">fread</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"winequality-white.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">red</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  fixed acidity   volatile acidity  citric acid    residual sugar  
+##  Min.   : 4.60   Min.   :0.1200   Min.   :0.000   Min.   : 0.900  
+##  1st Qu.: 7.10   1st Qu.:0.3900   1st Qu.:0.090   1st Qu.: 1.900  
+##  Median : 7.90   Median :0.5200   Median :0.260   Median : 2.200  
+##  Mean   : 8.32   Mean   :0.5278   Mean   :0.271   Mean   : 2.539  
+##  3rd Qu.: 9.20   3rd Qu.:0.6400   3rd Qu.:0.420   3rd Qu.: 2.600  
+##  Max.   :15.90   Max.   :1.5800   Max.   :1.000   Max.   :15.500  
+##    chlorides       free sulfur dioxide total sulfur dioxide    density      
+##  Min.   :0.01200   Min.   : 1.00       Min.   :  6.00       Min.   :0.9901  
+##  1st Qu.:0.07000   1st Qu.: 7.00       1st Qu.: 22.00       1st Qu.:0.9956  
+##  Median :0.07900   Median :14.00       Median : 38.00       Median :0.9968  
+##  Mean   :0.08747   Mean   :15.87       Mean   : 46.47       Mean   :0.9967  
+##  3rd Qu.:0.09000   3rd Qu.:21.00       3rd Qu.: 62.00       3rd Qu.:0.9978  
+##  Max.   :0.61100   Max.   :72.00       Max.   :289.00       Max.   :1.0037  
+##        pH          sulphates         alcohol         quality     
+##  Min.   :2.740   Min.   :0.3300   Min.   : 8.40   Min.   :3.000  
+##  1st Qu.:3.210   1st Qu.:0.5500   1st Qu.: 9.50   1st Qu.:5.000  
+##  Median :3.310   Median :0.6200   Median :10.20   Median :6.000  
+##  Mean   :3.311   Mean   :0.6581   Mean   :10.42   Mean   :5.636  
+##  3rd Qu.:3.400   3rd Qu.:0.7300   3rd Qu.:11.10   3rd Qu.:6.000  
+##  Max.   :4.010   Max.   :2.0000   Max.   :14.90   Max.   :8.000</code></pre>
+<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">white</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  fixed acidity    volatile acidity  citric acid     residual sugar  
+##  Min.   : 3.800   Min.   :0.0800   Min.   :0.0000   Min.   : 0.600  
+##  1st Qu.: 6.300   1st Qu.:0.2100   1st Qu.:0.2700   1st Qu.: 1.700  
+##  Median : 6.800   Median :0.2600   Median :0.3200   Median : 5.200  
+##  Mean   : 6.855   Mean   :0.2782   Mean   :0.3342   Mean   : 6.391  
+##  3rd Qu.: 7.300   3rd Qu.:0.3200   3rd Qu.:0.3900   3rd Qu.: 9.900  
+##  Max.   :14.200   Max.   :1.1000   Max.   :1.6600   Max.   :65.800  
+##    chlorides       free sulfur dioxide total sulfur dioxide    density      
+##  Min.   :0.00900   Min.   :  2.00      Min.   :  9.0        Min.   :0.9871  
+##  1st Qu.:0.03600   1st Qu.: 23.00      1st Qu.:108.0        1st Qu.:0.9917  
+##  Median :0.04300   Median : 34.00      Median :134.0        Median :0.9937  
+##  Mean   :0.04577   Mean   : 35.31      Mean   :138.4        Mean   :0.9940  
+##  3rd Qu.:0.05000   3rd Qu.: 46.00      3rd Qu.:167.0        3rd Qu.:0.9961  
+##  Max.   :0.34600   Max.   :289.00      Max.   :440.0        Max.   :1.0390  
+##        pH          sulphates         alcohol         quality     
+##  Min.   :2.720   Min.   :0.2200   Min.   : 8.00   Min.   :3.000  
+##  1st Qu.:3.090   1st Qu.:0.4100   1st Qu.: 9.50   1st Qu.:5.000  
+##  Median :3.180   Median :0.4700   Median :10.40   Median :6.000  
+##  Mean   :3.188   Mean   :0.4898   Mean   :10.51   Mean   :5.878  
+##  3rd Qu.:3.280   3rd Qu.:0.5500   3rd Qu.:11.40   3rd Qu.:6.000  
+##  Max.   :3.820   Max.   :1.0800   Max.   :14.20   Max.   :9.000</code></pre>
+<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">red</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"red"</span></span>
+<span><span class="va">white</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"white"</span></span>
+<span></span>
+<span><span class="va">all</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">red</span>, <span class="va">white</span><span class="op">)</span></span></code></pre></div>
+<p>In addition to summary, getting more statistical measures can be done with the <code>describe</code> and <code>describeBy</code> functions from the <code>pysch</code> package.</p>
+<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">all</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                      vars    n   mean    sd median trimmed   mad  min    max
+## fixed acidity           1 6497   7.22  1.30   7.00    7.06  0.89 3.80  15.90
+## volatile acidity        2 6497   0.34  0.16   0.29    0.32  0.12 0.08   1.58
+## citric acid             3 6497   0.32  0.15   0.31    0.32  0.10 0.00   1.66
+## residual sugar          4 6497   5.44  4.76   3.00    4.70  2.52 0.60  65.80
+## chlorides               5 6497   0.06  0.04   0.05    0.05  0.02 0.01   0.61
+## free sulfur dioxide     6 6497  30.53 17.75  29.00   29.32 17.79 1.00 289.00
+## total sulfur dioxide    7 6497 115.74 56.52 118.00  115.92 57.82 6.00 440.00
+## density                 8 6497   0.99  0.00   0.99    0.99  0.00 0.99   1.04
+## pH                      9 6497   3.22  0.16   3.21    3.21  0.16 2.72   4.01
+## sulphates              10 6497   0.53  0.15   0.51    0.52  0.12 0.22   2.00
+## alcohol                11 6497  10.49  1.19  10.30   10.40  1.33 8.00  14.90
+## quality                12 6497   5.82  0.87   6.00    5.79  1.48 3.00   9.00
+## color*                 13 6497   1.75  0.43   2.00    1.82  0.00 1.00   2.00
+##                       range  skew kurtosis   se
+## fixed acidity         12.10  1.72     5.05 0.02
+## volatile acidity       1.50  1.49     2.82 0.00
+## citric acid            1.66  0.47     2.39 0.00
+## residual sugar        65.20  1.43     4.35 0.06
+## chlorides              0.60  5.40    50.84 0.00
+## free sulfur dioxide  288.00  1.22     7.90 0.22
+## total sulfur dioxide 434.00  0.00    -0.37 0.70
+## density                0.05  0.50     6.60 0.00
+## pH                     1.29  0.39     0.37 0.00
+## sulphates              1.78  1.80     8.64 0.00
+## alcohol                6.90  0.57    -0.53 0.01
+## quality                6.00  0.19     0.23 0.01
+## color*                 1.00 -1.18    -0.61 0.01</code></pre>
+<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.by.html">describeBy</a></span><span class="op">(</span><span class="va">all</span>, group <span class="op">=</span> <span class="va">all</span><span class="op">$</span><span class="va">color</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Descriptive statistics by group 
+## group: red
+##                      vars    n  mean    sd median trimmed   mad  min    max
+## fixed acidity           1 1599  8.32  1.74   7.90    8.15  1.48 4.60  15.90
+## volatile acidity        2 1599  0.53  0.18   0.52    0.52  0.18 0.12   1.58
+## citric acid             3 1599  0.27  0.19   0.26    0.26  0.25 0.00   1.00
+## residual sugar          4 1599  2.54  1.41   2.20    2.26  0.44 0.90  15.50
+## chlorides               5 1599  0.09  0.05   0.08    0.08  0.01 0.01   0.61
+## free sulfur dioxide     6 1599 15.87 10.46  14.00   14.58 10.38 1.00  72.00
+## total sulfur dioxide    7 1599 46.47 32.90  38.00   41.84 26.69 6.00 289.00
+## density                 8 1599  1.00  0.00   1.00    1.00  0.00 0.99   1.00
+## pH                      9 1599  3.31  0.15   3.31    3.31  0.15 2.74   4.01
+## sulphates              10 1599  0.66  0.17   0.62    0.64  0.12 0.33   2.00
+## alcohol                11 1599 10.42  1.07  10.20   10.31  1.04 8.40  14.90
+## quality                12 1599  5.64  0.81   6.00    5.59  1.48 3.00   8.00
+## color                  13 1599  1.00  0.00   1.00    1.00  0.00 1.00   1.00
+##                       range skew kurtosis   se
+## fixed acidity         11.30 0.98     1.12 0.04
+## volatile acidity       1.46 0.67     1.21 0.00
+## citric acid            1.00 0.32    -0.79 0.00
+## residual sugar        14.60 4.53    28.49 0.04
+## chlorides              0.60 5.67    41.53 0.00
+## free sulfur dioxide   71.00 1.25     2.01 0.26
+## total sulfur dioxide 283.00 1.51     3.79 0.82
+## density                0.01 0.07     0.92 0.00
+## pH                     1.27 0.19     0.80 0.00
+## sulphates              1.67 2.42    11.66 0.00
+## alcohol                6.50 0.86     0.19 0.03
+## quality                5.00 0.22     0.29 0.02
+## color                  0.00  NaN      NaN 0.00
+## ------------------------------------------------------------ 
+## group: white
+##                      vars    n   mean    sd median trimmed   mad  min    max
+## fixed acidity           1 4898   6.85  0.84   6.80    6.82  0.74 3.80  14.20
+## volatile acidity        2 4898   0.28  0.10   0.26    0.27  0.09 0.08   1.10
+## citric acid             3 4898   0.33  0.12   0.32    0.33  0.09 0.00   1.66
+## residual sugar          4 4898   6.39  5.07   5.20    5.80  5.34 0.60  65.80
+## chlorides               5 4898   0.05  0.02   0.04    0.04  0.01 0.01   0.35
+## free sulfur dioxide     6 4898  35.31 17.01  34.00   34.36 16.31 2.00 289.00
+## total sulfur dioxide    7 4898 138.36 42.50 134.00  136.96 43.00 9.00 440.00
+## density                 8 4898   0.99  0.00   0.99    0.99  0.00 0.99   1.04
+## pH                      9 4898   3.19  0.15   3.18    3.18  0.15 2.72   3.82
+## sulphates              10 4898   0.49  0.11   0.47    0.48  0.10 0.22   1.08
+## alcohol                11 4898  10.51  1.23  10.40   10.43  1.48 8.00  14.20
+## quality                12 4898   5.88  0.89   6.00    5.85  1.48 3.00   9.00
+## color                  13 4898   2.00  0.00   2.00    2.00  0.00 2.00   2.00
+##                       range skew kurtosis   se
+## fixed acidity         10.40 0.65     2.17 0.01
+## volatile acidity       1.02 1.58     5.08 0.00
+## citric acid            1.66 1.28     6.16 0.00
+## residual sugar        65.20 1.08     3.46 0.07
+## chlorides              0.34 5.02    37.51 0.00
+## free sulfur dioxide  287.00 1.41    11.45 0.24
+## total sulfur dioxide 431.00 0.39     0.57 0.61
+## density                0.05 0.98     9.78 0.00
+## pH                     1.10 0.46     0.53 0.00
+## sulphates              0.86 0.98     1.59 0.00
+## alcohol                6.20 0.49    -0.70 0.02
+## quality                6.00 0.16     0.21 0.01
+## color                  0.00  NaN      NaN 0.00</code></pre>
+<p>Visualize all data:</p>
+<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># visualize all data transformed from wide to long</span></span>
+<span><span class="va">all_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/melt.data.table.html">melt</a></span><span class="op">(</span><span class="va">all</span>, id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"color"</span>, <span class="st">"quality"</span><span class="op">)</span>, measure.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">all</span><span class="op">[</span>,</span>
+<span>    <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"color"</span>, <span class="st">"quality"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>, variable.name <span class="op">=</span> <span class="st">"property"</span>, value.name <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">bp_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">all_long</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">property</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">bp_all</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-151-1.png" width="672"></div>
+<p>Another way to view correlation and scatter points all together by using <code><a href="https://ggobi.github.io/ggally/">library(GGally)</a></code>:</p>
+<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/">GGally</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html">ggpairs</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">all</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Discuss:</p>
+<ul>
+<li>Visualize the distribution of the “free sulfur dioxide” variable, grouped by wine color. Perform a t-test to determine if there is a significant difference in the mean free sulfur dioxide between red and white wines. Next, rerun the t-test after removing any free sulfur dioxide values greater than 100. Record the number of observations dropped. Finally, run the analysis again after removing all potential outliers and again, record the number of observations dropped. How do the results differ across these steps?</li>
+</ul>
+<div class="sourceCode" id="cb307"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot density to see what free sulfur looks like in the</span></span>
+<span><span class="co"># whole dataset</span></span>
+<span><span class="va">dens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">all</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">`free sulfur dioxide`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>        color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">color</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">color</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">dens</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-153-1.png" width="672"></div>
+<div class="sourceCode" id="cb308"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># more visualization to see what the outliers look like in</span></span>
+<span><span class="co"># a boxplot</span></span>
+<span><span class="va">bp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">all</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">color</span>, y <span class="op">=</span> <span class="va">`free sulfur dioxide`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">bp</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-154-1.png" width="672"></div>
+<p>Based off the plots above, we can observe that the mean values of <code>free sulfur dioxide</code> between red and white wines are visually different. Let’s run a t-test to see if it statistically significant.</p>
+<div class="sourceCode" id="cb309"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># run t-test without dropping observations</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">`free sulfur dioxide`</span> <span class="op">~</span> <span class="va">color</span>, data <span class="op">=</span> <span class="va">all</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  free sulfur dioxide by color
+## t = -54.428, df = 4461.9, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means between group red and group white is not equal to 0
+## 95 percent confidence interval:
+##  -20.13315 -18.73318
+## sample estimates:
+##   mean in group red mean in group white 
+##            15.87492            35.30808</code></pre>
+<p>Since we have a p-value &lt; 0.05, then we can reject the null hypothesis and say that there does exist a difference between the means.</p>
+<div class="sourceCode" id="cb311"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># t-test when dropping data &gt; 100</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">`free sulfur dioxide`</span> <span class="op">~</span> <span class="va">color</span>, data <span class="op">=</span> <span class="va">all</span><span class="op">[</span><span class="va">`free sulfur dioxide`</span> <span class="op">&lt;</span></span>
+<span>    <span class="fl">100</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  free sulfur dioxide by color
+## t = -55.041, df = 4170.1, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means between group red and group white is not equal to 0
+## 95 percent confidence interval:
+##  -19.79527 -18.43358
+## sample estimates:
+##   mean in group red mean in group white 
+##            15.87492            34.98935</code></pre>
+<p>From the results above, the t-test still provides the same results.</p>
+<p>Next, I will continue on with outliering the dataset with the following functions below:</p>
+<ul>
+<li><p>IQR*1.5 method: standard method we all know, recommended to use if data is somewhat symmetric and you want a simple, systematic, and robust way to outlier</p></li>
+<li><p>Percentile method: recommended for skewed data and large datasets, also provides more flexibility because you can define a threshold</p></li>
+</ul>
+<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#' This function processes a data frame, examining all numeric columns</span></span>
+<span><span class="co">#' to detect outliers on a row-by-row basis. Since the data being analyzed </span></span>
+<span><span class="co">#' is paired, if any observation in a row is considered an outlier </span></span>
+<span><span class="co">#' (according to the IQR method), the entire row will be dropped from the dataset.</span></span>
+<span><span class="co">#' </span></span>
+<span><span class="co">#' @param df A data frame containing numeric columns.</span></span>
+<span><span class="co">#' @return A data frame with all rows that had an outlier in any numeric column removed.</span></span>
+<span><span class="co">#' </span></span>
+<span><span class="co">#' To step through the function line by line, you can add `browser()` </span></span>
+<span><span class="co">#' at the start of the function, re-run it, and call a test case. </span></span>
+<span><span class="co">#' This will initiate 'debug/browser' mode, allowing you to examine each </span></span>
+<span><span class="co">#' step of the function with a snapshot of the environment at that point in time.</span></span>
+<span><span class="va">detect_and_remove_outliers</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>    <span class="co"># Create a new column to mark outliers</span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">is_outlier</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
+<span></span>
+<span>    <span class="co"># Loop through each numeric column to detect outliers</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">col</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>            <span class="co"># Calculate IQR for the column</span></span>
+<span>            <span class="va">Q1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>, <span class="fl">0.25</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>            <span class="va">Q3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>, <span class="fl">0.75</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>            <span class="va">IQR_value</span> <span class="op">&lt;-</span> <span class="va">Q3</span> <span class="op">-</span> <span class="va">Q1</span></span>
+<span></span>
+<span>            <span class="va">lower_bound</span> <span class="op">&lt;-</span> <span class="va">Q1</span> <span class="op">-</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="va">IQR_value</span></span>
+<span>            <span class="va">upper_bound</span> <span class="op">&lt;-</span> <span class="va">Q3</span> <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="va">IQR_value</span></span>
+<span></span>
+<span>            <span class="co"># Identify outliers</span></span>
+<span>            <span class="va">df</span><span class="op">$</span><span class="va">is_outlier</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">$</span><span class="va">is_outlier</span> <span class="op">|</span> <span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;=</span> <span class="va">lower_bound</span> <span class="op">|</span></span>
+<span>                <span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span> <span class="op">&gt;=</span> <span class="va">upper_bound</span><span class="op">)</span></span>
+<span>        <span class="op">}</span></span>
+<span>    <span class="op">}</span></span>
+<span></span>
+<span>    <span class="co"># Remove rows that are outliers</span></span>
+<span>    <span class="va">df_removed</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[</span><span class="op">!</span><span class="va">df</span><span class="op">$</span><span class="va">is_outlier</span>, <span class="op">]</span></span>
+<span></span>
+<span>    <span class="co"># Drop the is_outlier column</span></span>
+<span>    <span class="va">df_removed</span><span class="op">$</span><span class="va">is_outlier</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">df_removed</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># percentile way - may be useful for highly skewed data as</span></span>
+<span><span class="co"># IQR might miss values on one tail better for large</span></span>
+<span><span class="co"># datasets flexible thresholds</span></span>
+<span><span class="va">detect_and_remove_outliers_percentile</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>    <span class="co"># Create a new column to mark outliers</span></span>
+<span>    <span class="va">df</span><span class="op">$</span><span class="va">is_outlier</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
+<span></span>
+<span>    <span class="co"># Loop through each numeric column to detect outliers</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">col</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>            <span class="co"># Calculate IQR for the column</span></span>
+<span>            <span class="va">lower_bound</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>, <span class="fl">0.05</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>            <span class="va">upper_bound</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>, <span class="fl">0.95</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span>            <span class="co"># Identify outliers</span></span>
+<span>            <span class="va">df</span><span class="op">$</span><span class="va">is_outlier</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">$</span><span class="va">is_outlier</span> <span class="op">|</span> <span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;=</span> <span class="va">lower_bound</span> <span class="op">|</span></span>
+<span>                <span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span> <span class="op">&gt;=</span> <span class="va">upper_bound</span><span class="op">)</span></span>
+<span>        <span class="op">}</span></span>
+<span>    <span class="op">}</span></span>
+<span></span>
+<span>    <span class="co"># Remove rows that are outliers</span></span>
+<span>    <span class="va">df_removed</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[</span><span class="op">!</span><span class="va">df</span><span class="op">$</span><span class="va">is_outlier</span>, <span class="op">]</span></span>
+<span></span>
+<span>    <span class="co"># Drop the is_outlier column</span></span>
+<span>    <span class="va">df_removed</span><span class="op">$</span><span class="va">is_outlier</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">df_removed</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Because my distributions look fairly different between red and white wines, I will outlier the <code>free sulfur dioxide separately.</code></p>
+<div class="sourceCode" id="cb314"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># remove outliers for free sulfur dioxide</span></span>
+<span><span class="va">free_red</span> <span class="op">&lt;-</span> <span class="va">all</span><span class="op">[</span><span class="va">color</span> <span class="op">==</span> <span class="st">"red"</span>, <span class="fu">.</span><span class="op">(</span><span class="va">`free sulfur dioxide`</span>, <span class="va">color</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">free_red</span> <span class="op">&lt;-</span> <span class="fu">detect_and_remove_outliers</span><span class="op">(</span><span class="va">free_red</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">free_white</span> <span class="op">&lt;-</span> <span class="va">all</span><span class="op">[</span><span class="va">color</span> <span class="op">==</span> <span class="st">"white"</span>, <span class="fu">.</span><span class="op">(</span><span class="va">`free sulfur dioxide`</span>,</span>
+<span>    <span class="va">color</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">free_white</span> <span class="op">&lt;-</span> <span class="fu">detect_and_remove_outliers</span><span class="op">(</span><span class="va">free_white</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># no difference, obvious difference between groups true</span></span>
+<span><span class="co"># significance</span></span>
+<span><span class="va">free</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">free_red</span>, <span class="va">free_white</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">free_dens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">free</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">`free sulfur dioxide`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>        color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">color</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">color</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">`free sulfur dioxide`</span> <span class="op">~</span> <span class="va">color</span>, data <span class="op">=</span> <span class="va">free</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  free sulfur dioxide by color
+## t = -60.887, df = 4515.2, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means between group red and group white is not equal to 0
+## 95 percent confidence interval:
+##  -20.12666 -18.87098
+## sample estimates:
+##   mean in group red mean in group white 
+##            15.13474            34.63356</code></pre>
+<p>Testing below if outliering based off of percentiles will make the analysis any different (I removed the top and bottom 5% of the values).</p>
+<div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># percentile</span></span>
+<span><span class="va">free_red_percentile</span> <span class="op">&lt;-</span> <span class="va">all</span><span class="op">[</span><span class="va">color</span> <span class="op">==</span> <span class="st">"red"</span>, <span class="fu">.</span><span class="op">(</span><span class="va">`free sulfur dioxide`</span>,</span>
+<span>    <span class="va">color</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">free_red_percentile</span> <span class="op">&lt;-</span> <span class="fu">detect_and_remove_outliers_percentile</span><span class="op">(</span><span class="va">free_red_percentile</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">free_white_percentile</span> <span class="op">&lt;-</span> <span class="va">all</span><span class="op">[</span><span class="va">color</span> <span class="op">==</span> <span class="st">"white"</span>, <span class="fu">.</span><span class="op">(</span><span class="va">`free sulfur dioxide`</span>,</span>
+<span>    <span class="va">color</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">free_white_percentile</span> <span class="op">&lt;-</span> <span class="fu">detect_and_remove_outliers_percentile</span><span class="op">(</span><span class="va">free_white_percentile</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">free_percentile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">free_red_percentile</span>, <span class="va">free_white_percentile</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># the distribution shows the data being more condensed when</span></span>
+<span><span class="co"># you outlier based off of a 0.05 threshold</span></span>
+<span><span class="va">free_dens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">free_percentile</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">`free sulfur dioxide`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>        color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">color</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">color</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">free_dens</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-159-1.png" width="672"></div>
+<div class="sourceCode" id="cb317"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">`free sulfur dioxide`</span> <span class="op">~</span> <span class="va">color</span>, data <span class="op">=</span> <span class="va">free_percentile</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  free sulfur dioxide by color
+## t = -68.652, df = 3886.8, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means between group red and group white is not equal to 0
+## 95 percent confidence interval:
+##  -20.16152 -19.04195
+## sample estimates:
+##   mean in group red mean in group white 
+##            14.98478            34.58652</code></pre>
+<p>Both outliering practices did not provide any difference between the t-test results.</p>
+<p>I am going to move forward with testing this same analysis again but with the <code>alcohol</code> variable. Based off the distribution of <code>alcohol</code>, the means and spread look relatively the same (the difference is so small that it could just be due to the fact that white wines have much more data).</p>
+<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bp_a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">all</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">color</span>, y <span class="op">=</span> <span class="va">alcohol</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">bp_a</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-160-1.png" width="672"></div>
+<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">alcohol</span> <span class="op">~</span> <span class="va">color</span>, data <span class="op">=</span> <span class="va">all</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  alcohol by color
+## t = -2.859, df = 3100.5, p-value = 0.004278
+## alternative hypothesis: true difference in means between group red and group white is not equal to 0
+## 95 percent confidence interval:
+##  -0.15388669 -0.02868117
+## sample estimates:
+##   mean in group red mean in group white 
+##            10.42298            10.51427</code></pre>
+<p>From the output above, if we run the t-test on the entire dataset for alcohol to see if there is a difference between alcohol means between white and red wines, we get a statistical significance. However, this makes me wonder since the means are both ~10, and the distribution is fairly the same. Is this practical?</p>
+<p>Let’s move forward with checking if outliers make a difference:</p>
+<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a_red</span> <span class="op">&lt;-</span> <span class="va">all</span><span class="op">[</span><span class="va">color</span> <span class="op">==</span> <span class="st">"red"</span>, <span class="fu">.</span><span class="op">(</span><span class="va">alcohol</span>, <span class="va">color</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">a_red</span> <span class="op">&lt;-</span> <span class="fu">detect_and_remove_outliers</span><span class="op">(</span><span class="va">a_red</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">a_white</span> <span class="op">&lt;-</span> <span class="va">all</span><span class="op">[</span><span class="va">color</span> <span class="op">==</span> <span class="st">"white"</span>, <span class="fu">.</span><span class="op">(</span><span class="va">alcohol</span>, <span class="va">color</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">a_white</span> <span class="op">&lt;-</span> <span class="fu">detect_and_remove_outliers</span><span class="op">(</span><span class="va">a_white</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">a_red</span>, <span class="va">a_white</span><span class="op">)</span></span>
+<span><span class="co"># t-test p val is significantly lower</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">alcohol</span> <span class="op">~</span> <span class="va">color</span>, data <span class="op">=</span> <span class="va">a</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  alcohol by color
+## t = -3.9245, df = 3202.2, p-value = 8.874e-05
+## alternative hypothesis: true difference in means between group red and group white is not equal to 0
+## 95 percent confidence interval:
+##  -0.18272476 -0.06097232
+## sample estimates:
+##   mean in group red mean in group white 
+##            10.39242            10.51427</code></pre>
+<div class="sourceCode" id="cb324"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># only red was affected</span></span>
+<span><span class="va">bp_a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">a</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">color</span>, y <span class="op">=</span> <span class="va">alcohol</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">bp_a</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-162-1.png" width="672"></div>
+<div class="sourceCode" id="cb325"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># difference if outliering based off of all data?</span></span>
+<span><span class="va">alcohol</span> <span class="op">&lt;-</span> <span class="va">all</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">alcohol</span>, <span class="va">color</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">bp_a2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">alcohol</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">color</span>, y <span class="op">=</span> <span class="va">alcohol</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">bp_a2</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-162-2.png" width="672"></div>
+<div class="sourceCode" id="cb326"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">alcohol</span> <span class="op">~</span> <span class="va">color</span>, data <span class="op">=</span> <span class="va">alcohol</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  alcohol by color
+## t = -2.859, df = 3100.5, p-value = 0.004278
+## alternative hypothesis: true difference in means between group red and group white is not equal to 0
+## 95 percent confidence interval:
+##  -0.15388669 -0.02868117
+## sample estimates:
+##   mean in group red mean in group white 
+##            10.42298            10.51427</code></pre>
+<p>We still get statistical significance!</p>
+<div class="sourceCode" id="cb328"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dens_alcohol</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">all</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">alcohol</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    binwidth <span class="op">=</span> <span class="fl">2</span>, color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">color</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">color</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">dens_alcohol</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-163-1.png" width="672"></div>
+<p>This could be due to numerous things, but what stands out is large sample size and low variability, which means a small difference in means can contribute to the statistical significance. The t-test looks at the ratio of the difference in means to the variation within the groups, so low variability can make the ratio larger, leading to significance. Although the test is statistically significant, it doesn’t seem practically significant since the means and sd are relatively similar- this could contribute to a small or low effect size. There is also a chance that this is a Type I Error.</p>
+<div class="sourceCode" id="cb329"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># try out with smaller sample</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">red_sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="va">red</span>, <span class="fl">150</span><span class="op">)</span></span>
+<span><span class="va">white_sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="va">white</span>, <span class="fl">150</span><span class="op">)</span></span>
+<span><span class="va">sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">red_sample</span>, <span class="va">white_sample</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sample_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/melt.data.table.html">melt</a></span><span class="op">(</span><span class="va">sample</span>, id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"color"</span>, <span class="st">"quality"</span><span class="op">)</span>,</span>
+<span>    measure.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">sample</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"color"</span>, <span class="st">"quality"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>    variable.name <span class="op">=</span> <span class="st">"property"</span>, value.name <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sample_bp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sample_long</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">property</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sample_bp</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-165-1.png" width="672"></div>
+<div class="sourceCode" id="cb331"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">alcohol</span> <span class="op">~</span> <span class="va">color</span>, data <span class="op">=</span> <span class="va">sample</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  alcohol by color
+## t = -1.0074, df = 295.42, p-value = 0.3146
+## alternative hypothesis: true difference in means between group red and group white is not equal to 0
+## 95 percent confidence interval:
+##  -0.3951196  0.1275640
+## sample estimates:
+##   mean in group red mean in group white 
+##            10.41522            10.54900</code></pre>
+<div class="sourceCode" id="cb333"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># would removing outliers impact?</span></span>
+<span><span class="va">samp_red</span> <span class="op">&lt;-</span> <span class="va">sample</span><span class="op">[</span><span class="va">color</span> <span class="op">==</span> <span class="st">"red"</span>, <span class="fu">.</span><span class="op">(</span><span class="va">alcohol</span>, <span class="va">color</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">samp_red</span> <span class="op">&lt;-</span> <span class="fu">detect_and_remove_outliers</span><span class="op">(</span><span class="va">samp_red</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">samp_white</span> <span class="op">&lt;-</span> <span class="va">all</span><span class="op">[</span><span class="va">color</span> <span class="op">==</span> <span class="st">"white"</span>, <span class="fu">.</span><span class="op">(</span><span class="va">alcohol</span>, <span class="va">color</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">samp_white</span> <span class="op">&lt;-</span> <span class="fu">detect_and_remove_outliers</span><span class="op">(</span><span class="va">samp_white</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">samp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">samp_red</span>, <span class="va">samp_white</span><span class="op">)</span></span>
+<span><span class="co"># does not!</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">alcohol</span> <span class="op">~</span> <span class="va">color</span>, data <span class="op">=</span> <span class="va">samp</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  alcohol by color
+## t = -1.7234, df = 160.23, p-value = 0.08675
+## alternative hypothesis: true difference in means between group red and group white is not equal to 0
+## 95 percent confidence interval:
+##  -0.31649841  0.02152287
+## sample estimates:
+##   mean in group red mean in group white 
+##            10.36678            10.51427</code></pre>
+<div class="sourceCode" id="cb335"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#' Visualize the distribution of free sulfur dioxide across the three quality </span></span>
+<span><span class="co">#' categories. For white wines only, run an ANOVA test to determine if free </span></span>
+<span><span class="co">#' sulfur dioxide differs significantly between the three quality groups.</span></span>
+<span><span class="co">#' </span></span>
+<span></span>
+<span><span class="va">quality_categorize</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fl">0</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="st">"Poor Quality"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="st">"Decent Quality"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="st">"Great Quality"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">qual_vect</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize</a></span><span class="op">(</span><span class="va">quality_categorize</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">white</span><span class="op">[</span>, <span class="va">qual_category</span> <span class="op">:=</span> <span class="fu">qual_vect</span><span class="op">(</span><span class="va">quality</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">dens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">white</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">`free sulfur dioxide`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>        color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">qual_category</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">qual_category</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">dens</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-168-1.png" width="672"></div>
+<div class="sourceCode" id="cb336"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">`free sulfur dioxide`</span> <span class="op">~</span> <span class="va">qual_category</span>, data <span class="op">=</span> <span class="va">white</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                 Df  Sum Sq Mean Sq F value   Pr(&gt;F)    
+## qual_category    2   14485    7242   25.29 1.19e-11 ***
+## Residuals     4895 1401937     286                     
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div class="sourceCode" id="cb338"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">free_white</span> <span class="op">&lt;-</span> <span class="va">white</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">`free sulfur dioxide`</span>, <span class="va">qual_category</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">free_white_remove</span> <span class="op">&lt;-</span> <span class="fu">detect_and_remove_outliers</span><span class="op">(</span><span class="va">free_white</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">bp_white</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">free_white_remove</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">qual_category</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">`free sulfur dioxide`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">bp_white</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-168-2.png" width="672"></div>
+<div class="sourceCode" id="cb339"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">`free sulfur dioxide`</span> <span class="op">~</span> <span class="va">qual_category</span>, data <span class="op">=</span> <span class="va">free_white_remove</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                 Df  Sum Sq Mean Sq F value Pr(&gt;F)    
+## qual_category    2   28262   14131   60.99 &lt;2e-16 ***
+## Residuals     4845 1122522     232                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div class="sourceCode" id="cb341"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">white</span><span class="op">[</span>, <span class="va">free_log</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">`free sulfur dioxide`</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">dens2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">white</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">free_log</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    binwidth <span class="op">=</span> <span class="fl">2</span>, color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">qual_category</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">qual_category</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">dens2</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-168-3.png" width="672"></div>
+<div class="sourceCode" id="cb342"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">free_log</span> <span class="op">~</span> <span class="va">qual_category</span>, data <span class="op">=</span> <span class="va">white</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                 Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## qual_category    2   58.3  29.145   101.2 &lt;2e-16 ***
+## Residuals     4895 1409.8   0.288                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div class="sourceCode" id="cb344"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">samp_white2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="va">white</span>, <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">`free sulfur dioxide`</span> <span class="op">~</span> <span class="va">qual_category</span>, data <span class="op">=</span> <span class="va">samp_white2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##               Df Sum Sq Mean Sq F value Pr(&gt;F)
+## qual_category  2    380   190.0   0.717  0.491
+## Residuals     97  25724   265.2</code></pre>
+
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="hypothesis-testing.html"><span class="header-section-number">7</span> Hypothesis Testing</a></div>
+<div class="next"><a href="useful-tips.html">Useful Tips</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#case-study-wine-quality-dataset">Case Study: Wine Quality Dataset</a></li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
