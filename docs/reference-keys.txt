@@ -44,6 +44,8 @@ density-plot
 violin-plot
 faceted-plots
 themes
+additional-customization
+case-study-airquality-dataset
 statistics
 measures-of-central-tendency
 mean-median-mode
