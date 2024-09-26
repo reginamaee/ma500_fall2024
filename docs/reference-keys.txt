@@ -46,6 +46,7 @@ faceted-plots
 themes
 additional-customization
 case-study-airquality-dataset
+working-with-maps
 statistics
 measures-of-central-tendency
 mean-median-mode

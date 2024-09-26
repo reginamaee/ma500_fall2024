@@ -324,8 +324,88 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">combined_plot</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-105-1.png" width="672"></div>
 <p>By employing the <code><a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html">ggarrange()</a></code> function, we can arrange our <code>ggplot</code> objects in a single row with three columns, as specified by the <code>nrow</code> and <code>ncol</code> parameters. We’ve omitted the color legends from the second and third plots and centralized the legends for all plots at the bottom to achieve a more streamlined appearance.</p>
-
 </div>
+</div>
+<div id="working-with-maps" class="section level2" number="4.4">
+<h2>
+<span class="header-section-number">4.4</span> Working with Maps<a class="anchor" aria-label="anchor" href="#working-with-maps"><i class="fas fa-link"></i></a>
+</h2>
+<p>This section will discuss working with maps with <code>ggplot</code>! We will be using the <code>sf()</code> library to pull in files from ArcGIS, specifically a shapefile of the map of Guam with its main village boundaries. In the case you are working with other regions or locations, you can do your best to google its respective shapefile.</p>
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># import libraries install.package('sf')</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># read in shape</span></span>
+<span><span class="va">sf_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html">st_read</a></span><span class="op">(</span><span class="st">"/Users/rdominguez/Downloads/Village/new_map/village.shp"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Reading layer `village' from data source 
+##   `/Users/rdominguez/Downloads/Village/new_map/village.shp' using driver `ESRI Shapefile'
+## Simple feature collection with 19 features and 6 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 85741.2 ymin: 170580.6 xmax: 122375.7 ymax: 217087.4
+## Projected CRS: 1993_Guam_Geodetic_Network</code></pre>
+<p>The main file we are pulling in is <code>village.shp</code>. However, it is important to note that the folder that contains your <code>.shp</code> file must have a related <code>.shx</code> file in order to read its data in correctly. When reading this file with <code>st_read</code>, it will load into your <code>R</code> environment as a data.frame and you can interact with it as such.</p>
+<p>For our purposes. let’s plot the number of votes data in the 2020 election we utilized in Homework 1.</p>
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">repub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">95</span>, <span class="fl">235</span>, <span class="fl">166</span>, <span class="fl">427</span>, <span class="fl">331</span>, <span class="fl">175</span>, <span class="fl">180</span>, <span class="fl">428</span>, <span class="fl">267</span>, <span class="fl">368</span>, <span class="fl">516</span>,</span>
+<span>    <span class="fl">384</span>, <span class="fl">242</span>, <span class="fl">502</span>, <span class="fl">638</span>, <span class="fl">699</span>, <span class="fl">785</span>, <span class="fl">2214</span>, <span class="fl">835</span><span class="op">)</span></span>
+<span><span class="va">democ</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">172</span>, <span class="fl">384</span>, <span class="fl">341</span>, <span class="fl">861</span>, <span class="fl">721</span>, <span class="fl">247</span>, <span class="fl">477</span>, <span class="fl">683</span>, <span class="fl">670</span>, <span class="fl">1043</span>,</span>
+<span>    <span class="fl">1020</span>, <span class="fl">765</span>, <span class="fl">664</span>, <span class="fl">759</span>, <span class="fl">1257</span>, <span class="fl">1422</span>, <span class="fl">1471</span>, <span class="fl">3468</span>, <span class="fl">1833</span><span class="op">)</span></span>
+<span><span class="va">village</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Hagatna"</span>, <span class="st">"Asan"</span>, <span class="st">"Piti"</span>, <span class="st">"Agat"</span>, <span class="st">"Santa Rita"</span>,</span>
+<span>    <span class="st">"Umatac"</span>, <span class="st">"Merizo"</span>, <span class="st">"Inarajan"</span>, <span class="st">"Talofofo"</span>, <span class="st">"Yona"</span>, <span class="st">"Ordot / Chalan Pago"</span>,</span>
+<span>    <span class="st">"Sinajana"</span>, <span class="st">"Agana Heights"</span>, <span class="st">"Mongmong-Toto-Maite"</span>, <span class="st">"Barrigada"</span>,</span>
+<span>    <span class="st">"Mangilao"</span>, <span class="st">"Tamuning"</span>, <span class="st">"Dededo"</span>, <span class="st">"Yigo"</span><span class="op">)</span></span></code></pre></div>
+<p>Continuing forward, I ensured that the <code>village</code> vector contained values that matched the <code>MUNICIPAL</code> column in our <code>sf_data</code> data.frame so we can easily merge our values together!</p>
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>village <span class="op">=</span> <span class="va">village</span>, repub <span class="op">=</span> <span class="va">repub</span>, democ <span class="op">=</span> <span class="va">democ</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>total <span class="op">=</span> <span class="va">repub</span> <span class="op">+</span> <span class="va">democ</span>, percent_repub <span class="op">=</span> <span class="va">repub</span><span class="op">/</span><span class="va">total</span> <span class="op">*</span></span>
+<span>        <span class="fl">100</span>, percent_democ <span class="op">=</span> <span class="va">democ</span><span class="op">/</span><span class="va">total</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># if columns have same name df &lt;- df %&gt;% rename(MUNICIPAL</span></span>
+<span><span class="co"># == village) df &lt;- left_join(sf_data, df, by =</span></span>
+<span><span class="co"># 'MUNICIPAL') if columns have different names</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">sf_data</span>, <span class="va">df</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="st">"MUNICIPAL"</span> <span class="op">==</span> <span class="st">"village"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Since our id columns we want to merge by have two different column names, instead of re-naming the column, I used the <code>join_by</code> argument to inform that the <code>MUNICIPAL</code> column from the <code>sf_data</code> frame should match the <code>village</code> column from the <code>df</code> data.frame.</p>
+<p>Let’s move forward with plotting our map!</p>
+<p>The first map we are going to plot is the voting numbers for the democratic party in 2020.</p>
+<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># number of votes for the democratic party</span></span>
+<span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">percent_democ</span><span class="op">)</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#56B1F7"</span>,</span>
+<span>    high <span class="op">=</span> <span class="st">"#132B43"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">MUNICIPAL</span>,</span>
+<span>    <span class="st">"\n"</span>, <span class="va">democ</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Votes for democratic party in 2020"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"*Hue represents percentage of votes per village (denominator is total votes from that respective village), while labels display number of votes."</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"Percentage of Votes"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    hjust <span class="op">=</span> <span class="fl">0.5</span>, face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">g1</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-109-1.png" width="672"></div>
+<ul>
+<li><p><code>geom_sf</code> plots the map by reading in the specified <code>geometry</code> polygon coordinates from the dataframe. We fill these polygons with the variable <code>percent_democ</code> to represent the percentage of votes per village where the <code>white</code> color argument represents the color of the outline of the polygons.</p></li>
+<li><p><code>scale_fill_gradient</code> is manually defined with a custom low colored hex-code and high colored hex-code. This was done to ensure that our smaller values are filled with lighter hues and our larger values are darker.</p></li>
+<li><p><code>geom_sf_text</code> labels our polygons (the shape of the villages in this case) with the village name and the number of votes from that village</p></li>
+</ul>
+<p>Let’s do the same for the voting numbers for the republican party in 2020.</p>
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># number of votes for the republican party</span></span>
+<span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">percent_repub</span><span class="op">)</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#ffa5a5"</span>,</span>
+<span>    high <span class="op">=</span> <span class="st">"#AA0000"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">MUNICIPAL</span>,</span>
+<span>    <span class="st">"\n"</span>, <span class="va">repub</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Votes for republican party in 2020"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"*Hue represents percentage of votes per village (denominator is total votes from that respective village), while labels display number of votes."</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"Percentage of Votes"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    hjust <span class="op">=</span> <span class="fl">0.5</span>, face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">g2</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-110-1.png" width="672"></div>
+<p>The code to plot the voting numbers for the republican party is similar, we just switch the values and fill to represent the republican voting numbers and percentage. We also move forward with a red gradient for this map.</p>
+<p>Let’s combine these maps to show them side-by-side using <code>ggpubr</code>.</p>
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/ggpubr/">ggpubr</a></span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html">ggarrange</a></span><span class="op">(</span><span class="va">g1</span>, <span class="va">g2</span>, nrow <span class="op">=</span> <span class="fl">1</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="intro_r_course_files/figure-html/unnamed-chunk-111-1.png" width="672"></div>
+
 </div>
 </div>
   <div class="chapter-nav">
@@ -351,6 +431,7 @@
 <li>
 <a class="nav-link" href="#additional-customization"><span class="header-section-number">4.3</span> Additional Customization</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#case-study-airquality-dataset"><span class="header-section-number">4.3.1</span> Case Study: Airquality Dataset</a></li></ul>
 </li>
+<li><a class="nav-link" href="#working-with-maps"><span class="header-section-number">4.4</span> Working with Maps</a></li>
 </ul>
 
       <div class="book-extra">

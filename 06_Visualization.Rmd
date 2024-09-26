@@ -154,7 +154,7 @@ box <- box + theme_minimal()
 print(box)
 ```
 
-## Additional Customization 
+## Additional Customization
 
 ### Case Study: Airquality Dataset
 
@@ -263,3 +263,101 @@ print(combined_plot)
 ```
 
 By employing the `ggarrange()` function, we can arrange our `ggplot` objects in a single row with three columns, as specified by the `nrow` and `ncol` parameters. We've omitted the color legends from the second and third plots and centralized the legends for all plots at the bottom to achieve a more streamlined appearance.
+
+## Working with Maps 
+
+This section will discuss working with maps with `ggplot`! We will be using the `sf()` library to pull in files from ArcGIS, specifically a shapefile of the map of Guam with its main village boundaries. In the case you are working with other regions or locations, you can do your best to google its respective shapefile.
+
+```{r}
+# import libraries
+#install.package("sf")
+library(sf)
+
+# read in shape
+sf_data <- st_read("/Users/rdominguez/Downloads/Village/new_map/village.shp")
+```
+
+The main file we are pulling in is `village.shp`. However, it is important to note that the folder that contains your `.shp` file must have a related `.shx` file in order to read its data in correctly. When reading this file with `st_read`, it will load into your `R` environment as a data.frame and you can interact with it as such.
+
+For our purposes. let's plot the number of votes data in the 2020 election we utilized in Homework 1.
+
+```{r}
+repub   <- c(95, 235, 166, 427, 331, 175, 180, 428, 267, 368, 516,
+             384, 242, 502, 638, 699, 785, 2214, 835)
+democ   <- c(172, 384, 341, 861, 721, 247, 477, 683, 670, 1043,
+             1020, 765, 664, 759, 1257, 1422, 1471, 3468, 1833)
+village <- c("Hagatna", "Asan", "Piti", "Agat", "Santa Rita",
+             "Umatac", "Merizo", "Inarajan", "Talofofo", "Yona", 
+             "Ordot / Chalan Pago","Sinajana", "Agana Heights", 
+             "Mongmong-Toto-Maite", "Barrigada",
+             "Mangilao", "Tamuning", "Dededo", "Yigo")
+```
+
+Continuing forward, I ensured that the `village` vector contained values that matched the `MUNICIPAL` column in our `sf_data` data.frame so we can easily merge our values together!
+
+```{r}
+df <- data.frame(village = village, 
+                 repub = repub, 
+                 democ = democ)
+
+df <- df %>% mutate(total = repub + democ, 
+                    percent_repub = repub/total * 100, 
+                    percent_democ = democ/total * 100)
+
+# if columns have same name
+#df <- df %>% rename(MUNICIPAL == village)
+#df <- left_join(sf_data, df, by = "MUNICIPAL")
+# if columns have different names
+data <- left_join(sf_data, df, join_by("MUNICIPAL" == "village"))
+```
+
+Since our id columns we want to merge by have two different column names, instead of re-naming the column, I used the `join_by` argument to inform that the `MUNICIPAL` column from the `sf_data` frame should match the `village` column from the `df` data.frame.
+
+Let's move forward with plotting our map!
+
+The first map we are going to plot is the voting numbers for the democratic party in 2020.
+
+```{r}
+# number of votes for the democratic party
+g1 <- ggplot(data = data) +
+  geom_sf(aes(fill = percent_democ), color="white")+
+  theme_void()+scale_fill_gradient(low="#56B1F7", 
+                                   high = "#132B43")+
+  geom_sf_text(aes(label = paste0(MUNICIPAL, "\n", democ)), size = 2)+
+  labs(title = "Votes for democratic party in 2020", 
+       caption = "*Hue represents percentage of votes per village (denominator is total votes from that respective village), while labels display number of votes.", 
+       fill = "Percentage of Votes")+
+  theme(plot.caption = element_text(size = 8, hjust=0.5, face = "italic"))
+g1
+```
+
+-   `geom_sf` plots the map by reading in the specified `geometry` polygon coordinates from the dataframe. We fill these polygons with the variable `percent_democ` to represent the percentage of votes per village where the `white` color argument represents the color of the outline of the polygons.
+
+-   `scale_fill_gradient` is manually defined with a custom low colored hex-code and high colored hex-code. This was done to ensure that our smaller values are filled with lighter hues and our larger values are darker.
+
+-   `geom_sf_text` labels our polygons (the shape of the villages in this case) with the village name and the number of votes from that village
+
+Let's do the same for the voting numbers for the republican party in 2020.
+
+```{r}
+# number of votes for the republican party
+g2 <- ggplot(data = data) +
+  geom_sf(aes(fill = percent_repub), color="white")+
+  theme_void()+scale_fill_gradient(low="#ffa5a5", high="#AA0000")+
+  geom_sf_text(aes(label = paste0(MUNICIPAL, "\n", repub)), size = 2)+
+  labs(title = "Votes for republican party in 2020", 
+       caption = "*Hue represents percentage of votes per village (denominator is total votes from that respective village), while labels display number of votes.", 
+       fill = "Percentage of Votes")+
+  theme(plot.caption = element_text(size = 8, hjust=0.5, face = "italic"))
+g2
+```
+
+The code to plot the voting numbers for the republican party is similar, we just switch the values and fill to represent the republican voting numbers and percentage. We also move forward with a red gradient for this map.
+
+Let's combine these maps to show them side-by-side using `ggpubr`.
+
+```{r}
+library(ggpubr)
+g <- ggarrange(g1, g2, nrow = 1, ncol = 2)
+print(g)
+```
